@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page Not Found | Forest Cafe</title>
+    <style>
+      :root {
+        --forest-900: #1d3d2f;
+        --forest-700: #2f5a45;
+        --forest-500: #4d785d;
+        --cream: #f6f0e7;
+        --card: #f9f5ee;
+        --line: rgba(31, 48, 36, 0.14);
+        --honey: #c9834f;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(180deg, #f5efe7 0%, #efe4d5 100%);
+        font-family: Arial, Helvetica, sans-serif;
+        color: var(--forest-900);
+      }
+
+      .wrap {
+        width: min(900px, calc(100% - 32px));
+        background: rgba(255,255,255,0.4);
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        padding: clamp(24px, 4vw, 48px);
+        box-shadow: 0 20px 40px rgba(45, 60, 40, 0.08);
+        text-align: center;
+      }
+
+      img {
+        display: block;
+        width: min(100%, 520px);
+        height: auto;
+        margin: 0 auto 18px;
+      }
+
+      h1 {
+        margin: 0 0 10px;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        letter-spacing: 0.04em;
+        color: var(--forest-900);
+      }
+
+      p {
+        margin: 0 auto 24px;
+        max-width: 560px;
+        color: rgba(29, 61, 47, 0.8);
+        line-height: 1.7;
+      }
+
+      .btn {
+        display: inline-block;
+        background: var(--forest-900);
+        color: #fff;
+        text-decoration: none;
+        padding: 14px 22px;
+        border-radius: 999px;
+        font-weight: 700;
+        letter-spacing: 0.03em;
+      }
+
+      .btn:hover {
+        background: var(--forest-700);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <img src="page-not-found.webp" alt="Forest Cafe page not found illustration" />
+      <h1>Page Not Found</h1>
+      <p>The page you are looking for doesn’t exist or may have moved. Head back to the Forest Cafe homepage.</p>
+      <a class="btn" href="index.html">Back to Home</a>
+    </div>
+  </body>
+</html>

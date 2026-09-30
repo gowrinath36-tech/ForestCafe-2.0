@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forest Cafe CMS Dashboard</title>
+  <link href="logo.png" rel="icon" type="image/png" />
+  <style>
+    :root {
+      --bg: #f5f1e9;
+      --panel: #fffdf9;
+      --panel-strong: #f0e6d7;
+      --green: #253c20;
+      --green-soft: #e0eadc;
+      --honey: #d8a85c;
+      --ink: #1c1c1c;
+      --muted: #5d584d;
+      --border: rgba(37, 60, 32, 0.12);
+      --shadow: 0 22px 50px rgba(33, 25, 15, 0.09);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f4efe6 0%, #eee5d2 100%);
+      color: var(--ink);
+    }
+
+    .shell {
+      width: min(1200px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      background: var(--green);
+      color: white;
+      padding: 22px 0;
+      box-shadow: 0 12px 28px rgba(25, 39, 29, 0.18);
+    }
+
+    .topbar-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .brand-logo {
+      width: 42px;
+      height: 42px;
+      object-fit: contain;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.12);
+      padding: 4px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 999px;
+      padding: 8px 12px;
+      opacity: 0.9;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 24px;
+      padding: 32px 0 56px;
+    }
+
+    .panel {
+      background: rgba(255,255,255,0.72);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .sidebar {
+      padding: 24px;
+      height: fit-content;
+      position: sticky;
+      top: 20px;
+    }
+
+    .sidebar h2 {
+      margin-top: 0;
+      margin-bottom: 18px;
+      font-size: 1.4rem;
+      color: var(--green);
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 12px;
+    }
+
+    .sidebar li {
+      background: var(--green-soft);
+      border: 1px solid rgba(37,60,32,0.08);
+      border-radius: 16px;
+      padding: 12px 14px;
+      color: var(--green);
+      font-weight: 600;
+    }
+
+    .content {
+      padding: 24px;
+    }
+
+    .content h1 {
+      margin: 0 0 18px;
+      color: var(--green);
+      font-size: clamp(2rem, 2vw + 1rem, 2.8rem);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(220px, 1fr));
+      gap: 18px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      grid-column: span 2;
+    }
+
+    .field.half {
+      grid-column: span 1;
+    }
+
+    .product-toggle-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 12px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.7);
+      border-radius: 16px;
+      padding: 12px;
+    }
+
+    .product-toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 12px;
+      border: 1px solid rgba(37,60,32,0.08);
+      border-radius: 12px;
+      background: #faf7f2;
+    }
+
+    .product-toggle-row label {
+      font-weight: 600;
+      color: var(--ink);
+      cursor: pointer;
+      flex: 1;
+    }
+
+    .product-toggle-row input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--green);
+      cursor: pointer;
+      margin: 0;
+    }
+
+    label {
+      font-weight: 700;
+      color: var(--green);
+      font-size: 0.9rem;
+    }
+
+    input, textarea {
+      width: 100%;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: white;
+      color: var(--ink);
+      padding: 12px 14px;
+      font: inherit;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: rgba(37,60,32,0.4);
+      box-shadow: 0 0 0 3px rgba(37,60,32,0.08);
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+
+    button, .secondary-link {
+      border: none;
+      border-radius: 999px;
+      padding: 12px 18px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .primary {
+      background: var(--green);
+      color: white;
+      box-shadow: 0 12px 22px rgba(37, 60, 32, 0.18);
+    }
+
+    .secondary {
+      background: var(--panel-strong);
+      color: var(--green);
+      border: 1px solid rgba(37,60,32,0.08);
+    }
+
+    .status {
+      margin-top: 12px;
+      color: var(--green);
+      font-weight: 600;
+      min-height: 22px;
+    }
+
+    @media (max-width: 840px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .field, .field.half {
+        grid-column: span 1;
+      }
+    }
+  </style>
+</head>
+<body data-page="cms">
+  <header class="topbar">
+    <div class="shell topbar-inner">
+      <div class="brand">
+        <img class="brand-logo" src="logo.png" alt="Forest Cafe logo" />
+        <span>Forest Cafe CMS</span>
+      </div>
+      <nav class="nav-links" aria-label="Dashboard navigation">
+        <a href="index.html">Preview Site</a>
+        <a href="dashboard.html">Refresh</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="shell layout">
+    <aside class="panel sidebar">
+      <h2>Quick edit areas</h2>
+      <ul>
+        <li>Hero headline</li>
+        <li>About us text</li>
+        <li>Contact phone</li>
+        <li>Email and social links</li>
+      </ul>
+    </aside>
+
+    <section class="panel content">
+      <h1>Site content dashboard</h1>
+
+      <form id="cmsForm">
+        <div class="form-grid">
+          <div class="field">
+            <label for="heroTitle">Hero title</label>
+            <input id="heroTitle" name="heroTitle" type="text" />
+          </div>
+
+          <div class="field">
+            <label for="heroText">Hero text</label>
+            <textarea id="heroText" name="heroText"></textarea>
+          </div>
+
+          <div class="field">
+            <label for="aboutTitle">About title</label>
+            <input id="aboutTitle" name="aboutTitle" type="text" />
+          </div>
+
+          <div class="field">
+            <label for="aboutText">About text</label>
+            <textarea id="aboutText" name="aboutText"></textarea>
+          </div>
+
+          <div class="field half">
+            <label for="phoneText">Phone label</label>
+            <input id="phoneText" name="phoneText" type="text" />
+          </div>
+
+          <div class="field half">
+            <label for="phoneLink">Phone link</label>
+            <input id="phoneLink" name="phoneLink" type="text" />
+          </div>
+
+          <div class="field half">
+            <label for="emailText">Email label</label>
+            <input id="emailText" name="emailText" type="text" />
+          </div>
+
+          <div class="field half">
+            <label for="emailLink">Email link</label>
+            <input id="emailLink" name="emailLink" type="text" />
+          </div>
+
+          <div class="field half">
+            <label for="instaLink">Instagram link</label>
+            <input id="instaLink" name="instaLink" type="text" />
+          </div>
+
+          <div class="field half">
+            <label for="waLink">WhatsApp link</label>
+            <input id="waLink" name="waLink" type="text" />
+          </div>
+
+          <div class="field">
+            <label>Farm product availability</label>
+            <div class="product-toggle-list" id="productAvailabilityList"></div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="primary" type="submit">Save changes</button>
+          <button class="secondary" id="resetBtn" type="button">Reset to default</button>
+          <a class="secondary-link secondary" href="index.html">Open live site</a>
+        </div>
+
+        <div class="status" id="formStatus" aria-live="polite"></div>
+      </form>
+    </section>
+  </main>
+
+  <script src="js/cms.js"></script>
+</body>
+</html>
