@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
 <title>Forest Cafe — Coffee, Farm &amp; Stay in the Kalrayan Hills</title>
 <meta content="Forest Cafe in the Kalrayan Hills: single-origin filter coffee, a working farm shop, and cosy rooms to stay the night. Open daily 8am to 9pm." name="description"/>
 <meta content="Forest Cafe, Kalrayan Hills, hill station cafe, filter coffee Tamil Nadu, farm stay, homestay Kalrayan, organic honey, Salem cafe" name="keywords"/>
@@ -13,13 +13,20 @@
 <meta content="website" property="og:type"/>
 <meta content="Forest Cafe — Coffee, Farm &amp; Stay" property="og:title"/>
 <meta content="A cosy escape in the Kalrayan Hills. Coffee grown on our slopes, food from our farm, rooms under the trees." property="og:description"/>
-<meta content="CafeImg/cafe-01.jpg" property="og:image"/>
+<meta content="index, follow, max-image-preview:large" name="robots"/>
+<meta content="https://forestcafe.in/" property="og:url"/>
+<meta content="Forest Cafe" property="og:site_name"/>
+<meta content="https://forestcafe.in/images/cafe/cafe-01.jpg" property="og:image"/>
+<meta content="Forest Cafe — Coffee, Farm &amp; Stay in the Kalrayan Hills" name="twitter:title"/>
+<meta content="Filter coffee, a farm shop and cosy rooms in the Kalrayan Hills." name="twitter:description"/>
+<meta content="https://forestcafe.in/images/cafe/cafe-01.jpg" name="twitter:image"/>
+<link href="logo.png" rel="apple-touch-icon"/>
 <meta content="en_IN" property="og:locale"/>
 <meta content="summary_large_image" name="twitter:card"/>
 <link href="logo.png" rel="icon" type="image/png"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;500;600&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
 <link href="css/style.css" rel="stylesheet"/>
 <script type="application/ld+json">
         {
@@ -27,11 +34,14 @@
           "@type": "CafeOrCoffeeShop",
           "name": "Forest Cafe",
           "description": "Coffee, farm shop and stay in the Kalrayan Hills, Tamil Nadu.",
-          "image": "CafeImg/cafe-01.jpg",
+          "url": "https://forestcafe.in/",
+          "sameAs": ["https://www.instagram.com/forestcafe.khills"],
+          "hasMap": "https://www.google.com/maps/search/?api=1&query=Kalrayan+Hills+Tamil+Nadu",
+          "image": "images/cafe/cafe-01.jpg",
           "servesCuisine": ["Coffee", "South Indian", "Bakery"],
           "priceRange": "₹₹",
-          "telephone": "+91-98765-43210",
-          "email": "hello@forestcafe.in",
+          "telephone": "+91-94440-60619",
+          "email": "forestcafe.khilla@gmail.com",
           "address": {
             "@type": "PostalAddress",
             "streetAddress": "Kalrayan Hills Main Road, Vellimalai",
@@ -43,6 +53,7 @@
           "openingHours": "Mo-Su 08:00-21:00"
         }
     </script>
+<noscript><style>.hero.is-loading .hero-copy{opacity:1!important;transform:none!important}.hero-skel{display:none!important}.hero video{opacity:1!important}</style></noscript>
 </head>
 <body data-page="site">
     <a class="skip-link" href="#main">Skip to content</a>
@@ -61,14 +72,11 @@
     <header class="nav" id="nav">
         <div class="nav-inner">
             <a aria-label="Forest Cafe home" class="brand" href="#top">
-                <span class="brand-mark">
-                    <img alt="Forest Cafe logo" src="logo.png" />
-                </span>
-                <span class="brand-text">
-                    <span class="brand-name">Forest Cafe</span>
-                    <span class="brand-sub">Kalrayan Hills</span>
-                </span>
+                <img alt="Forest Cafe" class="brand-logo" src="logo.png" />
             </a>
+            <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+                <span></span><span></span><span></span>
+            </button>
             <nav aria-label="Main">
                 <ul class="nav-links" id="navLinks">
                     <li><a href="#about">About</a></li>
@@ -77,21 +85,35 @@
                     <li><a href="#shop">Farm shop</a></li>
                     <li><a href="#stay">Stay</a></li>
                     <li><a href="#art-director">Our Story</a></li>
+                    <li><a href="#reviews">Reviews</a></li>
                     <li><a href="#visit">Visit</a></li>
+                    <li class="nav-links-cta"><a href="tel:+919444060619">Call the cafe</a></li>
                 </ul>
             </nav>
         </div>
     </header>
-    <!-- mobile drawer -->
+    <div class="nav-backdrop" id="navBackdrop" aria-hidden="true"></div>
 
     <main id="main">
         <span id="top"></span>
         <!-- ============ HERO ============ -->
-        <section aria-label="Forest Cafe introduction" class="hero">
-            <video aria-hidden="true" id="heroVideo" loop="" muted="" playsinline="" poster="CafeImg/cafe-01.jpg" preload="auto">
-                <source src="Hero.webm" type="video/webm" />
-                <source src="Hero.mp4" type="video/mp4" />
-            </video>
+        <section aria-label="Forest Cafe introduction" class="hero is-loading">
+            <video aria-hidden="true" id="heroVideo" loop="" muted="" playsinline="" preload="auto" data-poster-desktop="images/cafe/cafe-01.jpg" data-poster-mobile="images/cafe/hero-mob-poster.webp"></video>
+            <script>
+                /* The video has NO <source> in the markup on purpose: this script picks the file
+                   (9:16 Hero-Mob.webm on phones, 16:9 Hero.webm elsewhere) before the browser
+                   downloads anything, so phones never fetch the big desktop video. */
+                (function () {
+                    var v = document.getElementById('heroVideo');
+                    if (!v) return;
+                    var phone = window.matchMedia('(max-width: 767px)').matches;
+                    v.setAttribute('data-active', phone ? 'mobile' : 'desktop');
+                    var s = document.createElement('source');
+                    s.src = phone ? 'Hero-Mob.webm' : 'Hero.webm';
+                    s.type = 'video/webm';
+                    v.appendChild(s);
+                }());
+            </script>
             <div class="hero-veil"></div>
             <div class="hero-copy">
                 <span class="hero-eyebrow">
@@ -106,9 +128,26 @@
                     mist is still coming off the hills.
                 </p>
                 <div class="hero-buttons">
-                    <a class="btn btn--honey" href="#menu">See the menu <span class="arrow">→</span></a>
-                    <a class="btn btn--light" href="#stay">Rooms &amp; stay</a>
+                    <a class="hero-cta hero-cta--menu" href="#menu">
+                        <span class="hero-cta-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 3H4v10c0 2.21 1.79 4 4 4h6c2.21 0 4-1.79 4-4v-3h2c1.11 0 2-.9 2-2V5c0-1.11-.89-2-2-2zm0 5h-2V5h2v3zM4 19h16v2H4z"/></svg></span>
+                        <span class="hero-cta-txt">See the menu</span>
+                        <span class="hero-cta-arrow" aria-hidden="true">→</span>
+                    </a>
+                    <a class="hero-cta hero-cta--stay" href="#stay">
+                        <span class="hero-cta-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21 10.78V8c0-1.65-1.35-3-3-3h-4c-.77 0-1.47.3-2 .78-.53-.48-1.23-.78-2-.78H6C4.35 5 3 6.35 3 8v2.78c-.61.55-1 1.34-1 2.22v6h2v-2h16v2h2v-6c0-.88-.39-1.67-1-2.22zM14 7h4c.55 0 1 .45 1 1v2h-6V8c0-.55.45-1 1-1zM5 8c0-.55.45-1 1-1h4c.55 0 1 .45 1 1v2H5V8zm-1 7v-2c0-.55.45-1 1-1h14c.55 0 1 .45 1 1v2H4z"/></svg></span>
+                        <span class="hero-cta-txt">Rooms &amp; stay</span>
+                        <span class="hero-cta-arrow" aria-hidden="true">→</span>
+                    </a>
                 </div>
+            </div>
+            <div class="hero-skel" aria-hidden="true">
+                <span class="sk sk-pill"></span>
+                <span class="sk sk-title"></span>
+                <span class="sk sk-title s2"></span>
+                <span class="sk sk-line"></span>
+                <span class="sk sk-line s2"></span>
+                <span class="sk sk-line s3"></span>
+                <span class="sk-btns"><span class="sk sk-btn"></span><span class="sk sk-btn"></span></span>
             </div>
             <a aria-label="Scroll to about" class="hero-scroll" href="#about">
                 <span class="mouse"></span>
@@ -122,33 +161,33 @@
                     <svg viewbox="0 0 24 24">
                         <path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 14.5 9 2.5 2.5 0 0 1 12 11.5z"></path>
                     </svg>
-                    <div>Vellimalai, Kalrayan Hills<span>Salem district, Tamil Nadu</span></div>
+                    <div><b class="i-full">Vellimalai, Kalrayan Hills</b><b class="i-short">Vellimalai</b><span>Salem district, Tamil Nadu</span></div>
                 </div>
                 <div class="info-item">
                     <svg viewbox="0 0 24 24">
                         <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 10.6 4.2 2.5-.8 1.3L11 13.2V6h2z"></path>
                     </svg>
-                    <div>Open every day<span>8:00 am – 9:00 pm</span></div>
+                    <div><b class="i-full">Open every day</b><b class="i-short">8 am – 9 pm</b><span>8:00 am – 9:00 pm</span></div>
                 </div>
                 <div class="info-item">
                     <svg viewbox="0 0 24 24">
                         <path d="M4.5 12a2.5 2.5 0 1 1 2.5-2.5A2.5 2.5 0 0 1 4.5 12zm5-4a2.5 2.5 0 1 1 2.5-2.5A2.5 2.5 0 0 1 9.5 8zm5 0A2.5 2.5 0 1 1 17 5.5 2.5 2.5 0 0 1 14.5 8zm5 4a2.5 2.5 0 1 1 2.5-2.5A2.5 2.5 0 0 1 19.5 12zM12 22c-3 0-5-1.7-5-4 0-1.6 1-2.6 2-3.6S11 12 12 12s2 1.4 3 2.4 2 2 2 3.6c0 2.3-2 4-5 4z"></path>
                     </svg>
-                    <div>Dogs welcome<span>Inside and on the deck</span></div>
+                    <div><b class="i-full">Dogs welcome</b><b class="i-short">Dogs welcome</b><span>Inside and on the deck</span></div>
                 </div>
                 <div class="info-item">
                     <svg viewbox="0 0 24 24">
                         <path d="M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11h.5A1.5 1.5 0 0 1 21 12.5V18h-2v-2H5v2H3v-5.5A1.5 1.5 0 0 1 4.5 11zm2.1 0h9.8l-1-3H8.1zM7 14.5A1.25 1.25 0 1 0 5.75 13 1.25 1.25 0 0 0 7 14.5zm10 0A1.25 1.25 0 1 0 15.75 13 1.25 1.25 0 0 0 17 14.5z"></path>
                     </svg>
-                    <div>Free parking<span>Space for 20 cars</span></div>
+                    <div><b class="i-full">Free parking</b><b class="i-short">Free parking</b><span>Space for 20 cars</span></div>
                 </div>
             </div>
         </div>
         <!-- ============ ABOUT ============ -->
-        <section class="section" id="about">
+        <section class="section theme-cafe" id="about">
             <div class="shell split split--reverse reveal">
                 <div class="about-media">
-                    <img alt="Illustration of the Forest Cafe building surrounded by trees" class="floating-img" height="700" src="Cafe/item1.png" width="900" />
+                    <img alt="Illustration of the Forest Cafe building surrounded by trees" class="floating-img" height="700" src="images/farm/item1.webp" width="900" />
                 </div>
                 <div class="about-copy">
                     <span class="eyebrow">
@@ -159,7 +198,7 @@
                     </span>
                     <h2 class="headline headline--xl" data-cms="aboutTitle">Forest Cafe</h2>
                     <p class="lede" data-cms="aboutText">
-                        We started in 2019 with four tables, one roaster and a slope full of coffee plants.
+                        We started in 2021 with four tables, one roaster and a slope full of coffee plants.
                         Today the same slope feeds the kitchen, the shop and the six rooms behind the cafe.
                         Nothing travels far here — most of it walks down the hill in the morning.
                     </p>
@@ -182,7 +221,7 @@
                     </div>
                     <div class="stat-row">
                         <div>
-                            <div class="stat-num">7</div>
+                            <div class="stat-num">5</div>
                             <div class="stat-label">years on the hill</div>
                         </div>
                         <div>
@@ -204,175 +243,19 @@
                 </div>
             </div>
         </section>
-        <!-- ============================================
-                 SOIL TO SIP — SPLIT SCREEN JOURNEY
-                 ============================================ -->
-        <main id="soil-to-sip" class="process-section soil-to-sip-section">
-            <div class="sts-right-content">
-                <div class="sts-header-block">
-                    <div class="eyebrow">From Soil to Sip</div>
-                    <h2 class="display">The Coffee Journey</h2>
-                    <p class="sts-lead-text">
-                        Follow the transformation of single-origin coffee from fertile Salem
-                        soil to your handcrafted morning cup.
-                    </p>
-                </div>
+        <!-- ============ SOIL TO SIP — full-width video ============ -->
+        <section class="sts-section" id="soil-to-sip" aria-label="From soil to sip — the coffee journey">
+            <div class="sts-media is-loading">
+                <video class="sts-video" id="stsVideo" muted loop playsinline preload="metadata" aria-hidden="true">
+                    <source src="images/sts/soil-to-sip.webm" type="video/webm" />
+                </video>
+                <div class="sts-shade" aria-hidden="true"></div>
+                <img class="sts-board" id="stsBoard" src="images/sts/title-board.webp" data-exts="png,webp,jpg,jpeg"
+                     alt="From soil to sip — the coffee journey" />
             </div>
-            <div class="sts-wave sts-wave--top" aria-hidden="true">
-                <svg viewBox="0 0 1440 85" preserveAspectRatio="none">
-                    <path d="M0,42 C180,92 330,-8 520,36 C720,82 860,4 1040,38 C1210,68 1320,12 1440,40 L1440,0 L0,0 Z"></path>
-                </svg>
-            </div>
-            <div class="sts-wave sts-wave--bottom" aria-hidden="true">
-                <svg viewBox="0 0 1440 85" preserveAspectRatio="none">
-                    <path d="M0,44 C180,-6 330,92 520,48 C720,2 860,80 1040,46 C1210,16 1320,72 1440,44 L1440,85 L0,85 Z"></path>
-                </svg>
-            </div>
-            <div class="paper-lines" aria-hidden="true"></div>
-            <div class="edge-fade edge-fade-left" aria-hidden="true"></div>
-            <div class="edge-fade edge-fade-right" aria-hidden="true"></div>
+        </section>
 
-            <div class="content-wrap">
-                <section class="process-board" aria-label="From soil to filter coffee journey">
-
-                    <svg class="route"
-                         aria-hidden="true"
-                         viewBox="0 0 1600 1480"
-                         preserveAspectRatio="none">
-                        <!-- One continuous smooth route. The path enters each card once and ends at the filter cup. -->
-                        <path class="route-bg"
-                              d="M 285 250
-                            C 285 335, 315 405, 505 420
-                            C 705 436, 1030 425, 1145 395
-                            C 1190 383, 1205 355, 1205 330
-
-                            C 1205 450, 1175 535, 955 570
-                            C 745 603, 525 625, 445 670
-                            C 410 690, 405 715, 405 742
-
-                            C 405 820, 445 870, 640 875
-                            C 900 882, 1080 900, 1210 900
-                            C 1265 900, 1295 905, 1312 905
-                            C 1280 930, 1190 965, 1010 995
-                            C 820 1032, 560 1040, 445 1082
-                            C 410 1095, 405 1125, 405 1155
-
-                            C 405 1225, 450 1265, 610 1285
-                            C 700 1297, 770 1315, 820 1350
-                            C 870 1385, 900 1410, 900 1435" />
-                        <path class="route-active"
-                              d="M 285 250
-                            C 285 335, 315 405, 505 420
-                            C 705 436, 1030 425, 1145 395
-                            C 1190 383, 1205 355, 1205 330
-
-                            C 1205 450, 1175 535, 955 570
-                            C 745 603, 525 625, 445 670
-                            C 410 690, 405 715, 405 742
-
-                            C 405 820, 445 870, 640 875
-                            C 900 882, 1080 900, 1210 900
-                            C 1265 900, 1295 905, 1312 905
-                            C 1280 930, 1190 965, 1010 995
-                            C 820 1032, 560 1040, 445 1082
-                            C 410 1095, 405 1125, 405 1155
-
-                            C 405 1225, 450 1265, 610 1285
-                            C 700 1297, 770 1315, 820 1350
-                            C 870 1385, 900 1410, 900 1435" />
-                    </svg>
-
-                    <!-- One traveler follows the exact same SVG route used by the dotted path. -->
-                    <div class="traveler-layer" aria-hidden="true">
-                        <div class="traveler">
-                            <img class="traveler-icon" id="travelerIcon" src="images/seed.png" alt="">
-                        </div>
-                    </div>
-
-                    <article class="process-card card-1">
-                        <div class="card-shell">
-                            <svg class="pin pin-coral" aria-hidden="true" viewBox="0 0 24 24">
-                                <path d="M16 3a1 1 0 0 1 .117 1.993L16 5v4.764l1.894 3.789c.054.108.088.22.1.331L18 14v2a1 1 0 0 1-.883.993L17 17h-4v4a1 1 0 0 1-1.993.117L11 21v-4H7a1 1 0 0 1-.993-.883L6 16v-2c0-.117.02-.23.06-.34l.046-.107L8 9.762V5a1 1 0 0 1-.117-1.993L8 3h8Z" />
-                            </svg>
-                            <div class="inner-panel coral">
-                                <h2>1. The Soil &amp; Sprout</h2>
-                                <div class="card-image-wrap">
-                                    <img class="card-image" src="images/card-01.webp" alt="">
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="process-card card-2">
-                        <div class="card-shell">
-                            <svg class="pin pin-ocean" aria-hidden="true" viewBox="0 0 24 24">
-                                <path d="M16 3a1 1 0 0 1 .117 1.993L16 5v4.764l1.894 3.789c.054.108.088.22.1.331L18 14v2a1 1 0 0 1-.883.993L17 17h-4v4a1 1 0 0 1-1.993.117L11 21v-4H7a1 1 0 0 1-.993-.883L6 16v-2c0-.117.02-.23.06-.34L8 9.762V5a1 1 0 0 1-.117-1.993L8 3h8Z" />
-                            </svg>
-                            <div class="inner-panel ocean">
-                                <h2>2. Cherry Ripening</h2>
-                                <div class="card-image-wrap">
-                                    <img class="card-image" src="images/card-02.webp" alt="">
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="process-card card-3">
-                        <div class="card-shell">
-                            <svg class="pin pin-mint" aria-hidden="true" viewBox="0 0 24 24">
-                                <path d="M16 3a1 1 0 0 1 .117 1.993L16 5v4.764l1.894 3.789c.054.108.088.22.1.331L18 14v2a1 1 0 0 1-.883.993L17 17h-4v4a1 1 0 0 1-1.993.117L11 21v-4H7a1 1 0 0 1-.993-.883L6 16v-2c0-.117.02-.23.06-.34l.046-.107L8 9.762V5a1 1 0 0 1-.117-1.993L8 3h8Z" />
-                            </svg>
-                            <div class="inner-panel mint">
-                                <h2>3. The Artisanal Roast</h2>
-                                <div class="card-image-wrap">
-                                    <img class="card-image" src="images/card-03.webp" alt="">
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="process-card card-4">
-                        <div class="card-shell">
-                            <svg class="pin pin-coral" aria-hidden="true" viewBox="0 0 24 24">
-                                <path d="M16 3a1 1 0 0 1 .117 1.993L16 5v4.764l1.894 3.789c.054.108.088.22.1.331L18 14v2a1 1 0 0 1-.883.993L17 17h-4v4a1 1 0 0 1-1.993.117L11 21v-4H7a1 1 0 0 1-.993-.883L6 16v-2c0-.117.02-.23.06-.34l.046-.107L8 9.762V5a1 1 0 0 1-.117-1.993L8 3h8Z" />
-                            </svg>
-                            <div class="inner-panel coral">
-                                <h2>4. Precision Grind</h2>
-                                <div class="card-image-wrap">
-                                    <img class="card-image" src="images/card-04.webp" alt="">
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="process-card card-5">
-                        <div class="card-shell">
-                            <svg class="pin pin-ocean" aria-hidden="true" viewBox="0 0 24 24">
-                                <path d="M16 3a1 1 0 0 1 .117 1.993L16 5v4.764l1.894 3.789c.054.108.088.22.1.331L18 14v2a1 1 0 0 1-.883.993L17 17h-4v4H11v-4H7a1 1 0 0 1-.993-.883L6 16v-2c0-.117.02-.23.06-.34l.046-.107L8 9.762V5a1 1 0 0 1-.117-1.993L8 3h8Z" />
-                            </svg>
-                            <div class="inner-panel ocean">
-                                <h2>5. The Perfect Sip</h2>
-                                <div class="card-image-wrap">
-                                    <img class="card-image" src="images/card-05.webp" alt="">
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-
-                    <div class="filter-cup-stage" id="filterCupStage" aria-label="Filter coffee destination">
-                        <img class="filter-cup-image filter-cup-empty" id="filterCupEmpty" src="images/filter-cup-empty.webp" alt="Empty filter coffee cup">
-                        <img class="filter-cup-image filter-cup-filled" id="filterCupFilled" src="images/filter-cup-filled.webp" alt="Filter coffee">
-                        <div class="coffee-vapour" id="coffeeVapour" aria-hidden="true">
-                            <span></span><span></span><span></span>
-                        </div>
-                    </div>
-
-                </section>
-            </div>
-        </main>
-
-        <!-- ============ CAFE GALLERY ============ -->
-        <section class="section" id="cafe">
+        <section class="section theme-cafe" id="cafe">
             <div class="shell">
                 <div class="split gallery-default reveal" id="galleryDefault">
                     <div class="gallery-copy">
@@ -395,11 +278,11 @@
                     <div class="cards-wrapper">
                         <button aria-label="Previous photo" class="nav-arrow" id="prevCard" type="button">‹</button>
                         <div class="cards-stack" id="cardsStack">
-                            <button class="photo-card pos-0" data-index="0" type="button"><img alt="Forest Cafe seating area" loading="lazy" src="CafeImg/cafe-01.jpg" /></button>
-                            <button class="photo-card pos-1" data-index="1" type="button"><img alt="Coffee being poured at Forest Cafe" loading="lazy" src="CafeImg/cafe-05.jpg" /></button>
-                            <button class="photo-card pos-2" data-index="2" type="button"><img alt="View from the Forest Cafe deck" loading="lazy" src="CafeImg/cafe-06.jpg" /></button>
-                            <button class="photo-card pos-3" data-index="3" type="button"><img alt="Interior corner of Forest Cafe" loading="lazy" src="CafeImg/cafe-11.jpg" /></button>
-                            <button class="photo-card pos-4" data-index="4" type="button"><img alt="Forest Cafe surroundings" loading="lazy" src="CafeImg/cafe-14.jpg" /></button>
+                            <button class="photo-card pos-0" data-index="0" type="button"><img alt="Forest Cafe seating area" loading="lazy" src="images/cafe/cafe-01.jpg" /></button>
+                            <button class="photo-card pos-1" data-index="1" type="button"><img alt="Coffee being poured at Forest Cafe" loading="lazy" src="images/cafe/cafe-05.jpg" /></button>
+                            <button class="photo-card pos-2" data-index="2" type="button"><img alt="View from the Forest Cafe deck" loading="lazy" src="images/cafe/cafe-06.jpg" /></button>
+                            <button class="photo-card pos-3" data-index="3" type="button"><img alt="Interior corner of Forest Cafe" loading="lazy" src="images/cafe/cafe-11.jpg" /></button>
+                            <button class="photo-card pos-4" data-index="4" type="button"><img alt="Forest Cafe surroundings" loading="lazy" src="images/cafe/cafe-14.jpg" /></button>
                         </div>
                         <button aria-label="Next photo" class="nav-arrow" id="nextCard" type="button">›</button>
                     </div>
@@ -418,21 +301,21 @@
                         <button class="btn btn--ghost btn--sm" id="closeGalleryBtn" type="button">← Back</button>
                     </div>
                     <div class="gallery-grid" id="galleryGrid">
-                        <button class="grid-card" data-index="0" type="button"><img alt="Forest Cafe seating area" loading="lazy" src="CafeImg/cafe-01.jpg" /></button>
-                        <button class="grid-card" data-index="1" type="button"><img alt="Coffee being poured" loading="lazy" src="CafeImg/cafe-05.jpg" /></button>
-                        <button class="grid-card" data-index="2" type="button"><img alt="View from the deck" loading="lazy" src="CafeImg/cafe-06.jpg" /></button>
-                        <button class="grid-card" data-index="3" type="button"><img alt="Interior corner" loading="lazy" src="CafeImg/cafe-11.jpg" /></button>
-                        <button class="grid-card" data-index="4" type="button"><img alt="Cafe surroundings" loading="lazy" src="CafeImg/cafe-14.jpg" /></button>
-                        <button class="grid-card" data-index="5" type="button"><img alt="Tables by the window" loading="lazy" src="CafeImg/cafe-18.jpg" /></button>
-                        <button class="grid-card" data-index="6" type="button"><img alt="Garden path to the cafe" loading="lazy" src="CafeImg/cafe-19.jpg" /></button>
-                        <button class="grid-card" data-index="7" type="button"><img alt="Evening at Forest Cafe" loading="lazy" src="CafeImg/cafe-20.jpg" /></button>
-                        <button class="grid-card" data-index="8" type="button"><img alt="Hillside behind the cafe" loading="lazy" src="CafeImg/cafe-22.jpg" /></button>
+                        <button class="grid-card" data-index="0" type="button"><img alt="Forest Cafe seating area" loading="lazy" src="images/cafe/cafe-01.jpg" /></button>
+                        <button class="grid-card" data-index="1" type="button"><img alt="Coffee being poured" loading="lazy" src="images/cafe/cafe-05.jpg" /></button>
+                        <button class="grid-card" data-index="2" type="button"><img alt="View from the deck" loading="lazy" src="images/cafe/cafe-06.jpg" /></button>
+                        <button class="grid-card" data-index="3" type="button"><img alt="Interior corner" loading="lazy" src="images/cafe/cafe-11.jpg" /></button>
+                        <button class="grid-card" data-index="4" type="button"><img alt="Cafe surroundings" loading="lazy" src="images/cafe/cafe-14.jpg" /></button>
+                        <button class="grid-card" data-index="5" type="button"><img alt="Tables by the window" loading="lazy" src="images/cafe/cafe-18.jpg" /></button>
+                        <button class="grid-card" data-index="6" type="button"><img alt="Garden path to the cafe" loading="lazy" src="images/cafe/cafe-19.jpg" /></button>
+                        <button class="grid-card" data-index="7" type="button"><img alt="Evening at Forest Cafe" loading="lazy" src="images/cafe/cafe-20.jpg" /></button>
+                        <button class="grid-card" data-index="8" type="button"><img alt="Hillside behind the cafe" loading="lazy" src="images/cafe/cafe-22.jpg" /></button>
                     </div>
                 </div>
             </div>
         </section>
         <!-- ============ MENU ============ -->
-        <section class="section section--alt section--hairline" id="menu">
+        <section class="section section--alt section--hairline theme-cafe" id="menu">
             <div class="shell">
                 <div class="split reveal">
                     <div class="menu-copy">
@@ -454,7 +337,6 @@
                     <div class="menu-media">
                         <video aria-label="Forest Cafe menu video" autoplay="" class="menu-video" loop="" muted="" playsinline="" preload="metadata">
                             <source src="menu-video.webm" type="video/webm" />
-                            <source src="menu-video.mp4" type="video/mp4" />
                         </video>
                     </div>
                 </div>
@@ -545,15 +427,15 @@
         <!-- ============ RIBBON ============ -->
         <div aria-hidden="true" class="ribbon">
             <div class="ribbon-inner">
-                <img alt="" loading="lazy" src="farm/item13.webp" />
+                <img alt="" loading="lazy" src="images/farm/item13.webp" />
             </div>
         </div>
         <!-- ============ LITTLE FARMER ============ -->
-        <section class="section" id="farm" style="padding-top:0">
+        <section class="section theme-farm" id="farm">
             <div class="shell split reveal">
                 <!-- IMAGE — LEFT -->
                 <div class="farm-media">
-                    <img alt="Illustration of the Forest Cafe farm and greenhouse" loading="lazy" src="farm/item4.png" />
+                    <img alt="Illustration of the Forest Cafe farm and greenhouse" loading="lazy" src="images/farm/item4.webp" />
                 </div>
                 <!-- TEXT — RIGHT -->
                 <div class="farm-copy">
@@ -564,14 +446,58 @@
                             </svg>
                             Welcome to
                         </span>
-                        <img alt="Little Farmer" class="little-farmer-logo" src="farm/little-farmer.png" />
+                        <img alt="Little Farmer" class="little-farmer-logo" src="images/farm/little-farmer.webp" />
                     </div>
                     <p class="lede">
-                        Four acres behind the cafe: coffee, pepper, turmeric, ginger and a few beehives
+                        2.25 acres behind the cafe: coffee, pepper, turmeric, ginger and a few beehives
                         we mostly leave alone. Whatever we cannot use in the kitchen gets dried,
                         milled and packed by hand for the shop.
                     </p>
-                    <div style="margin-top:30px">
+                    <!-- Farm promises (same chip style as the Tiny Cot features) -->
+                    <div class="farm-features-grid">
+                        <div class="farm-feature-item">
+                            <span class="farm-feat-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"></path>
+                                    <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path>
+                                </svg>
+                            </span>
+                            <div><strong>100% Organic</strong><span>Grown the natural way</span></div>
+                        </div>
+                        <div class="farm-feature-item">
+                            <span class="farm-feat-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path>
+                                    <path d="m9 12 2 2 4-4"></path>
+                                </svg>
+                            </span>
+                            <div><strong>No Preservatives</strong><span>Nothing added, ever</span></div>
+                        </div>
+                        <div class="farm-feature-item">
+                            <span class="farm-feat-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="m7.5 4.27 9 5.15"></path>
+                                    <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path>
+                                    <path d="m3.3 7 8.7 5 8.7-5"></path>
+                                    <path d="M12 22V12"></path>
+                                </svg>
+                            </span>
+                            <div><strong>Hand-packed</strong><span>Dried, milled &amp; packed by hand</span></div>
+                        </div>
+                        <div class="farm-feature-item">
+                            <span class="farm-feat-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M7 20h10"></path>
+                                    <path d="M10 20c5.5-2.5.8-6.4 3-10"></path>
+                                    <path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"></path>
+                                    <path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"></path>
+                                </svg>
+                            </span>
+                            <div><strong>Farm-fresh</strong><span>Straight from our slopes</span></div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:8px">
                         <a class="btn btn--solid" href="#shop">
                             Our Products <span class="arrow">→</span>
                         </a>
@@ -580,7 +506,7 @@
             </div>
         </section>
         <!-- ============ FARM PRODUCTS ============ -->
-        <section class="section section--alt section--hairline" id="shop">
+        <section class="section section--alt section--hairline theme-farm" id="shop">
             <div class="shell shell--wide">
                 <div class="section-head reveal">
                     <span class="eyebrow" style="justify-content:center">
@@ -593,77 +519,82 @@
                     <p class="lede">Packed the week it is milled, with the same care and freshness from our farm.</p>
                 </div>
                 <div class="products-grid reveal" id="productsGrid">
-                    <article class="product-card" data-id="prod-1" data-img="toWEBP/farmproducts/1-pure-coffee.webp" data-name="Pure Coffee">
-                        <div class="product-img-wrap"><img alt="Forest Cafe Pure Coffee" loading="lazy" src="toWEBP/farmproducts/1-pure-coffee.webp" /></div>
+                    <article class="product-card" tabindex="0" role="button" aria-haspopup="dialog" data-id="prod-1" data-img="images/products/1-pure-coffee.webp" data-name="Pure Coffee">
+                        <div class="product-img-wrap"><img alt="Forest Cafe Pure Coffee" loading="lazy" src="images/products/1-pure-coffee.webp" /></div>
                         <h3 class="product-title">Pure Coffee</h3>
                         <p class="product-weight">Freshly roasted</p>
                         <p class="product-desc">Freshly roasted coffee made from carefully selected beans grown with the rich character of the Kalvarayan Hills.</p>
+                        <span class="product-cta">Select &amp; order <span aria-hidden="true">→</span></span>
                     </article>
-                    <article class="product-card" data-id="prod-2" data-img="toWEBP/farmproducts/2-70-30.webp" data-name="70/30 Coffee Blend">
-                        <div class="product-img-wrap"><img alt="Forest Cafe 70/30 Coffee Blend" loading="lazy" src="toWEBP/farmproducts/2-70-30.webp" /></div>
+                    <article class="product-card" tabindex="0" role="button" aria-haspopup="dialog" data-id="prod-2" data-img="images/products/2-70-30.webp" data-name="70/30 Coffee Blend">
+                        <div class="product-img-wrap"><img alt="Forest Cafe 70/30 Coffee Blend" loading="lazy" src="images/products/2-70-30.webp" /></div>
                         <h3 class="product-title">70/30 Coffee Blend</h3>
                         <p class="product-weight">Balanced and aromatic</p>
                         <p class="product-desc">A balanced blend crafted for a smooth, aromatic cup with the rich body and character of freshly roasted coffee.</p>
+                        <span class="product-cta">Select &amp; order <span aria-hidden="true">→</span></span>
                     </article>
-                    <article class="product-card" data-id="prod-3" data-img="toWEBP/farmproducts/3-80-20.webp" data-name="80/20 Coffee Blend">
-                        <div class="product-img-wrap"><img alt="Forest Cafe 80/20 Coffee Blend" loading="lazy" src="toWEBP/farmproducts/3-80-20.webp" /></div>
-                        <h3 class="product-title">80/20 Coffee Blend</h3>
-                        <p class="product-weight">Fuller body</p>
-                        <p class="product-desc">A fuller and richer coffee blend with a smooth finish, created for those who enjoy a stronger everyday cup.</p>
-                    </article>
-                    <article class="product-card" data-id="prod-4" data-img="toWEBP/farmproducts/4-tea-powder.webp" data-name="Tea Dust">
-                        <div class="product-img-wrap"><img alt="Forest Cafe Tea Dust" loading="lazy" src="toWEBP/farmproducts/4-tea-powder.webp" /></div>
+                    <article class="product-card" tabindex="0" role="button" aria-haspopup="dialog" data-id="prod-4" data-img="images/products/4-tea-powder.webp" data-name="Tea Dust">
+                        <div class="product-img-wrap"><img alt="Forest Cafe Tea Dust" loading="lazy" src="images/products/4-tea-powder.webp" /></div>
                         <h3 class="product-title">Tea Dust</h3>
                         <p class="product-weight">Refreshing everyday tea</p>
                         <p class="product-desc">Fine tea dust selected for a rich colour, refreshing aroma and a comforting cup of everyday tea.</p>
+                        <span class="product-cta">Select &amp; order <span aria-hidden="true">→</span></span>
                     </article>
-                    <article class="product-card" data-id="prod-5" data-img="toWEBP/farmproducts/5-honey.webp" data-name="Honey">
-                        <div class="product-img-wrap"><img alt="Forest Cafe Honey" loading="lazy" src="toWEBP/farmproducts/5-honey.webp" /></div>
+                    <article class="product-card" tabindex="0" role="button" aria-haspopup="dialog" data-id="prod-5" data-img="images/products/5-honey.webp" data-name="Honey" data-variants="400 g|700 g">
+                        <div class="product-img-wrap"><img alt="Forest Cafe Honey" loading="lazy" src="images/products/5-honey.webp" /></div>
                         <h3 class="product-title">Honey</h3>
-                        <p class="product-weight">Pure and natural</p>
+                        <p class="product-weight">400 g &amp; 700 g</p>
                         <p class="product-desc">Pure natural honey with a rich golden sweetness, sourced with care and bottled to preserve its natural character.</p>
+                        <span class="product-cta">Select &amp; order <span aria-hidden="true">→</span></span>
                     </article>
-                    <article class="product-card" data-id="prod-6" data-img="toWEBP/farmproducts/6-curryleaf-powder.webp" data-name="Curry Leaf Powder">
-                        <div class="product-img-wrap"><img alt="Forest Cafe Curry Leaf Powder" loading="lazy" src="toWEBP/farmproducts/6-curryleaf-powder.webp" /></div>
+                    <article class="product-card" tabindex="0" role="button" aria-haspopup="dialog" data-id="prod-6" data-img="images/products/6-curryleaf-powder.webp" data-name="Curry Leaf Powder">
+                        <div class="product-img-wrap"><img alt="Forest Cafe Curry Leaf Powder" loading="lazy" src="images/products/6-curryleaf-powder.webp" /></div>
                         <h3 class="product-title">Curry Leaf Powder</h3>
                         <p class="product-weight">Aromatic and earthy</p>
                         <p class="product-desc">Aromatic curry leaf powder made from carefully dried curry leaves, adding a distinctive earthy flavour to everyday dishes.</p>
+                        <span class="product-cta">Select &amp; order <span aria-hidden="true">→</span></span>
                     </article>
-                    <article class="product-card" data-id="prod-7" data-img="toWEBP/farmproducts/7-idly-podi.webp" data-name="Idli Podi">
-                        <div class="product-img-wrap"><img alt="Forest Cafe Idli Podi" loading="lazy" src="toWEBP/farmproducts/7-idly-podi.webp" /></div>
+                    <article class="product-card" tabindex="0" role="button" aria-haspopup="dialog" data-id="prod-7" data-img="images/products/7-idly-podi.webp" data-name="Idli Podi">
+                        <div class="product-img-wrap"><img alt="Forest Cafe Idli Podi" loading="lazy" src="images/products/7-idly-podi.webp" /></div>
                         <h3 class="product-title">Idli Podi</h3>
                         <p class="product-weight">Traditional breakfast spice</p>
                         <p class="product-desc">A traditional South Indian spice blend made to pair beautifully with idli, dosa and other favourite breakfast dishes.</p>
+                        <span class="product-cta">Select &amp; order <span aria-hidden="true">→</span></span>
                     </article>
-                    <article class="product-card" data-id="prod-8" data-img="toWEBP/farmproducts/8-maa-inji-thokku.webp" data-name="Maa Inji Thokku">
-                        <div class="product-img-wrap"><img alt="Forest Cafe Maa Inji Thokku" loading="lazy" src="toWEBP/farmproducts/8-maa-inji-thokku.webp" /></div>
+                    <article class="product-card" tabindex="0" role="button" aria-haspopup="dialog" data-id="prod-8" data-img="images/products/8-maa-inji-thokku.webp" data-name="Maa Inji Thokku">
+                        <div class="product-img-wrap"><img alt="Forest Cafe Maa Inji Thokku" loading="lazy" src="images/products/8-maa-inji-thokku.webp" /></div>
                         <h3 class="product-title">Maa Inji Thokku</h3>
                         <p class="product-weight">Traditional and tangy</p>
                         <p class="product-desc">A traditional ginger-based thokku made with carefully selected ingredients, bringing together warmth, spice and a tangy homemade flavour.</p>
+                        <span class="product-cta">Select &amp; order <span aria-hidden="true">→</span></span>
                     </article>
-                    <article class="product-card" data-id="prod-9" data-img="toWEBP/farmproducts/9-parupu-podi.webp" data-name="Dal Powder">
-                        <div class="product-img-wrap"><img alt="Forest Cafe Dal Powder" loading="lazy" src="toWEBP/farmproducts/9-parupu-podi.webp" /></div>
+                    <article class="product-card" tabindex="0" role="button" aria-haspopup="dialog" data-id="prod-9" data-img="images/products/9-parupu-podi.webp" data-name="Dal Powder">
+                        <div class="product-img-wrap"><img alt="Forest Cafe Dal Powder" loading="lazy" src="images/products/9-parupu-podi.webp" /></div>
                         <h3 class="product-title">Dal Powder</h3>
                         <p class="product-weight">Comforting and wholesome</p>
                         <p class="product-desc">A wholesome lentil-based powder prepared for easy everyday cooking, bringing a comforting roasted flavour to traditional meals.</p>
+                        <span class="product-cta">Select &amp; order <span aria-hidden="true">→</span></span>
                     </article>
-                    <article class="product-card" data-id="prod-10" data-img="toWEBP/farmproducts/10-pirandai-thokku.webp" data-name="Perandai Thokku">
-                        <div class="product-img-wrap"><img alt="Forest Cafe Perandai Thokku" loading="lazy" src="toWEBP/farmproducts/10-pirandai-thokku.webp" /></div>
+                    <article class="product-card" tabindex="0" role="button" aria-haspopup="dialog" data-id="prod-10" data-img="images/products/10-pirandai-thokku.webp" data-name="Perandai Thokku">
+                        <div class="product-img-wrap"><img alt="Forest Cafe Perandai Thokku" loading="lazy" src="images/products/10-pirandai-thokku.webp" /></div>
                         <h3 class="product-title">Perandai Thokku</h3>
                         <p class="product-weight">Bold and aromatic</p>
                         <p class="product-desc">A bold homemade-style thokku combining pepper, garlic and traditional spices for a rich, spicy and aromatic flavour.</p>
+                        <span class="product-cta">Select &amp; order <span aria-hidden="true">→</span></span>
                     </article>
-                    <article class="product-card" data-id="prod-11" data-img="toWEBP/farmproducts/11-turmeric-powder.webp" data-name="Turmeric Powder">
-                        <div class="product-img-wrap"><img alt="Forest Cafe Turmeric Powder" loading="lazy" src="toWEBP/farmproducts/11-turmeric-powder.webp" /></div>
+                    <article class="product-card" tabindex="0" role="button" aria-haspopup="dialog" data-id="prod-11" data-img="images/products/11-turmeric-powder.webp" data-name="Turmeric Powder">
+                        <div class="product-img-wrap"><img alt="Forest Cafe Turmeric Powder" loading="lazy" src="images/products/11-turmeric-powder.webp" /></div>
                         <h3 class="product-title">Turmeric Powder</h3>
                         <p class="product-weight">Earthy and vibrant</p>
                         <p class="product-desc">Finely ground turmeric powder with a vibrant natural colour and earthy aroma, ideal for everyday cooking.</p>
+                        <span class="product-cta">Select &amp; order <span aria-hidden="true">→</span></span>
                     </article>
-                    <article class="product-card" data-id="prod-12" data-img="toWEBP/farmproducts/12-avacado.webp" data-name="Farm Fresh Avocado">
-                        <div class="product-img-wrap"><img alt="Forest Cafe Farm Fresh Avocado" loading="lazy" src="toWEBP/farmproducts/12-avacado.webp" /></div>
+                    <article class="product-card" tabindex="0" role="button" aria-haspopup="dialog" data-id="prod-12" data-img="images/products/12-avacado.webp" data-name="Farm Fresh Avocado">
+                        <div class="product-img-wrap"><img alt="Forest Cafe Farm Fresh Avocado" loading="lazy" src="images/products/12-avacado.webp" /></div>
                         <h3 class="product-title">Farm Fresh Avocado</h3>
                         <p class="product-weight">Fresh from the hill farm</p>
                         <p class="product-desc">Fresh avocado sourced from the farm, offering a creamy texture and naturally rich flavour straight from the hills.</p>
+                        <span class="product-cta">Select &amp; order <span aria-hidden="true">→</span></span>
                     </article>
                 </div>
                 <!-- View More / Collapse Toggle Button -->
@@ -682,16 +613,15 @@
         <!-- ============ RIBBON (STAY) ============ -->
         <div aria-hidden="true" class="ribbon">
             <div class="ribbon-inner">
-                <img alt="" loading="lazy" src="cot/item14.webp" />
+                <img alt="" loading="lazy" src="images/rooms/item14.webp" />
             </div>
         </div>
 
         <!-- ============ STAY ============ -->
-        <section class="section stay-section" id="stay" style="padding-top: clamp(24px, 3.5vw, 44px);">
+        <section class="section stay-section theme-stay" id="stay">
             <div class="shell shell--wide">
 
-                <div class="split stay-hero-split reveal"
-                     style="align-items: center; margin-bottom: clamp(40px, 5vw, 70px);">
+                <div class="split stay-hero-split reveal">
                     <div class="cot-copy">
                         <span class="eyebrow" style="color: var(--stay-700)">
                             <svg viewBox="0 0 24 24" style="width: 17px; height: 17px; fill: var(--stay-700);">
@@ -706,7 +636,7 @@
                             screens—just fresh air, birdsong, and open space for little ones to play freely.
                         </p>
 
-                        <!-- Integrated Warm Note (No Awkward Floating Elements) -->
+                        <!-- Restored Classic Warm Note -->
                         <div class="stay-warm-note">
                             <p>
                                 "Breakfast is whatever came fresh off the farm that morning — served warm, healthy, and
@@ -714,23 +644,93 @@
                             </p>
                         </div>
 
-                        <div style="margin-top: 24px;">
-                            <a class="btn btn--solid stay-btn" href="#rooms">
-                                See the Rooms &amp; Outdoors <span class="arrow">→</span>
+                        <!-- Amenities with Soft Blue Backgrounds & Refined SVG Icons -->
+                        <div class="cot-features-grid">
+                            <div class="cot-feature-item">
+                                <span class="cot-feat-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                    </svg>
+                                </span>
+                                <div><strong>Comfortable Stay</strong><span>Clean & cozy hill rooms</span></div>
+                            </div>
+                            <div class="cot-feature-item">
+                                <span class="cot-feat-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+                                        <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+                                        <line x1="6" y1="1" x2="6" y2="4"></line>
+                                        <line x1="10" y1="1" x2="10" y2="4"></line>
+                                        <line x1="14" y1="1" x2="14" y2="4"></line>
+                                    </svg>
+                                </span>
+                                <div><strong>Estate Experience</strong><span>Live among coffee slopes</span></div>
+                            </div>
+                            <div class="cot-feature-item">
+                                <span class="cot-feat-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path
+                                            d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22L6.58 20.44C10.5 14 16 11 20 8C18.5,5 15.5,2 12,2C8,2 4,5 4,8C4,10.5 5.5,13.5 8,15.5L7.2,17C4.2,14.5 2,10.8 2,8C2,4.1 5.6,1 12,1C17.5,1 21.5,4.8 22,8.5L17,8Z">
+                                        </path>
+                                    </svg>
+                                </span>
+                                <div><strong>Peaceful Surroundings</strong><span>Birds, mist & silence</span></div>
+                            </div>
+                            <div class="cot-feature-item">
+                                <span class="cot-feat-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="9" cy="7" r="4"></circle>
+                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                    </svg>
+                                </span>
+                                <div><strong>Families & Groups</strong><span>Open space for kids</span></div>
+                            </div>
+                        </div>
+
+                        <div class="cot-cta-group">
+                            <a class="btn btn--solid stay-btn"
+                                href="https://wa.me/919444060619?text=Hi%20Forest%20Cafe%2C%20I%20would%20like%20to%20book%20a%20homestay%20room"
+                                target="_blank" rel="noopener">
+                                Book Your Stay Today <span class="arrow">→</span>
+                            </a>
+                            <a class="btn btn--ghost" href="#rooms">
+                                Explore Room Views
                             </a>
                         </div>
                     </div>
 
-
-                    <div class="cot-media">
-                        <img alt="Illustration of the Tiny Cot rooms at Forest Cafe" loading="lazy" src="cot/item15.webp" />
+                    <div class="cot-media-wrap">
+                        <div class="cot-media">
+                            <img alt="Illustration of the Tiny Cot rooms at Forest Cafe" loading="lazy"
+                                src="images/rooms/item15.webp" />
+                        </div>
+                        <!-- Badges repositioned cleanly beneath cottage artwork -->
+                        <div class="cot-badges-row">
+                            <span class="cot-pill-badge">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor">
+                                    <path
+                                        d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L6.58,20.44C10.5,14 16,11 20,8C18.5,5 15.5,2 12,2C8,2 4,5 4,8C4,10.5 5.5,13.5 8,15.5L7.2,17C4.2,14.5 2,10.8 2,8C2,4.1 5.6,1 12,1C17.5,1 21.5,4.8 22,8.5L17,8Z">
+                                    </path>
+                                </svg>
+                                Inside a Coffee Estate
+                            </span>
+                            <span class="cot-pill-badge cot-pill-badge--accent">Max 8 Guests</span>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </section>
 
         <!-- ============ ROOM SHOWCASE CAROUSEL ============ -->
-        <section class="section rooms-showcase" id="rooms">
+        <section class="section rooms-showcase theme-stay" id="rooms">
             <div class="shell shell--wide">
 
                 <div class="section-head reveal">
@@ -744,29 +744,36 @@
 
                 <!-- Interior / Exterior Category Filter Pills -->
                 <div class="rooms-filter-wrapper" role="tablist" aria-label="Room categories">
-                    <button type="button" class="rooms-pill-btn is-active" data-category="interior" role="tab" aria-selected="true">
+                    <button type="button" class="rooms-pill-btn is-active" data-category="interior" role="tab"
+                        aria-selected="true">
                         Interior
                     </button>
 
-                    <button type="button" class="rooms-pill-btn" data-category="exterior" role="tab" aria-selected="false">
+                    <button type="button" class="rooms-pill-btn" data-category="exterior" role="tab"
+                        aria-selected="false">
                         Exterior
                     </button>
-                </div>   
+                </div>
 
                 <!-- Editorial Slat Coverflow Stage -->
-                <div class="horizon-slat-container" id="roomsSlatGallery" tabindex="0" role="region" aria-roledescription="carousel" aria-label="Rooms and Spaces Gallery">
+                <div class="horizon-slat-container" id="roomsSlatGallery" tabindex="0" role="region"
+                    aria-roledescription="carousel" aria-label="Rooms and Spaces Gallery">
                     <div class="horizon-slat__stage" id="slatStage">
                         <!-- Dynamically populated via JS -->
                     </div>
 
                     <!-- Sleek Round Navigation Buttons -->
-                    <button type="button" class="horizon-slat__arrow horizon-slat__arrow--left" id="slatPrevBtn" aria-label="Previous slide">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <button type="button" class="horizon-slat__arrow horizon-slat__arrow--left" id="slatPrevBtn"
+                        aria-label="Previous slide">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                            stroke-linecap="round" stroke-linejoin="round">
                             <path d="M15 18 9 12l6-6" />
                         </svg>
                     </button>
-                    <button type="button" class="horizon-slat__arrow horizon-slat__arrow--right" id="slatNextBtn" aria-label="Next slide">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <button type="button" class="horizon-slat__arrow horizon-slat__arrow--right" id="slatNextBtn"
+                        aria-label="Next slide">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                            stroke-linecap="round" stroke-linejoin="round">
                             <path d="m9 18 6-6-6-6" />
                         </svg>
                     </button>
@@ -786,215 +793,253 @@
 
 
         <!-- =========================================================
-             ART DIRECTOR SHOWCASE
-             Scrapbook-style section: portrait, journey stats,
-             future art classes teaser, articles teaser.
-             All photo spots below are PLACEHOLDERS — swap the
-             .ad-placeholder <img> src or background with real photos.
-        ========================================================= -->
-        <section class="section ad-section"
-                 id="art-director"
-                 aria-labelledby="ad-title">
+         ART DIRECTOR SHOWCASE
+         Scrapbook-style section: portrait, journey stats,
+         future art classes teaser, articles teaser.
+         All photo spots below are PLACEHOLDERS — swap the
+         .ad-placeholder <img> src or background with real photos.
+    ========================================================= -->
+        <section class="section ad-section" id="art-director" aria-labelledby="ad-title">
 
             <!-- Background -->
-            <img class="ad-background"
-                 src="Black.png"
-                 alt=""
-                 aria-hidden="true">
+            <img class="ad-background" src="Black.png" alt="" aria-hidden="true">
 
             <!-- =========================================================
-                 HANDCRAFTED MINIONS PERCHED ON BLACKBOARD TOP EDGE
+                 HANDCRAFTED HANGING MINION ON BLACKBOARD RIGHT RIM
             ========================================================== -->
             <div class="ad-minion-perch-layer" aria-hidden="true">
-                <!-- Left Minion: Hanging Legs & Trailing Vines -->
-                <div class="perched-minion perched-minion--left">
-                    <img class="minion-decor-leaf leaf--left" src="minion picture/leaf-left.png" alt="" onerror="this.style.display='none'">
-                    <img class="minion-character-img" src="minion picture/single-minion.png" alt="Handmade tire minion">
-                </div>
-
-                <!-- Right Minion Pair: Sitting with Purple/Green Fern -->
+                <!-- Right Suspended Rope & Trailing Ivy Minion -->
                 <div class="perched-minion perched-minion--right">
-                    <img class="minion-character-img" src="minion picture/couple-minion.png" alt="Handmade tire minion pair">
-                    <img class="minion-decor-leaf leaf--right" src="minion picture/leaf-right.png" alt="" onerror="this.style.display='none'">
+                    <img class="minion-hanging-img" src="images/minion/hanging-minion.png"
+                        alt="Handcrafted hanging minion planter with trailing vines" loading="lazy"
+                        onerror="this.src='images/minion/hanging minion.png';">
                 </div>
             </div>
 
             <div class="shell ad-shell">
 
                 <!-- =====================================================
-                     INTRO — MEET OUR ART DIRECTOR
-                ====================================================== -->
+                 INTRO — MEET OUR ART DIRECTOR
+            ====================================================== -->
                 <div class="ad-block ad-intro reveal">
-
-                    <img src="story/board1.webp"
-                         alt="Art director showcase"
-                         class="ad-board-image">
-
+                    <img src="images/story/board1.webp" alt="Meet Our Art Director" class="ad-board-image">
                 </div>
 
 
                 <!-- =====================================================
-                     A JOURNEY OF CREATIVE EXCELLENCE
-                ====================================================== -->
-                <div class="ad-block ad-journey reveal">
+                 OUR STORY — preview + "Read full story"
+                 The photo box below is a PLACEHOLDER: swap it for
+                 <img src="images/story/owner.jpg" alt="..."> when ready.
+            ====================================================== -->
+                <div class="ad-block ad-story reveal" id="ourStory">
+                    <span class="eyebrow ad-eyebrow">A DIRECTOR'S RETREAT</span>
 
-                    <span class="eyebrow ad-eyebrow">A JOURNEY OF</span>
-
-                    <h3 class="ad-subtitle">
-                        Creative Excellence
+                    <!-- Balanced two-line header -->
+                    <h3 class="ad-subtitle ad-title-break">
+                        From Cinema Sets<br>to Coffee Slopes
                     </h3>
 
-                    <div class="ad-journey-grid">
-
-                        <div class="ad-journey-copy">
-
-                            <ul class="ad-journey-list">
-                                <li>
-                                    <span class="ad-check">✓</span>
-                                    Worked on 500+ advertising projects
-                                </li>
-                                <li>
-                                    <span class="ad-check">✓</span>
-                                    Films —
-                                    <strong>Jeeva</strong> &amp;
-                                    <strong>Vennila Kabadi Kuzhu</strong>
-                                </li>
-                            </ul>
+                    <div class="ad-story-grid">
+                        <div class="ad-story-copy">
+                        <ul class="ad-journey-list">
+                            <li>
+                                <span class="ad-check">✓</span>
+                                <div><strong>Chennai Cinema Foundations:</strong> 300+ ad campaigns and celebrated films shaped two decades of visual storytelling.</div>
+                            </li>
+                            <li>
+                                <span class="ad-check">✓</span>
+                                <div><strong>The Mist of Kalrayan:</strong> A spontaneous journey into mountain mist sparked the leap from studio spotlights to untamed wilderness.</div>
+                            </li>
+                            <li>
+                                <span class="ad-check">✓</span>
+                                <div><strong>2.25 Acres of Living Earth:</strong> Cultivating raw soil into an organic homestead of shade-grown coffee, pepper vines, and wild apiaries.</div>
+                            </li>
+                            <li>
+                                <span class="ad-check">✓</span>
+                                <div><strong>The Forest Cafe (2021):</strong> Pouring fresh estate harvests, authentic spiced Podi Chai, and raw hill honey straight to your cup.</div>
+                            </li>
+                        </ul>
 
                             <p class="ad-journey-note">
-                                “Those brands to the big screen, every project
-                                carries the same love for detail.”
+                                “From our farm to your table, every cup and every taste carries a little piece of our
+                                journey.”
                             </p>
 
+                            <button class="btn btn--honey ad-btn ad-story-toggle" id="storyToggle" type="button"
+                                aria-expanded="false" aria-controls="storyFull">
+                                <span class="ad-story-toggle-text">Read My Full Story</span>
+                                <span class="arrow" aria-hidden="true">→</span>
+                            </button>
                         </div>
 
-                        <div class="ad-journey-media">
-
-                            <div class="ad-placeholder ad-thumb">
-                                <!-- Replace with: <img src="ArtDirector/work-1.jpg" alt=""> -->
-                                <span class="ad-placeholder-label">Portfolio photo 1</span>
+                        <div class="ad-story-media">
+                            <div class="ad-story-portrait-wrap">
+                                <img 
+                                    src="images/story/backenddevloper JK.png" 
+                                    alt="JK — Developer &amp; Creator behind Forest Cafe" 
+                                    class="ad-story-portrait-img"
+                                    loading="lazy"
+                                    onerror="this.src='images/story/backenddeveloperJK.png';"
+                                />
                             </div>
 
-                            <div class="ad-placeholder ad-thumb">
-                                <!-- Replace with: <img src="ArtDirector/work-2.jpg" alt=""> -->
-                                <span class="ad-placeholder-label">Portfolio photo 2</span>
+                            <div class="ad-story-stats">
+                                <div><span class="ad-stat-number">300+</span><span class="ad-stat-label">Ad Films &amp; Features</span></div>
+                                <div><span class="ad-stat-number">2.25</span><span class="ad-stat-label">Acres Organic Farm</span></div>
+                                <div><span class="ad-stat-number">2021</span><span class="ad-stat-label">Cafe Opened</span></div>
                             </div>
-
-                            <div class="ad-stat-card">
-                                <span class="ad-stat-number">500+</span>
-                                <span class="ad-stat-label">Projects</span>
-                            </div>
-
                         </div>
-
                     </div>
 
+                    <!-- Distinct Narrative Memoir Unfold -->
+                    <div class="ad-story-full" id="storyFull" aria-hidden="true">
+                        <div class="ad-story-full-inner">
+                            <div class="ad-story-text">
+                                <p>For years, my world was framed through camera lenses, production blueprints, and
+                                    studio backlots across Chennai. Crafting atmosphere for audiences across major films
+                                    and hundreds of commercials was deeply fulfilling, yet beneath the noise, I longed
+                                    for an honest, tactile connection to the earth.</p>
+                                <p>When I first visited the Kalrayan Hills, the quiet mountain roads and rolling mist
+                                    left a profound impression. It wasn't merely a getaway; it felt like home. That
+                                    encounter inspired my family and me to take a courageous leap—exchanging urban sets
+                                    for 2.25 acres of untamed slopes.</p>
+                                <p>Together, we cleared the land with reverence for the ecosystem. We nurtured
+                                    shade-grown coffee, planted silver oak for wind protection, tended pepper vines and
+                                    banana groves, and introduced bees to help pollinate the forest canopy while
+                                    providing raw honey.</p>
+                                <p>What began as a quiet family haven grew into something we wanted to share. In 2021,
+                                    The Forest Cafe opened its doors—not as an ordinary business, but as the living
+                                    culmination of cinema craft, mountain farming, and hospitality.</p>
+                                <p class="ad-story-sign">Every cup poured here carries the spirit of that transition.
+                                    Welcome to our table.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <!-- =====================================================
-                             FUTURE PLANS — ART CLASSES
-                        ====================================================== -->
-                <div class="ad-block ad-future reveal">
 
+                <!-- =====================================================
+                         FUTURE PLANS — ART CLASSES
+                    ====================================================== -->
+                <div class="ad-block ad-future reveal">
                     <div class="ad-placeholder ad-future-media">
-                        <!-- Replace with: <img src="ArtDirector/art-class.jpg" alt="Art class"> -->
-                        <span class="ad-placeholder-label">Art class photo</span>
+                        <img src="images/story/art-class.jpg" alt="Art classes at Forest Cafe"
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <span class="ad-placeholder-label" style="display:none;">Creative Studio & Workshops</span>
                     </div>
 
                     <div class="ad-future-copy">
-
-                        <span class="eyebrow ad-eyebrow">FUTURE PLANS</span>
-
-                        <h3 class="ad-subtitle">
-                            Art Classes
+                        <span class="eyebrow ad-eyebrow">CREATIVE WORKSHOPS</span>
+                        <h3 class="ad-subtitle ad-title-break">
+                            Hands-on Art<br>&amp; Design Sessions
                         </h3>
-
                         <p>
-                            Guided by love, knowledge and experience — thoughtful
-                            art classes focused on skill-building and hands-on
-                            learning for anyone who wants to create.
+                            Guided by decades in visual production and storytelling—intimate weekend workshops exploring
+                            drawing fundamentals, spatial design, and creative mindfulness amid the hills.
                         </p>
-
-                        <a class="btn btn--honey ad-btn" href="#">
+                        <a class="btn btn--honey ad-btn"
+                            href="https://wa.me/919444060619?text=Hi%20Forest%20Cafe%2C%20I%20am%20interested%20in%20upcoming%20art%20classes%20and%20workshops"
+                            target="_blank" rel="noopener">
                             Stay Tuned <span class="arrow">→</span>
                         </a>
-
                     </div>
-
                 </div>
 
 
                 <!-- =====================================================
-                     ARTICLES — THOUGHTS & IDEAS
-                ====================================================== -->
+                 ARTICLES — THOUGHTS & IDEAS
+            ====================================================== -->
                 <div class="ad-block ad-articles reveal">
-
-                    <span class="eyebrow ad-eyebrow">ARTICLES</span>
-
-                    <h3 class="ad-subtitle">
-                        Thoughts &amp; Ideas
+                    <span class="eyebrow ad-eyebrow">ARTICLES &amp; BLOGS</span>
+                    <h3 class="ad-subtitle ad-title-break">
+                        Behind the Canvas<br>&amp; The Soil
                     </h3>
 
                     <div class="ad-article-card">
-
                         <div class="ad-placeholder ad-article-media">
-                            <!-- Replace with: <img src="ArtDirector/article-cover.jpg" alt=""> -->
-                            <span class="ad-placeholder-label">Article cover image</span>
+                            <img src="images/story/article-cover.jpg" alt="Articles and Reflections"
+                                onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                            <span class="ad-placeholder-label" style="display:none;">Article Cover Preview</span>
                         </div>
 
                         <div class="ad-article-copy">
+                            <h4>Stories of Design, Cinema &amp; Farm Life</h4>
                             <p>
-                                Sharing insights, inspiration and behind-the-scenes
-                                stories from the world of art direction and design.
+                                Personal notes on production aesthetics, the philosophy of slowing down, and practical
+                                insights from homesteading on the Kalrayan slopes.
                             </p>
-                            <a class="btn btn--light ad-btn" href="#">
-                                Read Article
-                            </a>
+                            <div class="ad-article-actions">
+                                <a class="btn btn--honey ad-btn" href="#" target="_blank" rel="noopener">
+                                    View Articles <span class="arrow">→</span>
+                                </a>
+                                <a class="btn btn--light ad-btn" href="#" target="_blank" rel="noopener">
+                                    Visit Blog
+                                </a>
+                            </div>
                         </div>
-
                     </div>
-
                 </div>
 
             </div>
 
         </section>
 
-    </main>
+    <section class="section followup-image-section" id="reviews" aria-label="Guest reviews">
+        <div class="rvb-bg" aria-hidden="true"><span class="b1"></span><span class="b2"></span><span class="b3"></span><span class="b4"></span><span class="b5"></span><span class="b6"></span><span class="b7"></span><span class="b8"></span></div>
 
-    <section class="section followup-image-section" aria-label="Follow-up image section">
-        <div class="followup-marquee" aria-label="Forest Cafe review gallery">
-            <div class="followup-static-card">
-                <img src="review/review-board1.webp" alt="Forest Cafe review board" />
+        <div class="rv-head">
+            <img class="rv-board" src="images/reviews/review-board1.webp" alt="Forest Cafe review board" />
+        </div>
+
+        <!-- Spotlight + bubbles: the chosen review is shown large, all 10 sit around it as bubbles -->
+        <div class="rvb" id="rvHang" aria-label="Forest Cafe guest reviews">
+            <div class="rvb-stage">
+                <div class="rvb-spot">
+                    <div class="rvb-card"><img id="rvbBig" src="images/reviews/review%20(1).webp" alt="Forest Cafe guest review 1" /></div>
+                    <div class="rvb-ctrl">
+                        <button type="button" class="rvb-btn" id="rvbPrev" aria-label="Previous review">‹</button>
+                        <span class="rvb-count" aria-live="polite"><b id="rvbCur">01</b> / 10</span>
+                        <button type="button" class="rvb-btn" id="rvbNext" aria-label="Next review">›</button>
+                    </div>
+                </div>
+                <ul class="rvb-ring" id="rvbRing">
+                    <li style="--i:0;--x:62.98%;--y:11.96%;--rot:-5deg;--fd:4.2s">
+                        <button class="rvb-dot" type="button" aria-label="Show review 1"><img src="images/reviews/review%20(1).webp" alt="Forest Cafe guest review 1" loading="lazy" /></button>
+                    </li>
+                    <li style="--i:1;--x:83.98%;--y:26.49%;--rot:4deg;--fd:4.9s">
+                        <button class="rvb-dot" type="button" aria-label="Show review 2"><img src="images/reviews/review%20(2).webp" alt="Forest Cafe guest review 2" loading="lazy" /></button>
+                    </li>
+                    <li style="--i:2;--x:92.00%;--y:50.00%;--rot:-3deg;--fd:5.6s">
+                        <button class="rvb-dot" type="button" aria-label="Show review 3"><img src="images/reviews/review%20(3).webp" alt="Forest Cafe guest review 3" loading="lazy" /></button>
+                    </li>
+                    <li style="--i:3;--x:83.98%;--y:73.51%;--rot:6deg;--fd:6.3s">
+                        <button class="rvb-dot" type="button" aria-label="Show review 4"><img src="images/reviews/review%20(4).webp" alt="Forest Cafe guest review 4" loading="lazy" /></button>
+                    </li>
+                    <li style="--i:4;--x:62.98%;--y:88.04%;--rot:-4deg;--fd:4.2s">
+                        <button class="rvb-dot" type="button" aria-label="Show review 5"><img src="images/reviews/review%20(5).webp" alt="Forest Cafe guest review 5" loading="lazy" /></button>
+                    </li>
+                    <li style="--i:5;--x:37.02%;--y:88.04%;--rot:5deg;--fd:4.9s">
+                        <button class="rvb-dot" type="button" aria-label="Show review 6"><img src="images/reviews/review%20(6).webp" alt="Forest Cafe guest review 6" loading="lazy" /></button>
+                    </li>
+                    <li style="--i:6;--x:16.02%;--y:73.51%;--rot:-6deg;--fd:5.6s">
+                        <button class="rvb-dot" type="button" aria-label="Show review 7"><img src="images/reviews/review%20(7).webp" alt="Forest Cafe guest review 7" loading="lazy" /></button>
+                    </li>
+                    <li style="--i:7;--x:8.00%;--y:50.00%;--rot:3deg;--fd:6.3s">
+                        <button class="rvb-dot" type="button" aria-label="Show review 8"><img src="images/reviews/review%20(8).webp" alt="Forest Cafe guest review 8" loading="lazy" /></button>
+                    </li>
+                    <li style="--i:8;--x:16.02%;--y:26.49%;--rot:-5deg;--fd:4.2s">
+                        <button class="rvb-dot" type="button" aria-label="Show review 9"><img src="images/reviews/review%20(9).webp" alt="Forest Cafe guest review 9" loading="lazy" /></button>
+                    </li>
+                    <li style="--i:9;--x:37.02%;--y:11.96%;--rot:4deg;--fd:4.9s">
+                        <button class="rvb-dot" type="button" aria-label="Show review 10"><img src="images/reviews/review%20(10).webp" alt="Forest Cafe guest review 10" loading="lazy" /></button>
+                    </li>
+                </ul>
             </div>
-
-            <div class="followup-track">
-                <img src="review/review%20(1).webp" alt="Forest Cafe guest review 1" />
-                <img src="review/review%20(2).webp" alt="Forest Cafe guest review 2" />
-                <img src="review/review%20(3).webp" alt="Forest Cafe guest review 3" />
-                <img src="review/review%20(4).webp" alt="Forest Cafe guest review 4" />
-                <img src="review/review%20(5).webp" alt="Forest Cafe guest review 5" />
-                <img src="review/review%20(6).webp" alt="Forest Cafe guest review 6" />
-                <img src="review/review%20(7).webp" alt="Forest Cafe guest review 7" />
-                <img src="review/review%20(8).webp" alt="Forest Cafe guest review 8" />
-                <img src="review/review%20(9).webp" alt="Forest Cafe guest review 9" />
-                <img src="review/review%20(10).webp" alt="Forest Cafe guest review 10" />
-
-                <img src="review/review%20(1).webp" alt="Forest Cafe guest review 1 duplicate" />
-                <img src="review/review%20(2).webp" alt="Forest Cafe guest review 2 duplicate" />
-                <img src="review/review%20(3).webp" alt="Forest Cafe guest review 3 duplicate" />
-                <img src="review/review%20(4).webp" alt="Forest Cafe guest review 4 duplicate" />
-                <img src="review/review%20(5).webp" alt="Forest Cafe guest review 5 duplicate" />
-                <img src="review/review%20(6).webp" alt="Forest Cafe guest review 6 duplicate" />
-                <img src="review/review%20(7).webp" alt="Forest Cafe guest review 7 duplicate" />
-                <img src="review/review%20(8).webp" alt="Forest Cafe guest review 8 duplicate" />
-                <img src="review/review%20(9).webp" alt="Forest Cafe guest review 9 duplicate" />
-                <img src="review/review%20(10).webp" alt="Forest Cafe guest review 10 duplicate" />
-            </div>
+            <p class="rvb-hint">Tap a bubble to read that review</p>
         </div>
     </section>
 
     <!-- ============ VISIT ============ -->
-    <section class="section" id="visit">
+    <section class="section theme-cafe" id="visit">
         <div class="shell visit-grid">
             <div class="reveal">
                 <span class="eyebrow">
@@ -1018,8 +1063,8 @@
                         <div>
                             <div class="contact-label">Address</div>
                             <div class="contact-value">
-                                Kalrayan Hills Main Road, Vellimalai<br />Kalrayan Hills, Tamil
-                                Nadu 606 213
+                                No 367/2, Servaiyattu, Vellimalai Road, Karumandurai,
+                                Kalvarayan Hills, Salem – 636 138.
                             </div>
                         </div>
                     </li>
@@ -1066,81 +1111,119 @@
                     </li>
                 </ul>
                 <div style="margin-top:26px;display:flex;gap:12px;flex-wrap:wrap">
-                    <a class="btn btn--solid" href="https://www.google.com/maps/search/?api=1&amp;query=Kalrayan+Hills+Tamil+Nadu" rel="noopener" target="_blank">Get directions <span class="arrow">→</span></a>
+                    <a class="btn btn--solid" href="https://www.google.com/maps/search/?api=1&amp;query=Kalrayan+Hills+Tamil+Nadu" rel="noopener" target="_blank" rel="noopener noreferrer">Get directions <span class="arrow">→</span></a>
                     <a class="btn btn--ghost" href="tel:+919444060619">Call the cafe</a>
                 </div>
 
+            </div>
+        
+            <!-- MAP: swap the src with your exact Google Maps "Embed a map" link when ready -->
+            <div class="visit-map reveal">
+                <iframe title="Forest Cafe location on Google Maps" src="https://www.google.com/maps?q=Forest+Cafe+Kalrayan+Hills+Vellimalai&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
             </div>
         </div>
     </section>
 
 
 
+    </main>
+
     <!-- ============ FOOTER ============ -->
     <footer class="footer">
         <div class="footer-grid">
+            <!-- Brand & Warm Invitation Column -->
             <div class="footer-col footer-col--brand">
-                <a class="brand" href="#top">
-                    <span aria-hidden="true" class="brand-mark">
-                        <svg viewbox="0 0 24 24">
-                            <path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L6.58,20.44C10.5,14 16,11 20,8C18.5,5 15.5,2 12,2C8,2 4,5 4,8C4,10.5 5.5,13.5 8,15.5L7.2,17C4.2,14.5 2,10.8 2,8C2,4.1 5.6,1 12,1C17.5,1 21.5,4.8 22,8.5L17,8Z"></path>
-                        </svg>
-                    </span>
-                    <span class="brand-text">
-                        <span class="brand-name">Forest Cafe</span>
-                        <span class="brand-sub">Kalrayan Hills</span>
-                    </span>
+                <a class="footer-brand" href="#top" aria-label="Back to top">
+                    <img alt="Forest Cafe" class="footer-brand-logo" src="logo.png" />
+                    <div class="footer-brand-text">
+                        <span class="footer-brand-name">Forest Cafe</span>
+                        <span class="footer-brand-sub">Kalrayan Hills</span>
+                    </div>
                 </a>
-                <p class="footer-about">A cosy stop for coffee, farm produce and a place to sleep, tucked into the Kalvarayan Hills.</p>
-                <div class="socials">
-                    <a aria-label="Instagram" data-cms="instaLink" href="https://www.instagram.com/forestcafe.khills?utm_source=ig_web_button_share_sheet&stkn=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener">
-                        <svg viewbox="0 0 24 24">
-                            <path d="M12 2.2c3.2 0 3.6 0 4.9.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.7.1 4.8s0 3.6-.1 4.9c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-3.3-.1-4.8-1.7-4.9-4.9-.1-1.3-.1-1.7-.1-4.9s0-3.5.1-4.8C2.3 4 3.9 2.4 7.1 2.3 8.4 2.2 8.8 2.2 12 2.2zm0 5.1A4.7 4.7 0 1 0 16.7 12 4.7 4.7 0 0 0 12 7.3zm0 7.7A3 3 0 1 1 15 12a3 3 0 0 1-3 3zm4.9-9a1.1 1.1 0 1 0 1.1 1.1 1.1 1.1 0 0 0-1.1-1.1z"></path>
-                        </svg>
-                    </a>
-                    <a aria-label="Facebook" href="#">
-                        <svg viewbox="0 0 24 24">
-                            <path d="M13.5 22v-8h2.7l.4-3.1h-3.1V8.9c0-.9.25-1.5 1.55-1.5h1.65V4.6A22 22 0 0 0 14.3 4.5c-2.4 0-4 1.45-4 4.1v2.3H7.6V14h2.7v8z"></path>
-                        </svg>
-                    </a>
-                    <a aria-label="WhatsApp" data-cms="waLink" href="https://wa.me/919444060619?text=Hi%20Forest%20Cafe%2C%20I%20want%20to%20know%20more%20about%20your%20stay%20and%20cafe." target="_blank" rel="noopener">
-                        <svg viewbox="0 0 24 24">
-                            <path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.2 1.2-1.7 1.2s-1.1.3-3.6-.8-4-3.6-4.2-3.8-1.2-1.6-1.2-3 .8-2.1 1-2.4.5-.3.7-.3h.6c.2 0 .4 0 .6.5s.8 2 .9 2.1a.5.5 0 0 1 0 .5 7 7 0 0 1-.5.7c-.2.2-.4.4-.2.7a9.6 9.6 0 0 0 1.7 2.1 8.4 8.4 0 0 0 2.5 1.5c.3.2.5.1.7-.1s.8-.9 1-1.2.4-.2.7-.1 1.9.9 2.2 1.1.5.3.6.4a2 2 0 0 1-.1.9z"></path>
-                        </svg>
-                    </a>
-                    <a aria-label="YouTube" href="#">
-                        <svg viewbox="0 0 24 24">
-                            <path d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4a2.5 2.5 0 0 0-1.8 1.8A26 26 0 0 0 2 12a26 26 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8A26 26 0 0 0 22 12a26 26 0 0 0-.4-4.8zM10 15V9l5.2 3z"></path>
-                        </svg>
-                    </a>
+                <p class="footer-about">
+                    Where the mountain air slows you down, fresh estate coffee warms your hands, and peaceful hill
+                    mornings linger a little longer. Come take a breath under the trees.
+                </p>
+                <div class="footer-social-wrap">
+                    <span class="footer-social-label">Follow our hill life &amp; updates:</span>
+                    <div class="socials">
+                        <a aria-label="Instagram" data-cms="instaLink"
+                            href="https://www.instagram.com/forestcafe.khills?utm_source=ig_web_button_share_sheet&amp;stkn=ZDNlZDc0MzIxNw=="
+                            target="_blank" rel="noopener">
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M12 2.2c3.2 0 3.6 0 4.9.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.7.1 4.8s0 3.6-.1 4.9c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-3.3-.1-4.8-1.7-4.9-4.9-.1-1.3-.1-1.7-.1-4.9s0-3.5.1-4.8C2.3 4 3.9 2.4 7.1 2.3 8.4 2.2 8.8 2.2 12 2.2zm0 5.1A4.7 4.7 0 1 0 16.7 12 4.7 4.7 0 0 0 12 7.3zm0 7.7A3 3 0 1 1 15 12a3 3 0 0 1-3 3zm4.9-9a1.1 1.1 0 1 0 1.1 1.1 1.1 1.1 0 0 0-1.1-1.1z">
+                                </path>
+                            </svg>
+                        </a>
+                        <a aria-label="Facebook" href="#">
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M13.5 22v-8h2.7l.4-3.1h-3.1V8.9c0-.9.25-1.5 1.55-1.5h1.65V4.6A22 22 0 0 0 14.3 4.5c-2.4 0-4 1.45-4 4.1v2.3H7.6V14h2.7v8z">
+                                </path>
+                            </svg>
+                        </a>
+                        <a aria-label="WhatsApp" data-cms="waLink"
+                            href="https://wa.me/919444060619?text=Hi%20Forest%20Cafe%2C%20I%20want%20to%20know%20more%20about%20your%20stay%20and%20cafe."
+                            target="_blank" rel="noopener">
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.2 1.2-1.7 1.2s-1.1.3-3.6-.8-4-3.6-4.2-3.8-1.2-1.6-1.2-3 .8-2.1 1-2.4.5-.3.7-.3h.6c.2 0 .4 0 .6.5s.8 2 .9 2.1a.5.5 0 0 1 0 .5 7 7 0 0 1-.5.7c-.2.2-.4.4-.2.7a9.6 9.6 0 0 0 1.7 2.1 8.4 8.4 0 0 0 2.5 1.5c.3.2.5.1.7-.1s.8-.9 1-1.2.4-.2.7-.1 1.9.9 2.2 1.1.5.3.6.4a2 2 0 0 1-.1.9z">
+                                </path>
+                            </svg>
+                        </a>
+                        <a aria-label="YouTube" href="#">
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4a2.5 2.5 0 0 0-1.8 1.8A26 26 0 0 0 2 12a26 26 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8A26 26 0 0 0 22 12a26 26 0 0 0-.4-4.8zM10 15V9l5.2 3z">
+                                </path>
+                            </svg>
+                        </a>
+                    </div>
                 </div>
             </div>
+
+            <!-- Visit Information -->
             <div class="footer-col">
-                <h4>Visit</h4>
+                <h4 class="footer-heading">VISIT</h4>
                 <div class="footer-contact">
-                    <p>No 367/2, servaiyattu, vellimalai road, karumandurai,<br />kalvarayan hills, salem-636 138.</p>
-                    <p>ph no: <a data-cms="phoneLink" data-cms-text="phoneText" href="tel:+919444060619">9444060619</a></p>
-                    <p>e-mail: <a data-cms="emailLink" data-cms-text="emailText" href="mailto:forestcafe.khilla@gmail.com">forestcafe.khilla@gmail.com</a></p>
+                    <p>No 367/2, Servaiyattu, Vellimalai Road, Karumandurai,<br />Kalvarayan Hills, Salem – 636 138.</p>
                 </div>
             </div>
+
+            <!-- Navigation Links -->
             <div class="footer-col">
-                <h4>Explore</h4>
-                <ul>
+                <h4 class="footer-heading">EXPLORE</h4>
+                <ul class="footer-nav-list">
+                    <li><a href="#top">Home</a></li>
                     <li><a href="#about">About us</a></li>
                     <li><a href="#cafe">The cafe</a></li>
                     <li><a href="#menu">Menu</a></li>
-                    <li><a href="#stay">Rooms</a></li>
+                    <li><a href="#shop">Farm shop</a></li>
+                    <li><a href="#stay">Rooms &amp; Stay</a></li>
+                    <li><a href="#art-director">Our Story</a></li>
+                    <li><a href="#reviews">Reviews</a></li>
                     <li><a href="#visit">How to get here</a></li>
                 </ul>
             </div>
         </div>
-        <div class="footer-bottom">
-            <span>© <span id="year">2026</span> Forest Cafe, Kalrayan Hills. All rights reserved.</span>
-            <nav aria-label="Legal">
-                <a href="#">Privacy</a>
-                <a href="#">Terms</a>
-                <a href="#visit">Contact</a>
-            </nav>
+
+        <!-- Designer Watermark & Copyright -->
+        <div class="footer-bottom-wrap">
+            <div class="footer-credit">
+                <span>Sketches by <strong>Code Sketchers</strong></span>
+                <span class="footer-credit-sep">·</span>
+                <a href="tel:8248853636" class="footer-credit-phone">8248853636</a>
+            </div>
+
+            <div class="footer-bottom">
+                <span>© <span id="year">2026</span> Forest Cafe, Kalrayan Hills. All rights reserved.</span>
+                <nav aria-label="Footer Quick Links and Policies">
+                    <a href="#privacy" data-legal="privacy">Privacy Policy</a>
+                    <a href="#terms" data-legal="terms">Terms &amp; Conditions</a>
+                    <a href="#refund" data-legal="refund">Refund Policy</a>
+                </nav>
+            </div>
         </div>
     </footer>
 
@@ -1148,7 +1231,7 @@
     <div aria-label="Full menu board" aria-modal="true" class="modal" id="menuModal" role="dialog">
         <div class="modal-panel">
             <button aria-label="Close menu" class="modal-close" id="closeMenuModal" type="button">×</button>
-            <img alt="Forest Cafe full menu board" src="Cafe/menu.png" />
+            <img alt="Forest Cafe full menu board" src="images/farm/menu.webp" />
         </div>
     </div>
     <div aria-label="Photo viewer" aria-modal="true" class="lightbox" id="lightbox" role="dialog">
@@ -1159,177 +1242,181 @@
         <span class="lightbox-counter" id="lbCounter">1 / 9</span>
     </div>
     
+
+
+    <!-- ============ POLICIES (Privacy · Terms · Refund) ============ -->
+    <div class="lg" id="legalModal" role="dialog" aria-modal="true" aria-labelledby="lgTitle" aria-hidden="true">
+        <div class="lg-panel">
+            <div class="lg-head">
+                <h3 class="lg-title" id="lgTitle">Policies</h3>
+                <button class="lg-close" id="lgClose" type="button" aria-label="Close">×</button>
+            </div>
+            <div class="lg-tabs" role="tablist">
+                <button type="button" role="tab" class="lg-tab" data-tab="privacy">Privacy Policy</button>
+                <button type="button" role="tab" class="lg-tab" data-tab="terms">Terms &amp; Conditions</button>
+                <button type="button" role="tab" class="lg-tab" data-tab="refund">Refund Policy</button>
+            </div>
+            <div class="lg-body" id="lgBody" tabindex="0">
+
+                <article class="lg-doc" id="lg-privacy" role="tabpanel" hidden>
+                    <p class="lg-date">Last updated: October 2026</p>
+                    <p>Forest Cafe (“we”, “our”, “us”), located at No 367/2, Servaiyattu, Vellimalai Road, Karumandurai, Kalvarayan Hills, Salem – 636 138, Tamil Nadu, runs this website to share our café, farm shop and rooms. This policy explains what information we handle and why.</p>
+
+                    <h4>1. Information we receive</h4>
+                    <ul>
+                        <li><b>When you message us on WhatsApp:</b> your name (if you share it), phone number, the products or rooms you ask about, quantities, dates, notes and any photos you send.</li>
+                        <li><b>When you call or email us:</b> the contact details and the details of your enquiry.</li>
+                        <li><b>Basic browser data:</b> like most websites, our hosting provider may log technical data such as IP address, device and browser type, and pages visited.</li>
+                    </ul>
+                    <p>This website does not have an account system and does not collect card or UPI details. Orders and bookings are confirmed over WhatsApp, phone or in person.</p>
+
+                    <h4>2. How we use it</h4>
+                    <ul>
+                        <li>To reply to your enquiry, prepare your order, confirm price and availability, and arrange pick-up or delivery.</li>
+                        <li>To manage room bookings and stay-related communication.</li>
+                        <li>To keep the website working, safe and fast.</li>
+                    </ul>
+                    <p>We do not sell your personal information and we do not send marketing messages unless you ask us to.</p>
+
+                    <h4>3. Third-party services</h4>
+                    <p>This website uses services from other companies, each with its own privacy policy: <b>WhatsApp (Meta)</b> when you tap a button to message us, <b>Google Maps</b> for the location map, <b>Google Fonts</b> for typography, and <b>Instagram / YouTube / Facebook</b> if you follow those links. We do not control how they handle your data.</p>
+
+                    <h4>4. Cookies and local storage</h4>
+                    <p>We use no advertising or tracking cookies. Your browser may store small technical items (for example, to remember a visual preference) on your own device only.</p>
+
+                    <h4>5. Sharing</h4>
+                    <p>We share your information only with people who help us serve you (for example, a delivery partner for your order), when the law requires it, or to protect our rights and safety.</p>
+
+                    <h4>6. How long we keep it</h4>
+                    <p>We keep chat and order records only as long as needed to serve you, handle any follow-up, and meet legal or accounting needs.</p>
+
+                    <h4>7. Your choices</h4>
+                    <p>You can ask us to show, correct or delete the personal information we hold about you by contacting us below. You can also delete your WhatsApp chat with us at any time on your own device.</p>
+
+                    <h4>8. Children</h4>
+                    <p>This website is meant for adults and families. We do not knowingly collect personal information from children.</p>
+
+                    <h4>9. Changes</h4>
+                    <p>We may update this policy from time to time. The “last updated” date above shows the latest version.</p>
+
+                    <h4>10. Contact</h4>
+                    <p>Forest Cafe, Kalvarayan Hills · Phone / WhatsApp: <a href="tel:+919444060619">+91 94440 60619</a> · Email: <a href="mailto:forestcafe.khilla@gmail.com">forestcafe.khilla@gmail.com</a></p>
+                </article>
+
+                <article class="lg-doc" id="lg-terms" role="tabpanel" hidden>
+                    <p class="lg-date">Last updated: October 2026</p>
+                    <p>By using this website or ordering from Forest Cafe, you agree to these terms. Please read them with our Privacy Policy and Refund Policy.</p>
+
+                    <h4>1. About us</h4>
+                    <p>Forest Cafe is a café, farm shop and guest-rooms stay in the Kalvarayan Hills, Salem district, Tamil Nadu, India.</p>
+
+                    <h4>2. Using this website</h4>
+                    <p>The website is for information and to help you contact us. Please use it lawfully. Photos, text, logos and designs belong to Forest Cafe or its creators and may not be copied or reused without our written permission.</p>
+
+                    <h4>3. Farm shop orders</h4>
+                    <ul>
+                        <li>Tapping “Send order on WhatsApp” only sends us a request. <b>An order is confirmed only when we reply and confirm it</b>, including price and availability.</li>
+                        <li>Our farm products are made in small batches and some are seasonal, so stock can change without notice.</li>
+                        <li>Product photos and descriptions are for guidance. Colour, texture, taste and pack appearance can vary naturally from batch to batch.</li>
+                        <li>Prices are confirmed on WhatsApp at the time of order and may change. Packing, courier or delivery charges, if any, will be told before you pay.</li>
+                        <li>Payment is accepted by the methods we share on WhatsApp (for example UPI, bank transfer or cash on pick-up).</li>
+                    </ul>
+
+                    <h4>4. Delivery and pick-up</h4>
+                    <p>You can collect your order from the café or, where available, we will arrange delivery. Delivery timelines are estimates and can be affected by hill roads, weather and courier delays. Please share a complete and correct address and phone number.</p>
+
+                    <h4>5. Café visits</h4>
+                    <p>Opening hours and menu items can change without notice. Please tell us about allergies when you order; although we take care, our kitchen handles nuts, dairy, gluten and other allergens. Well-behaved dogs are welcome, and owners are responsible for them and for cleaning up after them.</p>
+
+                    <h4>6. Room stays</h4>
+                    <ul>
+                        <li>Room availability, tariff, advance amount, check-in / check-out times and house rules are confirmed with you on WhatsApp or phone before the booking is final.</li>
+                        <li>A booking is confirmed only after we acknowledge it and receive any advance we ask for.</li>
+                        <li>Guests are responsible for damage to property caused by them or their group.</li>
+                        <li>Please respect neighbours and the hill environment: no loud music late at night, and no littering or open fires.</li>
+                    </ul>
+
+                    <h4>7. Our responsibility</h4>
+                    <p>We take care to serve safe, fresh food and keep accurate information. To the extent allowed by law, Forest Cafe is not liable for indirect or consequential loss, for events beyond our control (weather, landslides, road closures, power or network failures), or for the content of third-party websites we link to. Nothing here limits any right you have under Indian consumer law.</p>
+
+                    <h4>8. Changes</h4>
+                    <p>We may update these terms and will change the date above when we do.</p>
+
+                    <h4>9. Governing law</h4>
+                    <p>These terms are governed by the laws of India. Any dispute will be subject to the courts at Salem, Tamil Nadu.</p>
+
+                    <h4>10. Contact</h4>
+                    <p>Phone / WhatsApp: <a href="tel:+919444060619">+91 94440 60619</a> · Email: <a href="mailto:forestcafe.khilla@gmail.com">forestcafe.khilla@gmail.com</a></p>
+                </article>
+
+                <article class="lg-doc" id="lg-refund" role="tabpanel" hidden>
+                    <p class="lg-date">Last updated: October 2026</p>
+                    <p>We want you to be happy with everything from our farm and kitchen. Because most of what we sell is food and made fresh, our refund rules are simple and fair.</p>
+
+                    <h4>1. Farm shop products</h4>
+                    <ul>
+                        <li>Food items (coffee, tea, honey, podi, thokku, spice powders and similar) cannot be returned once opened or used, for food-safety reasons.</li>
+                        <li>If your order arrives <b>damaged, leaking, spoiled or different from what you ordered</b>, tell us on WhatsApp <b>within 24 hours of receiving it</b> with a clear photo or short video of the item and the packing.</li>
+                        <li>After checking, we will offer a <b>replacement or a refund</b>, whichever you prefer where stock allows.</li>
+                        <li>We cannot accept returns for change of mind, or for taste preferences, once the pack is opened.</li>
+                    </ul>
+
+                    <h4>2. Cancelling an order</h4>
+                    <p>You can cancel for a full refund before we have packed or dispatched your order. Once packed for you or handed to a courier, the order cannot be cancelled, except as described above for damaged or wrong items.</p>
+
+                    <h4>3. Café food and drinks</h4>
+                    <p>If something you are served is not right, please tell us at the table straight away and we will remake it or remove it from your bill. Food that has been served and consumed cannot be refunded afterwards.</p>
+
+                    <h4>4. Room bookings</h4>
+                    <ul>
+                        <li>Cancel <b>72 hours or more</b> before check-in: the advance is refunded in full (less any payment-gateway charge).</li>
+                        <li>Cancel <b>less than 72 hours</b> before check-in, or no-show: the advance may be retained. We will try to reschedule you once, subject to availability.</li>
+                        <li>If we have to cancel because of weather, road closure or any reason on our side, you will receive a full refund or a free change of date, as you choose.</li>
+                        <li>Early check-out or unused nights are not refundable.</li>
+                        <li>Your exact cancellation terms are confirmed in your booking message on WhatsApp.</li>
+                    </ul>
+
+                    <h4>5. How refunds are paid</h4>
+                    <p>Approved refunds are sent to the same account or UPI ID used for payment, normally within <b>5–7 working days</b>. Bank or payment-app delays after that are outside our control.</p>
+
+                    <h4>6. Contact us</h4>
+                    <p>WhatsApp / phone: <a href="tel:+919444060619">+91 94440 60619</a> · Email: <a href="mailto:forestcafe.khilla@gmail.com">forestcafe.khilla@gmail.com</a></p>
+                </article>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ PRODUCT ORDER POPUP ============ -->
+    <div class="pm" id="productModal" role="dialog" aria-modal="true" aria-labelledby="pmTitle" aria-hidden="true">
+        <div class="pm-panel">
+            <button class="pm-close" id="pmClose" type="button" aria-label="Close">×</button>
+            <div class="pm-img"><img id="pmImg" src="" alt="" /></div>
+            <div class="pm-body">
+                <span class="pm-eyebrow">Farm shop</span>
+                <h3 class="pm-title" id="pmTitle"></h3>
+                <p class="pm-tag" id="pmTag"></p>
+                <p class="pm-desc" id="pmDesc"></p>
+
+                <div class="pm-qty-label" id="pmQtyLabel">How many do you need?</div>
+                <div class="pm-lines" id="pmLines" role="group" aria-labelledby="pmQtyLabel"></div>
+
+                <div class="pm-extra">
+                    <input type="text" id="pmName" maxlength="40" placeholder="Your name (optional)" autocomplete="name" />
+                    <input type="text" id="pmNote" maxlength="120" placeholder="Any note? e.g. pick-up time (optional)" />
+                </div>
+                <p class="pm-summary" id="pmSummary"></p>
+
+                <a class="pm-buy" id="pmBuy" href="#" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.2 1.2-1.7 1.2s-1.1.3-3.6-.8-4-3.6-4.2-3.8-1.2-1.6-1.2-3 .8-2.1 1-2.4.5-.3.7-.3h.6c.2 0 .4 0 .6.5s.8 2 .9 2.1a.5.5 0 0 1 0 .5 7 7 0 0 1-.5.7c-.2.2-.4.4-.2.7a9.6 9.6 0 0 0 1.7 2.1 8.4 8.4 0 0 0 2.5 1.5c.3.2.5.1.7-.1s.8-.9 1-1.2.4-.2.7-.1 1.9.9 2.2 1.1.5.3.6.4a2 2 0 0 1-.1.9z"/></svg>
+                    <span id="pmBuyText">Buy on WhatsApp</span>
+                </a>
+                <p class="pm-note">WhatsApp opens with your order and the product photo link ready to send — we'll confirm price and availability.</p>
+            </div>
+        </div>
+    </div>
+
     <button aria-label="Back to top" class="to-top" id="toTop" type="button">↑</button>
-    <script>
-                      (() => {
-                        const board = document.querySelector(".process-board");
-                        const route = document.querySelector(".route-active");
-                        const traveler = document.querySelector(".traveler");
-                        const icon = document.querySelector("#travelerIcon");
-
-                        if (!board || !route || !traveler || !icon) return;
-
-                        const stages = [
-                          { at: 0.00, src: "images/seed.webp", alt: "Coffee seed" },
-                          { at: 0.20, src: "images/coffee-cherry.webp", alt: "Coffee cherry" },
-                          { at: 0.42, src: "images/coffee-roast.webp", alt: "Roasted coffee" },
-                          { at: 0.64, src: "images/coffee-powder-bowl.webp", alt: "Coffee powder" }
-                        ];
-
-                        const duration = 32000;
-                        // The traveler crosses each card quickly, then returns to its normal speed.
-                        const cardCrossings = [0.015, 0.20, 0.42, 0.64, 0.86];
-                        const fastHalfWindow = 0.0055; // keep the existing quick card-crossing window
-                        const fastMultiplier = 10.0; // cross the card in a fraction of a second
-                        const cards = Array.from(document.querySelectorAll(".process-card"));
-                        const popDuration = 280;
-                        const popLead = 0.0015;
-                        const cupArrival = 0.985;
-                        const cupStage = document.querySelector("#filterCupStage");
-                        const cupEmpty = document.querySelector("#filterCupEmpty");
-                        const cupFilled = document.querySelector("#filterCupFilled");
-                        const vapour = document.querySelector("#coffeeVapour");
-
-                        let totalLength = 0;
-                        let virtualElapsed = 0;
-                        let lastNow = null;
-                        let lastProgress = 0;
-                        let cyclePaused = false;
-                        let lastCrossingIndex = -1;
-                        let popTimers = [];
-
-                        function speedMultiplier(progress) {
-                          let multiplier = 1;
-                          for (const center of cardCrossings) {
-                            let d = Math.abs(progress - center);
-                            d = Math.min(d, 1 - d);
-                            if (d < fastHalfWindow) {
-                              const t = d / fastHalfWindow;
-                              const smooth = 1 - (t * t * (3 - 2 * t));
-                              multiplier = Math.max(multiplier, 1 + (fastMultiplier - 1) * smooth);
-                            }
-                          }
-                          return multiplier;
-                        }
-
-                        function triggerCardPop(index) {
-                          const card = cards[index];
-                          if (!card) return;
-
-                          // Restart the animation cleanly if the traveler reaches the same card again.
-                          card.classList.remove("card-pop-active");
-                          void card.offsetWidth;
-                          card.classList.add("card-pop-active");
-
-                          const oldTimer = popTimers[index];
-                          if (oldTimer) window.clearTimeout(oldTimer);
-                          popTimers[index] = window.setTimeout(() => {
-                            card.classList.remove("card-pop-active");
-                          }, popDuration + 40);
-                        }
-
-                        function checkCardCrossings(progress) {
-                          for (let i = 0; i < cardCrossings.length; i++) {
-                            const center = cardCrossings[i];
-                            const crossed = lastProgress < center && progress >= center;
-                            const nearStart = lastProgress === 0 && progress >= Math.max(0, center - popLead) && progress < center;
-                            if ((crossed || nearStart) && lastCrossingIndex !== i) {
-                              lastCrossingIndex = i;
-                              triggerCardPop(i);
-                              break;
-                            }
-                          }
-
-                          // Allow the next card to trigger independently.
-                          if (lastCrossingIndex >= 0 && progress > cardCrossings[lastCrossingIndex] + 0.02) {
-                            lastCrossingIndex = -1;
-                          }
-                        }
-
-                        function setStage(progress) {
-                          let current = stages[0];
-                          for (const stage of stages) {
-                            if (progress >= stage.at) current = stage;
-                          }
-                          if (icon.dataset.stage !== current.src) {
-                            icon.src = current.src;
-                            icon.alt = current.alt;
-                            icon.dataset.stage = current.src;
-                          }
-                        }
-
-                        function showCoffeeMoment() {
-                          // The powder bowl disappears first. The cup immediately changes to coffee and vapour.
-                          traveler.style.opacity = "0";
-                          icon.style.opacity = "0";
-                          cupStage.classList.add("is-brewing");
-                          cupEmpty.style.opacity = "0";
-                          cupFilled.style.opacity = "1";
-                          vapour.classList.add("is-steaming");
-                        }
-
-                        function resetJourney() {
-                          vapour.classList.remove("is-steaming");
-                          cupStage.classList.remove("is-brewing");
-                          cupFilled.style.opacity = "0";
-                          cupEmpty.style.opacity = "1";
-                          traveler.style.opacity = "1";
-                          icon.style.opacity = "1";
-                          virtualElapsed = 0;
-                          lastProgress = 0;
-                          lastNow = null;
-                          lastCrossingIndex = -1;
-                          cards.forEach(card => card.classList.remove("card-pop-active"));
-                          popTimers.forEach(timer => timer && window.clearTimeout(timer));
-                          popTimers = [];
-                          setStage(0);
-                          cyclePaused = false;
-                        }
-
-                        function animate(now) {
-                          if (!totalLength) totalLength = route.getTotalLength();
-                          if (lastNow === null) lastNow = now;
-
-                          const dt = Math.min(now - lastNow, 50);
-                          lastNow = now;
-
-                          if (!cyclePaused) {
-                            const progress = (virtualElapsed / duration) % 1;
-                            virtualElapsed += dt * speedMultiplier(progress);
-                            const nextProgress = Math.min(virtualElapsed / duration, 1);
-
-                            checkCardCrossings(nextProgress);
-                            lastProgress = nextProgress;
-
-                            if (nextProgress >= cupArrival) {
-                              const point = route.getPointAtLength(totalLength);
-                              const x = (point.x / 1600) * board.clientWidth;
-                              const y = (point.y / 1480) * board.clientHeight;
-                              traveler.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-                              setStage(nextProgress);
-                              cyclePaused = true;
-                              showCoffeeMoment();
-                              window.setTimeout(resetJourney, 3000);
-                            } else {
-                              const point = route.getPointAtLength(nextProgress * totalLength);
-                              const x = (point.x / 1600) * board.clientWidth;
-                              const y = (point.y / 1480) * board.clientHeight;
-                              traveler.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-                              setStage(nextProgress);
-                            }
-                          }
-
-                          requestAnimationFrame(animate);
-                        }
-
-                        window.addEventListener("resize", () => {
-                          totalLength = 0;
-                          lastNow = null;
-                        });
-
-                        requestAnimationFrame(animate);
-                      })();
-    </script>
     <script src="js/cms.js"></script>
     <script src="js/main.js"></script>
 </body>

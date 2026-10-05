@@ -7,60 +7,25 @@
   var $ = function (s, c) { return (c || document).querySelector(s); };
   var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var webpCache = {};
-
-  function buildWebpCandidate(src) {
-    if (!src || src.indexOf('toWEBP/') !== -1 || /\.webp$/i.test(src)) return null;
-    var filename = src.split('?')[0].split('/').pop();
-    if (!/\.(png|jpe?g)$/i.test(filename)) return null;
-    return 'toWEBP/' + filename.replace(/\.(png|jpe?g)$/i, '.webp');
-  }
-
-  function getPreferredImageSource(src) {
-    if (!src) return Promise.resolve(src);
-    var candidate = buildWebpCandidate(src);
-    if (!candidate) return Promise.resolve(src);
-
-    if (webpCache[src]) return Promise.resolve(webpCache[src]);
-
-    return new Promise(function (resolve) {
-      var probe = new Image();
-      probe.onload = function () {
-        webpCache[src] = candidate;
-        resolve(candidate);
-      };
-      probe.onerror = function () {
-        webpCache[src] = src;
-        resolve(src);
-      };
-      probe.src = candidate + '?webp-check=' + Date.now();
-    });
-  }
-
-  function applyWebpFallback() {
-    $$('img[src]').forEach(function (img) {
-      var src = img.getAttribute('src');
-      if (!src) return;
-      getPreferredImageSource(src).then(function (resolved) {
-        if (resolved !== src) img.setAttribute('src', resolved);
-      });
-    });
-
-    $$('video[poster]').forEach(function (video) {
-      var poster = video.getAttribute('poster');
-      if (!poster) return;
-      getPreferredImageSource(poster).then(function (resolved) {
-        if (resolved !== poster) video.setAttribute('poster', resolved);
-      });
-    });
-  }
-
-  applyWebpFallback();
+  // images are already .webp / .jpg in /images — nothing to probe for
+  function getPreferredImageSource(src) { return Promise.resolve(src); }
 
   /* ---------- scroll lock ---------- */
-  var locks = 0;
-  function lockScroll() { locks++; document.body.classList.add('no-scroll'); }
-  function unlockScroll() { locks = Math.max(0, locks - 1); if (!locks) document.body.classList.remove('no-scroll'); }
+  // The page is locked ONLY while something is really open. (The old counter drifted:
+  // next/prev inside the photo viewer locked again each time, close unlocked once,
+  // so the page stayed stuck after closing.)
+  var OVERLAYS = '.modal.is-open, .lightbox.is-open, .room-modal.is-open, .pm.is-open, .lg.is-open, .nav-links.is-open, #preloader:not(.is-done)';
+  function overlayOpen() { return !!document.querySelector(OVERLAYS); }
+  function syncScroll() { document.body.classList.toggle('no-scroll', overlayOpen()); }
+  function lockScroll() { syncScroll(); }
+  function unlockScroll() { syncScroll(); }
+  window.fcSyncScroll = syncScroll;
+  // self-heal: if the page is ever left locked with nothing open, unlock on the next touch / wheel / key
+  ['wheel', 'touchstart', 'pointerdown', 'keydown'].forEach(function (ev) {
+    window.addEventListener(ev, function () {
+      if (document.body.classList.contains('no-scroll') && !overlayOpen()) document.body.classList.remove('no-scroll');
+    }, { passive: true });
+  });
 
   /* ======================================================================
      1. Preloader — always finishes, even if the video never loads
@@ -120,7 +85,7 @@
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
 
-    var links = $$('#navLinks a');
+    var links = $$('#navLinks a[href^="#"]');
     var targets = links.map(function (a) { return $(a.getAttribute('href')); }).filter(Boolean);
 
     if ('IntersectionObserver' in window && targets.length) {
@@ -315,9 +280,9 @@
   }());
 
   var galleryImages = [
-    'CafeImg/cafe-01.jpg', 'CafeImg/cafe-05.jpg', 'CafeImg/cafe-06.jpg',
-    'CafeImg/cafe-11.jpg', 'CafeImg/cafe-14.jpg', 'CafeImg/cafe-18.jpg',
-    'CafeImg/cafe-19.jpg', 'CafeImg/cafe-20.jpg', 'CafeImg/cafe-22.jpg'
+    'images/cafe/cafe-01.jpg', 'images/cafe/cafe-05.jpg', 'images/cafe/cafe-06.jpg',
+    'images/cafe/cafe-11.jpg', 'images/cafe/cafe-14.jpg', 'images/cafe/cafe-18.jpg',
+    'images/cafe/cafe-19.jpg', 'images/cafe/cafe-20.jpg', 'images/cafe/cafe-22.jpg'
   ];
 
   (function stack() {
@@ -529,176 +494,86 @@
   if (y) y.textContent = new Date().getFullYear();
 }());
 
-/* --- Editorial Slat Coverflow Engine with Category Filtering --- */
+/* --- Rooms accordion gallery (Interior / Exterior) --- */
 (() => {
     const stage = document.getElementById("slatStage");
     const container = document.getElementById("roomsSlatGallery");
     const prevBtn = document.getElementById("slatPrevBtn");
     const nextBtn = document.getElementById("slatNextBtn");
-    const currentIndexEl = document.getElementById("slatCurrentIndex");
-    const totalCountEl = document.getElementById("slatTotalCount");
+    const currentEl = document.getElementById("slatCurrentIndex");
+    const totalEl = document.getElementById("slatTotalCount");
     const progressBar = document.getElementById("slatProgressBar");
     const filterBtns = document.querySelectorAll(".rooms-pill-btn");
 
     if (!stage || !container) return;
 
     const allSlides = [
-        { id: "bedroom", label: "INTERIOR SUITE", title: "BEDROOM\nRETREAT", image: "cot/1.webp", category: "interior" },
-        { id: "hall", label: "LIVING SPACE", title: "CENTRAL\nHALL", image: "cot/2.webp", category: "interior" },
-        { id: "lounge", label: "LOUNGE CORNER", title: "COZY STEPS\nLOUNGE", image: "cot/6.webp", category: "interior" },
-        { id: "glade", label: "CANOPY RETREAT", title: "FOREST\nGLADE", image: "cot/3.webp", category: "exterior" },
-        { id: "terrace", label: "ENTRANCE DECK", title: "FRONT\nTERRACE", image: "cot/4.webp", category: "exterior" },
-        { id: "garden", label: "OUTDOOR AMBIENCE", title: "GARDEN\nDECK", image: "cot/5.webp", category: "exterior" }
+        { label: "Interior suite",   title: "Bedroom\nRetreat",   image: "images/rooms/1.webp", category: "interior" },
+        { label: "Living space",     title: "Central\nHall",      image: "images/rooms/2.webp", category: "interior" },
+        { label: "Lounge corner",    title: "Cozy Steps\nLounge", image: "images/rooms/6.webp", category: "interior" },
+        { label: "Canopy retreat",   title: "Forest\nGlade",      image: "images/rooms/3.webp", category: "exterior" },
+        { label: "Entrance deck",    title: "Front\nTerrace",     image: "images/rooms/4.webp", category: "exterior" },
+        { label: "Outdoor ambience", title: "Garden\nDeck",       image: "images/rooms/5.webp", category: "exterior" }
     ];
 
-    allSlides.forEach(s => { const img = new Image(); img.src = s.image; });
+    let category = "interior";
+    let slides = allSlides.filter(s => s.category === category);
+    let active = 0;
+    let panels = [];
 
-    let currentCategory = "interior";
-    let activeSlides = allSlides.filter(s => s.category === currentCategory);
-    let carouselPosition = 0;
-    let activeIndex = 0;
-    let containerWidth = container.clientWidth || 1100;
-    let isMoving = false;
-    let cardElements = [];
-
-    function renderCards() {
-        stage.innerHTML = activeSlides.map((slide, index) => `
-            <button type="button" class="horizon-slat__card" data-index="${index}" aria-label="Show ${slide.label}">
-                <img class="horizon-slat__image" src="${slide.image}" alt="${slide.label}" draggable="false">
-                <span class="horizon-slat__content-gradient"></span>
-                <span class="horizon-slat__content">
-                    <span class="horizon-slat__label">${slide.label}</span>
-                    <span class="horizon-slat__title">${slide.title.replace('\\n', '<br>')}</span>
+    function render() {
+        stage.innerHTML = slides.map((s, i) => `
+            <button type="button" class="rooms-panel" data-index="${i}" aria-label="Show ${s.label}" aria-pressed="false">
+                <img class="rooms-panel__img" src="${s.image}" alt="${s.label}" draggable="false">
+                <span class="rooms-panel__shade"></span>
+                <span class="rooms-panel__side">${s.label}</span>
+                <span class="rooms-panel__content">
+                    <span class="rooms-panel__tag">${s.label}</span>
+                    <span class="rooms-panel__title">${s.title.replace("\n", "<br>")}</span>
                 </span>
-            </button>
-        `).join("");
-
-        cardElements = Array.from(stage.querySelectorAll(".horizon-slat__card"));
-        cardElements.forEach(card => {
-            card.addEventListener("click", () => {
-                const idx = parseInt(card.getAttribute("data-index"), 10);
-                moveToSlide(idx);
-            });
+            </button>`).join("");
+        panels = Array.from(stage.querySelectorAll(".rooms-panel"));
+        panels.forEach((p, i) => {
+            p.addEventListener("click", () => setActive(i));
+            p.addEventListener("mouseenter", () => setActive(i));
         });
-
-        if (totalCountEl) totalCountEl.textContent = String(activeSlides.length).padStart(2, "0");
-        updateLayout();
+        if (totalEl) totalEl.textContent = String(slides.length).padStart(2, "0");
+        setActive(0);
     }
 
-    function clamp(val, min, max) { return Math.min(Math.max(val, min), max); }
-    function wrapIndex(val, total) { return ((val % total) + total) % total; }
-
-    function getRelativePosition(itemIndex, pos, total) {
-        const wrapped = wrapIndex(pos, total);
-        let rel = itemIndex - wrapped;
-        if (rel > total / 2) rel -= total;
-        if (rel < -total / 2) rel += total;
-        return rel;
-    }
-
-    function updateLayout() {
-        containerWidth = container.getBoundingClientRect().width;
-        const total = activeSlides.length;
-        const activeWidth = Math.round(clamp(containerWidth * 0.52, 320, 600));
-        const activeHeight = Math.round(activeWidth * 0.66);
-        const sideWidth = Math.round(clamp(containerWidth * 0.12, 80, 160));
-        const sideHeight = Math.round(clamp(activeHeight * 0.74, 210, 300));
-        const cardGap = Math.round(clamp(containerWidth * 0.022, 14, 28));
-        const visibleRange = Math.max(1, Math.min(2, Math.floor((total - 1) / 2)));
-
-        cardElements.forEach((card, index) => {
-            const rel = getRelativePosition(index, carouselPosition, total);
-            const dist = Math.abs(rel);
-            const isActive = dist < 0.5;
-            const isVisible = dist <= visibleRange + 0.5;
-
-            let hPos = 0;
-            if (dist !== 0) {
-                const firstSidePos = (activeWidth / 2) + cardGap + (sideWidth / 2);
-                const step = sideWidth + cardGap;
-                hPos = firstSidePos + Math.max(0, dist - 1) * step;
-                if (rel < 0) hPos = -hPos;
-            }
-
-            const w = isActive ? activeWidth : sideWidth;
-            const h = isActive ? activeHeight : sideHeight;
-            const opacity = dist <= visibleRange - 0.5 ? 1 : (dist <= visibleRange ? 0.35 : 0);
-
-            card.style.width = `${w}px`;
-            card.style.height = `${h}px`;
-            card.style.opacity = opacity;
-            card.style.zIndex = Math.round(100 - dist * 10);
-            card.style.transform = `translate(-50%, -50%) translate3d(${hPos}px, 0, 0)`;
-            card.style.pointerEvents = isVisible ? "auto" : "none";
-
-            card.classList.toggle("horizon-slat__card--active", isActive);
-            card.classList.toggle("horizon-slat__card--side", !isActive);
+    function setActive(i) {
+        active = (i + slides.length) % slides.length;
+        panels.forEach((p, idx) => {
+            const on = idx === active;
+            p.classList.toggle("is-active", on);
+            p.setAttribute("aria-pressed", on ? "true" : "false");
         });
-
-        if (currentIndexEl) currentIndexEl.textContent = String(activeIndex + 1).padStart(2, "0");
-        if (progressBar) progressBar.style.transform = `scaleX(${(activeIndex + 1) / total})`;
+        if (currentEl) currentEl.textContent = String(active + 1).padStart(2, "0");
+        if (progressBar) progressBar.style.transform = `scaleX(${(active + 1) / slides.length})`;
     }
 
-    function moveBy(direction) {
-        if (isMoving) return;
-        isMoving = true;
-        carouselPosition += direction;
-        activeIndex = wrapIndex(carouselPosition, activeSlides.length);
-        updateLayout();
-        setTimeout(() => { isMoving = false; }, 560);
-    }
-
-    function moveToSlide(requestedIndex) {
-        if (requestedIndex === activeIndex || isMoving) return;
-        let diff = requestedIndex - activeIndex;
-        const total = activeSlides.length;
-        if (diff > total / 2) diff -= total;
-        if (diff < -total / 2) diff += total;
-        moveBy(diff);
-    }
-
-    // Category Filter Switching
     filterBtns.forEach(btn => {
         btn.addEventListener("click", () => {
             const cat = btn.getAttribute("data-category");
-            if (cat === currentCategory) return;
-
-            filterBtns.forEach(b => {
-                b.classList.remove("is-active");
-                b.setAttribute("aria-selected", "false");
-            });
+            if (cat === category) return;
+            filterBtns.forEach(b => { b.classList.remove("is-active"); b.setAttribute("aria-selected", "false"); });
             btn.classList.add("is-active");
             btn.setAttribute("aria-selected", "true");
-
-            currentCategory = cat;
-            activeSlides = allSlides.filter(s => s.category === currentCategory);
-            carouselPosition = 0;
-            activeIndex = 0;
-            renderCards();
+            category = cat;
+            slides = allSlides.filter(s => s.category === category);
+            render();
         });
     });
 
-    if (prevBtn) prevBtn.addEventListener("click", () => moveBy(-1));
-    if (nextBtn) nextBtn.addEventListener("click", () => moveBy(1));
-
-    container.addEventListener("keydown", (e) => {
-        if (e.key === "ArrowLeft") { e.preventDefault(); moveBy(-1); }
-        if (e.key === "ArrowRight") { e.preventDefault(); moveBy(1); }
+    if (prevBtn) prevBtn.addEventListener("click", () => setActive(active - 1));
+    if (nextBtn) nextBtn.addEventListener("click", () => setActive(active + 1));
+    container.addEventListener("keydown", e => {
+        if (e.key === "ArrowLeft")  { e.preventDefault(); setActive(active - 1); }
+        if (e.key === "ArrowRight") { e.preventDefault(); setActive(active + 1); }
     });
 
-    let touchStartX = null;
-    container.addEventListener("pointerdown", (e) => { touchStartX = e.clientX; });
-    container.addEventListener("pointerup", (e) => {
-        if (touchStartX === null) return;
-        const diff = e.clientX - touchStartX;
-        touchStartX = null;
-        if (Math.abs(diff) > 40) moveBy(diff < 0 ? 1 : -1);
-    });
-
-    const ro = new ResizeObserver(() => updateLayout());
-    ro.observe(container);
-
-    renderCards();
+    allSlides.forEach(s => { const img = new Image(); img.src = s.image; });
+    render();
 })();
 
 (() => {
@@ -725,3 +600,477 @@
 })();
 
 
+/* ==========================================================================
+   OUR STORY — "Read full story" toggle
+   ========================================================================== */
+(() => {
+    const btn = document.getElementById("storyToggle");
+    const full = document.getElementById("storyFull");
+    const block = document.getElementById("ourStory");
+    if (!btn || !full) return;
+    const label = btn.querySelector(".ad-story-toggle-text");
+    const closedText = label ? label.textContent.trim() : "Read full story";
+
+    btn.addEventListener("click", () => {
+        const open = full.classList.toggle("is-open");
+        btn.setAttribute("aria-expanded", String(open));
+        full.setAttribute("aria-hidden", String(!open));
+        if (label) label.textContent = open ? "Show less" : closedText;
+        if (!open && block && block.getBoundingClientRect().top < 0) {
+            block.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+    });
+})();
+
+
+/* ==========================================================================
+   MOBILE — hamburger drawer, hero video (16:9 ↔ 9:16), swipe + tab helpers
+   ========================================================================== */
+(() => {
+    const $ = (s, c) => (c || document).querySelector(s);
+    const $$ = (s, c) => Array.from((c || document).querySelectorAll(s));
+
+    /* ---------- 1. Drawer menu ---------- */
+    const toggle = $("#navToggle");
+    const links = $("#navLinks");
+    const backdrop = $("#navBackdrop");
+    const drawerMq = window.matchMedia("(max-width: 900px)");
+
+    function setMenu(open) {
+        if (!toggle || !links) return;
+        links.classList.toggle("is-open", open);
+        if (backdrop) backdrop.classList.toggle("is-open", open);
+        toggle.setAttribute("aria-expanded", String(open));
+        toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+        window.fcSyncScroll();
+    }
+    if (toggle && links) {
+        toggle.addEventListener("click", () => setMenu(!links.classList.contains("is-open")));
+        if (backdrop) backdrop.addEventListener("click", () => setMenu(false));
+        links.addEventListener("click", e => { if (e.target.closest("a")) setMenu(false); });
+        document.addEventListener("keydown", e => { if (e.key === "Escape") setMenu(false); });
+        const onBp = () => { if (!drawerMq.matches) setMenu(false); };
+        if (drawerMq.addEventListener) drawerMq.addEventListener("change", onBp); else drawerMq.addListener(onBp);
+    }
+
+    /* ---------- 2. Hero video: skeleton while loading + swap source at the phone breakpoint ---------- */
+    const hero = $("#heroVideo");
+    const heroSec = $(".hero");
+    if (hero && heroSec) {
+        const mq = window.matchMedia("(max-width: 767px)");
+        const SRC = {
+            mobile: '<source src="Hero-Mob.webm" type="video/webm">',
+            desktop: '<source src="Hero.webm" type="video/webm">'
+        };
+        let fbTimer = null;
+        const ready = () => {
+            if (!heroSec.classList.contains("is-loading")) return;
+            clearTimeout(fbTimer);
+            heroSec.classList.remove("is-loading");
+            heroSec.classList.add("is-ready");
+        };
+        // video could not load at all → show the still photo instead of an endless skeleton
+        const fallback = () => {
+            clearTimeout(fbTimer);
+            heroSec.classList.remove("is-loading", "is-ready");
+            heroSec.classList.add("is-fallback");
+        };
+        const armTimer = () => { clearTimeout(fbTimer); fbTimer = setTimeout(fallback, 12000); };
+        const check = () => { if (hero.readyState >= 2) ready(); };
+        ["loadeddata", "canplay", "playing"].forEach(ev => hero.addEventListener(ev, check));
+        hero.addEventListener("error", fallback, true);
+        armTimer(); check();
+
+        const apply = () => {
+            const want = mq.matches ? "mobile" : "desktop";
+            const have = hero.getAttribute("data-active") === "mobile" ? "mobile" : "desktop";
+            if (want === have) return;
+            const wasPlaying = !hero.paused;
+            heroSec.classList.remove("is-ready", "is-fallback");
+            heroSec.classList.add("is-loading");
+            hero.innerHTML = SRC[want];
+            hero.setAttribute("data-active", want);
+            hero.load();
+            armTimer();
+            const p = (wasPlaying || !document.getElementById("preloader")) ? hero.play() : null;
+            if (p && p.catch) p.catch(() => {});
+        };
+        if (mq.addEventListener) mq.addEventListener("change", apply); else mq.addListener(apply);
+
+        // some phones pause autoplay when the tab is hidden — resume on return
+        document.addEventListener("visibilitychange", () => {
+            if (!document.hidden && !document.getElementById("preloader") && hero.paused) {
+                const p = hero.play(); if (p && p.catch) p.catch(() => {});
+            }
+        });
+    }
+
+    /* ---------- 3. Swipe helper (re-uses the existing arrow buttons) ---------- */
+    function swipe(el, onLeft, onRight) {
+        if (!el) return;
+        let x0 = 0, y0 = 0;
+        el.addEventListener("touchstart", e => { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
+        el.addEventListener("touchend", e => {
+            const dx = e.changedTouches[0].clientX - x0;
+            const dy = e.changedTouches[0].clientY - y0;
+            if (Math.abs(dx) < 45 || Math.abs(dx) < Math.abs(dy) * 1.3) return;
+            (dx < 0 ? onLeft : onRight)();
+        }, { passive: true });
+    }
+    const click = id => () => { const b = document.getElementById(id); if (b) b.click(); };
+
+    swipe($("#cardsStack"), click("nextCard"), click("prevCard"));          // cafe photo stack
+    swipe($("#lightbox"), click("lbNext"), click("lbPrev"));                 // photo viewer
+    swipe($("#roomsSlatGallery"), click("slatNextBtn"), click("slatPrevBtn")); // rooms gallery
+
+})();
+
+
+/* ==========================================================================
+   POLICIES POPUP — Privacy / Terms / Refund (footer links, #privacy etc.)
+   ========================================================================== */
+(() => {
+    const modal = document.getElementById("legalModal");
+    if (!modal) return;
+    const titles = { privacy: "Privacy Policy", terms: "Terms & Conditions", refund: "Refund Policy" };
+    const tabs = Array.from(modal.querySelectorAll(".lg-tab"));
+    const docs = Array.from(modal.querySelectorAll(".lg-doc"));
+    const body = document.getElementById("lgBody");
+    const title = document.getElementById("lgTitle");
+    let lastFocus = null;
+
+    function show(key) {
+        if (!titles[key]) key = "privacy";
+        tabs.forEach(t => { const on = t.dataset.tab === key; t.classList.toggle("is-on", on); t.setAttribute("aria-selected", String(on)); });
+        docs.forEach(d => { d.hidden = d.id !== "lg-" + key; });
+        title.textContent = titles[key];
+        body.scrollTop = 0;
+    }
+    function open(key) {
+        lastFocus = document.activeElement;
+        show(key);
+        modal.classList.add("is-open");
+        modal.setAttribute("aria-hidden", "false");
+        window.fcSyncScroll();
+        const c = document.getElementById("lgClose"); if (c) setTimeout(() => c.focus({ preventScroll: true }), 40);
+    }
+    function close() {
+        if (!modal.classList.contains("is-open")) return;
+        modal.classList.remove("is-open");
+        modal.setAttribute("aria-hidden", "true");
+        window.fcSyncScroll();
+        if (location.hash === "#privacy" || location.hash === "#terms" || location.hash === "#refund") {
+            history.replaceState(null, "", location.pathname + location.search);
+        }
+        if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
+    }
+
+    document.addEventListener("click", e => {
+        const a = e.target.closest("[data-legal]");
+        if (a) { e.preventDefault(); open(a.dataset.legal); }
+    });
+    tabs.forEach(t => t.addEventListener("click", () => show(t.dataset.tab)));
+    document.getElementById("lgClose").addEventListener("click", close);
+    modal.addEventListener("click", e => { if (e.target === modal) close(); });
+    document.addEventListener("keydown", e => { if (e.key === "Escape") close(); });
+
+    // direct links like  yoursite.com/#privacy
+    const fromHash = () => { const k = location.hash.slice(1); if (titles[k]) open(k); };
+    window.addEventListener("hashchange", fromHash);
+    if (titles[location.hash.slice(1)]) setTimeout(fromHash, 600);
+})();
+
+
+/* ==========================================================================
+   FARM SHOP — product popup
+   Every size has its OWN quantity (e.g. 1 × 400 g + 2 × 700 g in one order).
+   The WhatsApp message carries the product, sizes, quantities, note, name and
+   the product PHOTO link.
+   ========================================================================== */
+(() => {
+    // 👉 Owner's WhatsApp number (country code + number, no + or spaces)
+    const WA_NUMBER = "919444060619";
+
+    const modal = document.getElementById("productModal");
+    const grid = document.getElementById("productsGrid");
+    if (!modal || !grid) return;
+
+    const $ = id => document.getElementById(id);
+    const img = $("pmImg"), title = $("pmTitle"), tag = $("pmTag"), desc = $("pmDesc");
+    const linesBox = $("pmLines"), qtyLabel = $("pmQtyLabel");
+    const buy = $("pmBuy"), buyText = $("pmBuyText");
+    const nameIn = $("pmName"), noteIn = $("pmNote"), summary = $("pmSummary");
+    let current = null, lastFocus = null;
+
+    const clamp = n => Math.min(99, Math.max(0, parseInt(n, 10) || 0));
+
+    // Absolute link to the product photo. WhatsApp turns it into a picture preview
+    // once the site is online (a local file:// page has no public address).
+    function photoUrl(src) {
+        let base;
+        if (/^https?:$/.test(location.protocol)) base = location.href;
+        else {
+            const c = document.querySelector('link[rel="canonical"]');
+            base = c ? c.href : "https://forestcafe.in/";
+        }
+        try { return new URL(src, base).href; } catch (_) { return src; }
+    }
+
+    function chosen() { return current.lines.filter(l => l.qty > 0); }
+
+    function refresh() {
+        const sel = chosen();
+        const total = sel.reduce((n, l) => n + l.qty, 0);
+        const single = current.lines.length === 1;
+
+        if (!total) {
+            summary.textContent = "Pick at least 1 to order";
+            buyText.textContent = "Select a quantity";
+            buy.classList.add("is-disabled");
+            buy.setAttribute("aria-disabled", "true");
+            buy.href = "#";
+            return;
+        }
+        buy.classList.remove("is-disabled");
+        buy.removeAttribute("aria-disabled");
+
+        summary.textContent = current.name + " — " + sel.map(l => (single ? "" : l.label + " ") + "× " + l.qty).join(", ").replace(/^\s+/, "");
+        buyText.textContent = "Send order on WhatsApp";
+
+        const out = [
+            "Hello Forest Cafe! 🌿",
+            "I would like to order from your Farm Shop:",
+            "",
+            "🛒 *" + current.name + "*"
+        ];
+        if (single) out.push("🔢 Quantity: " + sel[0].qty);
+        else sel.forEach(l => out.push("📦 " + l.label + " × " + l.qty));
+        out.push("", "🖼️ Product photo:", photoUrl(current.img));
+        const nm = nameIn.value.trim(), nt = noteIn.value.trim();
+        if (nt) out.push("", "📝 Note: " + nt);
+        if (nm) out.push("", "👤 Name: " + nm);
+        out.push("", "Kindly confirm the price, availability and how I can collect it or have it delivered. Thank you! 🙏");
+        buy.href = "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(out.join("\n"));
+    }
+
+    function buildLines() {
+        linesBox.innerHTML = "";
+        const multi = current.lines.length > 1;
+        qtyLabel.textContent = multi ? "Choose size & quantity" : "How many do you need?";
+        current.lines.forEach((l, idx) => {
+            const row = document.createElement("div");
+            row.className = "pm-line" + (multi ? " is-multi" : "");
+            const name = document.createElement("span");
+            name.className = "pm-line-name";
+            name.textContent = multi ? l.label : "Quantity";
+            const step = document.createElement("div");
+            step.className = "pm-qty";
+            const minus = document.createElement("button"); minus.type = "button"; minus.textContent = "−"; minus.setAttribute("aria-label", "Decrease " + l.label);
+            const inp = document.createElement("input"); inp.type = "number"; inp.min = "0"; inp.max = "99"; inp.inputMode = "numeric"; inp.value = l.qty; inp.setAttribute("aria-label", l.label + " quantity");
+            const plus = document.createElement("button"); plus.type = "button"; plus.textContent = "+"; plus.setAttribute("aria-label", "Increase " + l.label);
+            const set = v => { l.qty = clamp(v); inp.value = l.qty; row.classList.toggle("is-on", l.qty > 0); refresh(); };
+            minus.addEventListener("click", () => set(l.qty - 1));
+            plus.addEventListener("click", () => set(l.qty + 1));
+            inp.addEventListener("input", () => { l.qty = clamp(inp.value); row.classList.toggle("is-on", l.qty > 0); refresh(); });
+            inp.addEventListener("change", () => set(inp.value));
+            step.append(minus, inp, plus);
+            row.append(name, step);
+            row.classList.toggle("is-on", l.qty > 0);
+            linesBox.appendChild(row);
+        });
+    }
+
+    function open(card) {
+        const name = card.querySelector(".product-title").textContent.trim();
+        const sizes = (card.dataset.variants || "").split("|").map(s => s.trim()).filter(Boolean);
+        const src = card.querySelector("img");
+        current = {
+            name: name,
+            img: src.getAttribute("src"),
+            lines: (sizes.length ? sizes : ["Quantity"]).map((s, i) => ({ label: s, qty: i === 0 ? 1 : 0 }))
+        };
+        img.src = src.getAttribute("src");
+        img.alt = src.alt || name;
+        title.textContent = name;
+        tag.textContent = card.querySelector(".product-weight").textContent.trim();
+        desc.textContent = card.querySelector(".product-desc").textContent.trim();
+        buildLines();
+        refresh();
+        lastFocus = document.activeElement;
+        modal.classList.add("is-open");
+        modal.setAttribute("aria-hidden", "false");
+        window.fcSyncScroll();
+        const panel = modal.querySelector(".pm-panel"); if (panel) panel.scrollTop = 0;
+        setTimeout(() => { const f = linesBox.querySelector("input"); if (f) f.focus({ preventScroll: true }); }, 50);
+    }
+
+    function close() {
+        if (!modal.classList.contains("is-open")) return;
+        modal.classList.remove("is-open");
+        modal.setAttribute("aria-hidden", "true");
+        window.fcSyncScroll();
+        if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
+    }
+
+    grid.addEventListener("click", e => {
+        const card = e.target.closest(".product-card");
+        if (card && !card.classList.contains("is-unavailable")) open(card);
+    });
+    grid.addEventListener("keydown", e => {
+        if ((e.key === "Enter" || e.key === " ") && e.target.classList.contains("product-card")) {
+            e.preventDefault(); open(e.target);
+        }
+    });
+    buy.addEventListener("click", e => { if (buy.classList.contains("is-disabled")) e.preventDefault(); });
+    nameIn.addEventListener("input", () => current && refresh());
+    noteIn.addEventListener("input", () => current && refresh());
+    $("pmClose").addEventListener("click", close);
+    modal.addEventListener("click", e => { if (e.target === modal) close(); });
+    document.addEventListener("keydown", e => { if (e.key === "Escape") close(); });
+})();
+
+/* ==========================================================================
+   REVIEWS — spotlight + bubbles
+   The chosen review is shown large; all 10 sit around it as bubbles
+   (a ring on desktop, a tidy grid on phones). Tap a bubble, use ‹ ›, arrow
+   keys, or swipe the big card. Nothing moves on its own.
+   ========================================================================== */
+(() => {
+    const root = document.getElementById("rvHang");
+    const ring = document.getElementById("rvbRing");
+    const big = document.getElementById("rvbBig");
+    if (!root || !ring || !big) return;
+    const dots = Array.from(ring.querySelectorAll(".rvb-dot"));
+    const n = dots.length;
+    const cur = document.getElementById("rvbCur");
+    const hint = root.querySelector(".rvb-hint");
+    const card = root.querySelector(".rvb-card");
+    let i = 0;
+
+    function select(k, dir) {
+        i = (k + n) % n;
+        const src = dots[i].querySelector("img");
+        big.src = src.getAttribute("src");
+        big.alt = src.alt;
+        big.style.setProperty("--from", ((dir || 0) * 46) + "px");
+        big.classList.remove("is-pop"); void big.offsetWidth; big.classList.add("is-pop");
+        dots.forEach((d, j) => d.setAttribute("aria-current", j === i ? "true" : "false"));
+        cur.textContent = String(i + 1).padStart(2, "0");
+        if (hint) hint.classList.add("is-off");
+    }
+
+    dots.forEach((d, j) => d.addEventListener("click", () => select(j, j > i ? 1 : -1)));
+    document.getElementById("rvbPrev").addEventListener("click", () => select(i - 1, -1));
+    document.getElementById("rvbNext").addEventListener("click", () => select(i + 1, 1));
+    root.addEventListener("keydown", e => {
+        if (e.key === "ArrowRight") { e.preventDefault(); select(i + 1, 1); }
+        if (e.key === "ArrowLeft") { e.preventDefault(); select(i - 1, -1); }
+    });
+
+    // swipe the big card
+    let sx = 0, sy = 0, down = false;
+    card.addEventListener("pointerdown", e => { down = true; sx = e.clientX; sy = e.clientY; });
+    card.addEventListener("pointerup", e => {
+        if (!down) return; down = false;
+        const dx = e.clientX - sx, dy = e.clientY - sy;
+        if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.3) select(i + (dx < 0 ? 1 : -1), dx < 0 ? 1 : -1);
+    });
+    card.addEventListener("pointercancel", () => { down = false; });
+
+    // bubbles pop in when the section scrolls into view
+    const enter = () => root.classList.add("is-in");
+    if (!("IntersectionObserver" in window)) enter();
+    else {
+        const io = new IntersectionObserver((es, o) => { es.forEach(en => { if (en.isIntersecting) { enter(); o.disconnect(); } }); }, { threshold: 0.12 });
+        io.observe(root);
+    }
+    select(0, 0);
+})();
+
+/* ==========================================================================
+   IMAGE SKELETONS — a soft shimmer while a photo loads, then a gentle fade-in
+   (instead of an empty hole / sudden pop). Transparent artwork is skipped.
+   ========================================================================== */
+(() => {
+    const SKIP = ".rvb, .ad-minion-perch-layer, .brand, .rv-head, .little-farmer-logo, .ad-board-image, .sts-media";
+    const imgs = Array.from(document.querySelectorAll("img")).filter(im =>
+        !im.complete && im.getAttribute("src") && !im.closest(SKIP));
+    imgs.forEach(im => {
+        im.setAttribute("data-skel", "");
+        const done = () => {
+            im.removeAttribute("data-skel");
+            im.classList.add("img-in");
+            im.removeEventListener("load", done);
+            im.removeEventListener("error", fail);
+        };
+        const fail = () => { im.removeAttribute("data-skel"); };
+        im.addEventListener("load", done);
+        im.addEventListener("error", fail);
+    });
+})();
+
+
+/* ==========================================================================
+   TINY COT + STORY — make sure their entrance (.reveal) always fires on scroll
+   (from the friend's files)
+   ========================================================================== */
+(function storyScrollReveals() {
+    var revealElements = document.querySelectorAll('.ad-block.reveal, .stay-hero-split.reveal');
+    if (!revealElements.length || !('IntersectionObserver' in window)) return;
+
+    var observer = new IntersectionObserver(function (entries, obs) {
+        entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-in');
+                obs.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+    revealElements.forEach(function (el) { observer.observe(el); });
+})();
+
+
+/* ==========================================================================
+   SOIL TO SIP — video plays only while it is on screen; title board drops in;
+   the board image is found whatever extension it was saved with.
+   ========================================================================== */
+(() => {
+    const v = document.getElementById("stsVideo");
+    const board = document.getElementById("stsBoard");
+    if (!v) return;
+    const media = v.closest(".sts-media");
+    const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    // title board: try png → webp → jpg → jpeg until one exists
+    if (board) {
+        const exts = (board.dataset.exts || "png").split(",");
+        const base = board.getAttribute("src").replace(/\.[a-z]+$/i, "");
+        let k = 0;
+        board.addEventListener("load", () => { board.style.opacity = ""; });
+        board.addEventListener("error", () => { k++; if (k < exts.length) board.src = base + "." + exts[k]; });
+    }
+
+    const ready = () => media.classList.remove("is-loading");
+    v.addEventListener("loadeddata", ready);
+    v.addEventListener("playing", ready);
+    v.addEventListener("error", ready, true);   // no video file → just show the dark backdrop + board
+    if (v.readyState >= 2) ready();
+
+    if (!("IntersectionObserver" in window)) { media.classList.add("is-in"); if (!reduce) v.play().catch(() => {}); return; }
+
+    // start downloading a little before it scrolls in
+    new IntersectionObserver((es, o) => {
+        es.forEach(en => { if (en.isIntersecting) { v.preload = "auto"; o.disconnect(); } });
+    }, { rootMargin: "700px 0px" }).observe(media);
+
+    // play only while visible
+    new IntersectionObserver(es => {
+        es.forEach(en => {
+            if (en.isIntersecting) {
+                media.classList.add("is-in");
+                if (!reduce) { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
+            } else if (!v.paused) v.pause();
+        });
+    }, { threshold: 0.25 }).observe(media);
+})();
