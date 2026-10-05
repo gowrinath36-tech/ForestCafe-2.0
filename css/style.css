@@ -4884,3 +4884,172 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
     .sts-media.is-in .sts-board { animation: none; opacity: 1; }
     .sts-media.is-loading::after { animation: none; }
 }
+
+/* ==========================================================================
+   CINEMA WORKS — Magnetic Deck & Expandable Drawer
+   ========================================================================== */
+
+/* Cinema Drawer Outer Structure */
+.ad-story-actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 26px;
+}
+.ad-cinema-toggle {
+    border-color: #F2B676 !important;
+    color: #F2B676 !important;
+}
+.ad-cinema-toggle:hover {
+    background: rgba(242, 182, 118, 0.15) !important;
+    color: #FFF3E3 !important;
+}
+.ad-cinema-toggle .arrow {
+    transition: transform 0.35s ease;
+    display: inline-block;
+}
+.ad-cinema-toggle[aria-expanded="true"] .arrow {
+    transform: rotate(180deg);
+}
+
+.ad-cinema-drawer {
+    display: grid;
+    grid-template-rows: 0fr;
+    visibility: hidden;
+    opacity: 0;
+    transition: grid-template-rows .65s cubic-bezier(.65, 0, .2, 1), opacity .5s ease, visibility 0s linear .65s, margin-top .65s ease;
+    margin-top: 0;
+    width: 100%;
+}
+.ad-cinema-drawer.is-open {
+    grid-template-rows: 1fr;
+    visibility: visible;
+    opacity: 1;
+    margin-top: 48px;
+    transition: grid-template-rows .65s cubic-bezier(.65, 0, .2, 1), opacity .6s ease .1s, visibility 0s, margin-top .65s ease;
+}
+.ad-cinema-drawer-inner {
+    overflow: hidden;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 36px 12px 42px;
+    border-radius: 28px;
+    background: rgba(13, 19, 11, 0.88);
+    border: 1px solid rgba(242, 182, 118, 0.25);
+    backdrop-filter: blur(10px);
+}
+.ad-cinema-header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+.ad-cinema-title {
+    font-family: 'CoffeeTown', cursive, sans-serif !important;
+    font-size: clamp(1.8rem, 3.2vw, 2.5rem);
+    color: #FFF3E3;
+    margin: 6px 0 8px;
+}
+.ad-cinema-subtitle {
+    font-size: 0.95rem;
+    color: rgba(247, 244, 235, 0.75);
+}
+
+/* Magnetic Deck Physics Stage */
+.md-field {
+    position: relative;
+    width: 100%;
+    max-width: 1140px;
+    height: 480px;
+    overflow: hidden;
+    border-radius: 24px;
+    background: radial-gradient(120% 120% at 50% 20%, #1c241a 0%, #0d130c 60%, #060906 100%);
+    cursor: crosshair;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: none;
+}
+.md-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 520px;
+    height: 520px;
+    margin: -260px 0 0 -260px;
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .4s ease;
+    z-index: 1;
+    background: radial-gradient(circle, rgba(242, 182, 118, 0.28) 0%, rgba(201, 128, 58, 0.12) 40%, transparent 68%);
+}
+.md-hub {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    z-index: 5;
+}
+.md-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200px;
+    height: 280px;
+    border-radius: 16px;
+    overflow: hidden;
+    will-change: transform;
+    background: #181f16;
+    border: 1px solid rgba(242, 182, 118, 0.35);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.45), 0 24px 44px -14px rgba(0,0,0,0.8);
+    display: flex;
+    flex-direction: column;
+}
+.md-photo {
+    flex: 1;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+.md-caption {
+    padding: 10px 14px;
+    background: rgba(18, 25, 17, 0.95);
+    border-top: 1px solid rgba(242, 182, 118, 0.2);
+    text-align: left;
+}
+.md-role {
+    display: block;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #F2B676;
+}
+.md-name {
+    margin: 2px 0 0;
+    font-size: 0.96rem;
+    font-weight: 600;
+    color: #FFF3E3;
+}
+
+/* Warm film gradient placeholders */
+.placeholder-movie-1 { background: radial-gradient(circle at 50% 40%, #5a341e 0%, #201107 100%); }
+.placeholder-movie-2 { background: radial-gradient(circle at 50% 40%, #1e4a36 0%, #0a1f16 100%); }
+.placeholder-movie-3 { background: radial-gradient(circle at 50% 40%, #5d481b 0%, #281e09 100%); }
+.placeholder-movie-4 { background: radial-gradient(circle at 50% 40%, #3a4b35 0%, #162013 100%); }
+.placeholder-movie-5 { background: radial-gradient(circle at 50% 40%, #55303c 0%, #241117 100%); }
+.placeholder-movie-6 { background: radial-gradient(circle at 50% 40%, #29404f 0%, #0d1820 100%); }
+
+.cinema-stack-hint {
+    margin-top: 20px;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    color: rgba(242, 182, 118, 0.85);
+}
+
+@media (max-width: 768px) {
+    .md-field { height: 420px; }
+}

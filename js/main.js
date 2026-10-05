@@ -930,10 +930,7 @@
 })();
 
 /* ==========================================================================
-   REVIEWS — spotlight + bubbles
-   The chosen review is shown large; all 10 sit around it as bubbles
-   (a ring on desktop, a tidy grid on phones). Tap a bubble, use ‹ ›, arrow
-   keys, or swipe the big card. Nothing moves on its own.
+   REVIEWS — spotlight + bubbles with 2s shuffle & 15s interaction pause
    ========================================================================== */
 (() => {
     const root = document.getElementById("rvHang");
@@ -946,6 +943,8 @@
     const hint = root.querySelector(".rvb-hint");
     const card = root.querySelector(".rvb-card");
     let i = 0;
+    let autoTimer = null;
+    let pauseTimer = null;
 
     function select(k, dir) {
         i = (k + n) % n;
@@ -959,31 +958,77 @@
         if (hint) hint.classList.add("is-off");
     }
 
-    dots.forEach((d, j) => d.addEventListener("click", () => select(j, j > i ? 1 : -1)));
-    document.getElementById("rvbPrev").addEventListener("click", () => select(i - 1, -1));
-    document.getElementById("rvbNext").addEventListener("click", () => select(i + 1, 1));
-    root.addEventListener("keydown", e => {
-        if (e.key === "ArrowRight") { e.preventDefault(); select(i + 1, 1); }
-        if (e.key === "ArrowLeft") { e.preventDefault(); select(i - 1, -1); }
+    function startAutoLoop() {
+        stopAutoLoop();
+        autoTimer = setInterval(() => {
+            select(i + 1, 1);
+        }, 2000);
+    }
+
+    function stopAutoLoop() {
+        if (autoTimer) {
+            clearInterval(autoTimer);
+            autoTimer = null;
+        }
+    }
+
+    function handleUserInteraction(nextIndex, dir) {
+        stopAutoLoop();
+        if (pauseTimer) clearTimeout(pauseTimer);
+        
+        select(nextIndex, dir);
+
+        // Wait 15 seconds to allow reading before resuming the 2s loop
+        pauseTimer = setTimeout(() => {
+            startAutoLoop();
+        }, 15000);
+    }
+
+    // Direct click on any circle bubble brings that review to center
+    dots.forEach((d, j) => {
+        d.addEventListener("click", () => handleUserInteraction(j, j > i ? 1 : -1));
     });
 
-    // swipe the big card
+    document.getElementById("rvbPrev").addEventListener("click", () => handleUserInteraction(i - 1, -1));
+    document.getElementById("rvbNext").addEventListener("click", () => handleUserInteraction(i + 1, 1));
+    
+    root.addEventListener("keydown", e => {
+        if (e.key === "ArrowRight") { e.preventDefault(); handleUserInteraction(i + 1, 1); }
+        if (e.key === "ArrowLeft") { e.preventDefault(); handleUserInteraction(i - 1, -1); }
+    });
+
+    // Touch/drag swipe on the big center card
     let sx = 0, sy = 0, down = false;
     card.addEventListener("pointerdown", e => { down = true; sx = e.clientX; sy = e.clientY; });
     card.addEventListener("pointerup", e => {
         if (!down) return; down = false;
         const dx = e.clientX - sx, dy = e.clientY - sy;
-        if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.3) select(i + (dx < 0 ? 1 : -1), dx < 0 ? 1 : -1);
+        if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.3) {
+            handleUserInteraction(i + (dx < 0 ? 1 : -1), dx < 0 ? 1 : -1);
+        }
     });
     card.addEventListener("pointercancel", () => { down = false; });
 
-    // bubbles pop in when the section scrolls into view
-    const enter = () => root.classList.add("is-in");
-    if (!("IntersectionObserver" in window)) enter();
-    else {
-        const io = new IntersectionObserver((es, o) => { es.forEach(en => { if (en.isIntersecting) { enter(); o.disconnect(); } }); }, { threshold: 0.12 });
+    // Bubbles appear and loop begins once scrolled into view
+    const enter = () => {
+        root.classList.add("is-in");
+        startAutoLoop();
+    };
+
+    if (!("IntersectionObserver" in window)) {
+        enter();
+    } else {
+        const io = new IntersectionObserver((es, o) => {
+            es.forEach(en => {
+                if (en.isIntersecting) {
+                    enter();
+                    o.disconnect();
+                }
+            });
+        }, { threshold: 0.12 });
         io.observe(root);
     }
+
     select(0, 0);
 })();
 
@@ -1073,4 +1118,210 @@
             } else if (!v.paused) v.pause();
         });
     }, { threshold: 0.25 }).observe(media);
+})();
+
+/* ==========================================================================
+   CINEMA WORKS — Magnetic Deck (Cursor Speed Scatter + Spring Integration)
+   ========================================================================== */
+(() => {
+    const toggleBtn = document.getElementById("cinemaToggle");
+    const drawer = document.getElementById("cinemaStackWrap");
+    const field = document.getElementById("mdField");
+    const hub = document.getElementById("mdHub");
+    const glow = document.getElementById("mdGlow");
+    if (!toggleBtn || !drawer || !field || !hub) return;
+
+    const cardsEl = Array.from(hub.querySelectorAll(".md-card"));
+    const count = cardsEl.length;
+
+    // Accordion Toggle
+    let isDrawerActive = false;
+    toggleBtn.addEventListener("click", () => {
+        isDrawerActive = drawer.classList.toggle("is-open");
+        toggleBtn.setAttribute("aria-expanded", String(isDrawerActive));
+        drawer.setAttribute("aria-hidden", String(!isDrawerActive));
+        if (isDrawerActive) {
+            measure();
+            syncRest();
+            field.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }
+    });
+
+    // Physics Constants
+    const PROXIMITY = 520;
+    const PUSH = 4.2;
+    const MAX_FORCE = 260;
+    const TILT = 0.09;
+    const NEIGHBOR = 0.22;
+    const STIFFNESS = 0.052;
+    const FRICTION = 0.86;
+    const SPAN = 1080;
+
+    const POSE = {
+        x: [-440, -266, -92, 92, 266, 440],
+        y: [22, -16, 28, -10, 24, -14],
+        rot: [-8, 6, -5, 8, -6, 7]
+    };
+
+    let fit = 1;
+    function measure() {
+        const fieldWidth = field.offsetWidth || window.innerWidth;
+        fit = Math.min(1, fieldWidth / SPAN, 480 / 460);
+        fit = Math.max(0.42, fit);
+    }
+
+    const deck = POSE.x.map((_, i) => ({
+        restX: 0,
+        restY: 0,
+        restR: POSE.rot[i],
+        x: 0,
+        y: 0,
+        r: POSE.rot[i],
+        vx: 0,
+        vy: 0,
+        vr: 0,
+        el: cardsEl[i]
+    }));
+
+    function syncRest() {
+        deck.forEach((c, i) => {
+            c.restX = POSE.x[i] * fit;
+            c.restY = POSE.y[i] * fit;
+        });
+    }
+
+    measure();
+    syncRest();
+    deck.forEach(c => {
+        c.x = c.restX;
+        c.y = c.restY;
+    });
+
+    const cursor = {
+        x: -9999,
+        y: -9999,
+        lastX: -9999,
+        lastY: -9999,
+        vx: 0,
+        vy: 0,
+        primed: false
+    };
+
+    function onPointerMove(clientX, clientY) {
+        if (!cursor.primed) {
+            cursor.lastX = clientX;
+            cursor.lastY = clientY;
+            cursor.primed = true;
+        }
+        cursor.x = clientX;
+        cursor.y = clientY;
+        if (glow) {
+            const r = field.getBoundingClientRect();
+            glow.style.transform = `translate(${clientX - r.left}px, ${clientY - r.top}px)`;
+            glow.style.opacity = "1";
+        }
+    }
+
+    field.addEventListener("pointermove", e => onPointerMove(e.clientX, e.clientY));
+    field.addEventListener("pointerleave", () => {
+        cursor.lastX = cursor.x;
+        cursor.lastY = cursor.y;
+        cursor.vx = 0;
+        cursor.vy = 0;
+        if (glow) glow.style.opacity = "0";
+    });
+
+    // Touch support for phones
+    field.addEventListener("touchmove", e => {
+        if (e.touches.length > 0) {
+            onPointerMove(e.touches[0].clientX, e.touches[0].clientY);
+        }
+    }, { passive: true });
+
+    field.addEventListener("touchend", () => {
+        if (glow) glow.style.opacity = "0";
+    });
+
+    function getPushForce(c) {
+        const speed = Math.hypot(cursor.vx, cursor.vy);
+        if (speed < 0.5) return { fx: 0, fy: 0 };
+        const r = hub.getBoundingClientRect();
+        const cx = r.left + c.restX;
+        const cy = r.top + c.restY;
+        const dist = Math.hypot(cursor.x - cx, cursor.y - cy);
+        const reach = PROXIMITY * fit;
+        if (dist > reach) return { fx: 0, fy: 0 };
+        const weight = Math.pow(1 - dist / reach, 3);
+        const clampF = v => Math.min(MAX_FORCE, Math.max(-MAX_FORCE, v));
+        return {
+            fx: clampF(cursor.vx * PUSH * weight),
+            fy: clampF(cursor.vy * PUSH * weight)
+        };
+    }
+
+    function calculateForces() {
+        const directForces = deck.map(getPushForce);
+        return deck.map((_, i) => {
+            let fx = directForces[i].fx;
+            let fy = directForces[i].fy;
+            directForces.forEach((f, j) => {
+                if (j === i) return;
+                const falloff = Math.pow(NEIGHBOR, Math.abs(j - i));
+                fx += f.fx * falloff;
+                fy += f.fy * falloff * 0.6;
+            });
+            return { fx, fy };
+        });
+    }
+
+    // Virtual preview wander when user is idle
+    let vt = 0;
+    let idleFrames = 0;
+
+    function tick() {
+        if (isDrawerActive) {
+            const dx = cursor.x - cursor.lastX;
+            const dy = cursor.y - cursor.lastY;
+            cursor.vx = cursor.vx * 0.6 + dx * 0.4;
+            cursor.vy = cursor.vy * 0.6 + dy * 0.4;
+            cursor.lastX = cursor.x;
+            cursor.lastY = cursor.y;
+
+            if (Math.hypot(dx, dy) < 0.1) idleFrames++; else idleFrames = 0;
+
+            // Gentle virtual wave if idle for 2 seconds
+            if (idleFrames > 120) {
+                const r = field.getBoundingClientRect();
+                vt += 0.016;
+                const px = r.left + r.width * (0.5 + 0.38 * Math.sin(vt) * Math.cos(vt * 0.5));
+                const py = r.top + r.height * (0.5 + 0.16 * Math.sin(vt * 1.6));
+                onPointerMove(px, py);
+            }
+
+            const forces = calculateForces();
+            for (let i = 0; i < count; i++) {
+                const c = deck[i];
+                const { fx, fy } = forces[i];
+                c.vx = (c.vx + (c.restX + fx - c.x) * STIFFNESS) * FRICTION;
+                c.vy = (c.vy + (c.restY + fy - c.y) * STIFFNESS) * FRICTION;
+                c.vr = (c.vr + (c.restR + fx * TILT - c.r) * STIFFNESS) * FRICTION;
+                c.x += c.vx;
+                c.y += c.vy;
+                c.r += c.vr;
+
+                if (c.el) {
+                    c.el.style.transform = `translate(-50%,-50%) translate(${c.x.toFixed(1)}px,${c.y.toFixed(1)}px) rotate(${c.r.toFixed(2)}deg) scale(${fit.toFixed(3)})`;
+                    c.el.style.zIndex = i;
+                }
+            }
+        }
+        requestAnimationFrame(tick);
+    }
+
+    window.addEventListener("resize", () => {
+        measure();
+        syncRest();
+    });
+
+    requestAnimationFrame(tick);
 })();
