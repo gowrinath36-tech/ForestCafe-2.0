@@ -1128,7 +1128,6 @@
     const drawer = document.getElementById("cinemaStackWrap");
     const field = document.getElementById("mdField");
     const hub = document.getElementById("mdHub");
-    const glow = document.getElementById("mdGlow");
     if (!toggleBtn || !drawer || !field || !hub) return;
 
     const cardsEl = Array.from(hub.querySelectorAll(".md-card"));
@@ -1157,10 +1156,18 @@
     const FRICTION = 0.86;
     const SPAN = 1080;
 
+    // Automatically distribute rest positions evenly regardless of 4, 6, or more cards
+    const spanWidth = Math.min(880, (count - 1) * 165);
+    const startX = -spanWidth / 2;
+    const stepX = count > 1 ? spanWidth / (count - 1) : 0;
+
     const POSE = {
-        x: [-440, -266, -92, 92, 266, 440],
-        y: [22, -16, 28, -10, 24, -14],
-        rot: [-8, 6, -5, 8, -6, 7]
+        x: cardsEl.map((_, i) => startX + i * stepX),
+        y: cardsEl.map((_, i) => (i % 2 === 0 ? 18 : -14)),
+        rot: cardsEl.map((_, i) => {
+            const progress = count > 1 ? (i / (count - 1)) * 2 - 1 : 0;
+            return progress * 9 + (i % 2 === 0 ? -2 : 3);
+        })
     };
 
     let fit = 1;
@@ -1215,11 +1222,6 @@
         }
         cursor.x = clientX;
         cursor.y = clientY;
-        if (glow) {
-            const r = field.getBoundingClientRect();
-            glow.style.transform = `translate(${clientX - r.left}px, ${clientY - r.top}px)`;
-            glow.style.opacity = "1";
-        }
     }
 
     field.addEventListener("pointermove", e => onPointerMove(e.clientX, e.clientY));
@@ -1228,19 +1230,15 @@
         cursor.lastY = cursor.y;
         cursor.vx = 0;
         cursor.vy = 0;
-        if (glow) glow.style.opacity = "0";
     });
 
     // Touch support for phones
     field.addEventListener("touchmove", e => {
         if (e.touches.length > 0) {
-            onPointerMove(e.touches[0].clientX, e.touches[0].clientY);
+            const t = e.touches[0];
+            onPointerMove(t.clientX, t.clientY);
         }
     }, { passive: true });
-
-    field.addEventListener("touchend", () => {
-        if (glow) glow.style.opacity = "0";
-    });
 
     function getPushForce(c) {
         const speed = Math.hypot(cursor.vx, cursor.vy);
@@ -1252,7 +1250,7 @@
         const reach = PROXIMITY * fit;
         if (dist > reach) return { fx: 0, fy: 0 };
         const weight = Math.pow(1 - dist / reach, 3);
-        const clampF = v => Math.min(MAX_FORCE, Math.max(-MAX_FORCE, v));
+        const clampF = v => Math.min(180, Math.max(-180, v));
         return {
             fx: clampF(cursor.vx * PUSH * weight),
             fy: clampF(cursor.vy * PUSH * weight)
