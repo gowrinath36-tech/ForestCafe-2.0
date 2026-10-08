@@ -354,10 +354,52 @@
                         </button>
                     </div>
                     <div class="menu-media">
-                        <video aria-label="Forest Cafe menu video" autoplay="" class="menu-video" loop="" muted="" playsinline="" preload="metadata">
-                            <source src="menu-video.webm" type="video/webm" />
-                        </video>
+                        <div class="menu-orbit-media" aria-label="Featured Forest Cafe menu items">
+                            <div class="menu-orbit-stage">
+                                <div class="menu-orbit-glow" aria-hidden="true"></div>
+                                <div class="menu-orbit-ring" aria-hidden="true"></div>
+
+                                <div class="menu-orbit" id="menuOrbit">
+                                    <button class="menu-orbit-item" data-index="0" aria-label="Grilled Sandwich" type="button">
+                                        <span class="menu-orbit-card"><img src="images/menu-orbit/sandwich.webp" alt="Grilled sandwich" /></span>
+                                    </button>
+                                    <button class="menu-orbit-item" data-index="1" aria-label="Fruit Nut Cake" type="button">
+                                        <span class="menu-orbit-card"><img src="images/menu-orbit/cake.webp" alt="Fruit nut cake" /></span>
+                                    </button>
+                                    <button class="menu-orbit-item" data-index="2" aria-label="Pizza" type="button">
+                                        <span class="menu-orbit-card"><img src="images/menu-orbit/pizza.webp" alt="Pizza" /></span>
+                                    </button>
+                                    <button class="menu-orbit-item" data-index="3" aria-label="Brownie" type="button">
+                                        <span class="menu-orbit-card"><img src="images/menu-orbit/brownie.webp" alt="Brownie" /></span>
+                                    </button>
+                                    <button class="menu-orbit-item" data-index="4" aria-label="Bread Omelette" type="button">
+                                        <span class="menu-orbit-card"><img src="images/menu-orbit/bread-omelette.webp" alt="Bread omelette" /></span>
+                                    </button>
+                                    <button class="menu-orbit-item" data-index="5" aria-label="Cappuccino" type="button">
+                                        <span class="menu-orbit-card"><img src="images/menu-orbit/cappuccino.webp" alt="Cappuccino" /></span>
+                                    </button>
+                                    <button class="menu-orbit-item" data-index="6" aria-label="Paneer Roll" type="button">
+                                        <span class="menu-orbit-card"><img src="images/menu-orbit/paneer-roll.webp" alt="Paneer roll" /></span>
+                                    </button>
+                                    <button class="menu-orbit-item" data-index="7" aria-label="Chocolate Cake" type="button">
+                                        <span class="menu-orbit-card"><img src="images/menu-orbit/chocolate-cake.webp" alt="Chocolate cake" /></span>
+                                    </button>
+                                </div>
+
+                                <div class="menu-orbit-brand" aria-hidden="true">
+                                    <div class="menu-orbit-brand-disc">
+                                        <img src="logo.png" alt="" />
+                                    </div>
+                                </div>
+
+                                <div class="menu-orbit-label" id="activeLabel">
+                                    <span class="menu-orbit-kicker">NOW SERVING</span>
+                                    <strong id="activeName">Grilled Sandwich</strong>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
                 <div class="menu-board reveal">
                     <div aria-label="Menu categories" class="menu-tabs" role="tablist">
