@@ -26,7 +26,7 @@
     heroTitle: 'Coffee, farm and a place to stay',
     heroText: 'We grow it on the slope behind the kitchen, roast it here, and pour it while the mist is still coming off the hills.',
     aboutTitle: 'Forest Cafe',
-    aboutText: 'We started in 2019 with four tables, one roaster and a slope full of coffee plants. Today the same slope feeds the kitchen, the shop and the six rooms behind the cafe. Nothing travels far here — most of it walks down the hill in the morning.',
+    aboutText: 'We started in 2021 with four tables, an artisan roaster, and a slope full of coffee plants. Today, the same slope feeds our cafe kitchen, the farm counter, and the cozy cottages tucked behind the trees. Nothing travels far here—everything is harvested fresh from the soil and served warm with love.',
     phoneText: '+91 94440 60619',
     phoneLink: 'tel:+919444060619',
     emailText: 'forestcafe.khilla@gmail.com',
