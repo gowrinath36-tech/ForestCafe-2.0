@@ -407,7 +407,8 @@
     if (!modal) return;
     function open() { modal.classList.add('is-open'); lockScroll(); }
     function close() { modal.classList.remove('is-open'); unlockScroll(); }
-    $('#viewMenuBtn') && $('#viewMenuBtn').addEventListener('click', open);
+    ($('#openMenuModal') || $('#viewMenuBtn')) && ($('#openMenuModal') || $('#viewMenuBtn')).addEventListener('click', open);
+    $('#viewMenuBtn') && $('#viewMenuBtn') !== $('#openMenuModal') && $('#viewMenuBtn').addEventListener('click', open);
     $('#closeMenuModal').addEventListener('click', close);
     modal.addEventListener('click', function (e) { if (e.target === modal) close(); });
   }());

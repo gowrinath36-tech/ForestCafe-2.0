@@ -285,35 +285,44 @@ textarea {
     border-color: rgba(56, 79, 49, 0.2);
 }
 
-.brand-text {
+/* Brand text initial state: hidden on hero */
+.nav .brand-text {
     display: flex;
     flex-direction: column;
     line-height: 1.05;
+    opacity: 0;
+    max-width: 0;
+    overflow: hidden;
+    transform: translateX(-10px);
+    transition: opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+                max-width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    white-space: nowrap;
+    pointer-events: none;
 }
 
-.brand-name {
-    font-family: var(--font-display);
-    font-size: 1.32rem;
-    font-weight: 600;
-    color: #fff;
-    transition: color 0.35s ease;
+/* Brand text appearance on scroll (.is-stuck) */
+.nav.is-stuck .brand-text {
+    opacity: 1;
+    max-width: 200px;
+    transform: translateX(0);
+    pointer-events: auto;
 }
 
-.brand-sub {
-    font-size: 0.64rem;
+.nav .brand-name {
+    font-family: 'CoffeeTown', cursive, serif;
+    font-size: 1.35rem;
+    font-weight: 500;
+    color: var(--green-800);
+    letter-spacing: 0.02em;
+}
+
+.nav .brand-sub {
+    font-size: 0.65rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.75);
-    font-weight: 600;
-    transition: color 0.35s ease;
-}
-
-.nav.is-stuck .brand-name {
-    color: var(--green-800);
-}
-
-.nav.is-stuck .brand-sub {
     color: var(--ink-mute);
+    font-weight: 700;
 }
 
 .nav-links {
@@ -679,14 +688,16 @@ textarea {
         transform: translateY(-2px);
     }
 
-.btn--honey {
-    background: var(--honey);
+.btn--honey,
+.btn-primary {
+    background: #6d432b;
     color: #fff;
-    box-shadow: 0 10px 22px rgba(201, 128, 58, 0.28);
+    box-shadow: 0 10px 22px rgba(109, 67, 43, 0.28);
 }
 
-.btn--honey:hover {
-        background: #B36E2D;
+.btn--honey:hover,
+.btn-primary:hover {
+        background: #533320;
         transform: translateY(-2px);
     }
 
@@ -818,6 +829,38 @@ textarea {
     color: var(--ink-mute);
     font-weight: 600;
     margin-top: 4px;
+}
+
+/* 4-column stat grid for #about */
+.about-stats {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: clamp(12px, 2vw, 24px) !important;
+    align-items: start !important;
+    width: 100% !important;
+    margin-top: 34px;
+    padding-top: 26px;
+    border-top: 1px solid var(--line);
+}
+
+.about-stats .stat-item b {
+    display: block;
+    font-family: 'CoffeeTown', cursive, serif;
+    font-size: clamp(1.4rem, 2.2vw, 2rem);
+    font-weight: 700;
+    color: #6d432b !important; /* exact warm brown matching button and strip */
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.about-stats .stat-item span {
+    display: block;
+    font-size: 0.8rem;
+    color: #8c6d58 !important; /* soft coffee brown subtitle */
+    font-weight: 600;
+    margin-top: 4px;
+    line-height: 1.2;
+    white-space: nowrap;
 }
 
 /* ========== 8. Cafe gallery + lightbox ========== */
@@ -1292,7 +1335,42 @@ textarea {
         animation: float 5.5s ease-in-out infinite;
     }
 
-/* ============ RIBBON ============ */
+/* ============ RIBBON & SEAMLESS DIVIDERS ============ */
+
+/* Strip solid block backgrounds that cause horizontal seam cuts */
+.menu-pricing,
+.menu-table-wrap,
+.menu-custom-note,
+.menu-divider,
+.section-divider,
+.ribbon-separator,
+.farm-shop,
+#farm,
+#stay,
+.stay-section {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Seamless Vertical Gradient for the Menu-to-Farm Divider */
+.menu-divider,
+.ribbon-separator {
+    position: relative;
+    width: 100%;
+    margin: 0 !important;
+    padding: 28px 0 !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Soft vertical blend matching the page canvas */
+    background: linear-gradient(
+        180deg,
+        rgba(247, 243, 237, 0) 0%,
+        rgba(242, 236, 227, 0.7) 50%,
+        rgba(247, 243, 237, 0) 100%
+    ) !important;
+}
 
 .ribbon {
     width: 100%;
@@ -2126,16 +2204,178 @@ body .visit-grid { grid-template-columns: 1fr 1fr; gap: 64px; align-items: stret
 
 .product-card:focus-visible { outline: 3px solid var(--green-600); outline-offset: 3px; }
 
-.product-cta {
-    margin: 14px 18px 0; align-self: flex-start;
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 7px 14px; border-radius: 999px;
-    font-size: .78rem; font-weight: 700; letter-spacing: .02em;
-    color: var(--green-700); background: var(--green-100);
-    transition: background .25s ease, color .25s ease, gap .25s ease;
+/* ==========================================================================
+   Tactile 3D "Select & Order" Button (Organic Forest Green Theme)
+   ========================================================================== */
+
+/* Outer Inset Bezel / Track Frame (if .btn-wrapper used) */
+.product-card .btn-wrapper {
+  --width: 100%;
+  --max-width: 175px;
+  --height: 44px;
+  --padding: 4px;
+  --border-radius: 999px;
+  
+  /* Forest & Leaf Green Palette */
+  --btn-green-base: #2e4d25;
+  --btn-green-light: #3d6332;
+  --btn-green-shadow: #192b14;
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--width);
+  max-width: var(--max-width);
+  height: var(--height);
+  border-radius: var(--border-radius);
+  background-color: rgba(0, 0, 0, 0.05);
+
+  /* Subtle Inset Well Cavity */
+  box-shadow:
+    1px 1px 2px 0 rgba(255, 255, 255, 0.9),
+    1px 1px 2px rgba(0, 0, 0, 0.08) inset,
+    2px 2px 5px rgba(0, 0, 0, 0.1) inset;
+
+  user-select: none;
+  box-sizing: border-box;
+  margin-top: auto;
 }
 
-.product-card:hover .product-cta { background: var(--green-700); color: #fff; gap: 10px; }
+/* Inner 3D Popped-Up Button & Direct .product-cta Button */
+.product-cta,
+.product-card .btn,
+.product-card a,
+.btn-select-order,
+.product-card .btn-order {
+  --btn-green-base: #2e4d25;
+  --btn-green-light: #3d6332;
+  --btn-green-shadow: #192b14;
+
+  margin: 14px 18px 0;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 9px 18px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+
+  /* Mild Organic Green Gradient */
+  background: linear-gradient(180deg, var(--btn-green-light) 0%, var(--btn-green-base) 100%);
+  
+  /* Crisp 3D Bevel & Raised Drop Shadow */
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.28) inset,
+    0 3px 0 var(--btn-green-shadow),
+    0 5px 10px rgba(25, 43, 20, 0.25);
+
+  /* Typography */
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #ffffff !important;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+  white-space: nowrap;
+
+  transition:
+    transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.18s cubic-bezier(0.34, 1.56, 0.64, 1),
+    background 0.2s ease,
+    filter 0.2s ease;
+  will-change: transform, box-shadow;
+  box-sizing: border-box;
+}
+
+.product-card .btn-order {
+  margin: 0;
+  width: calc(100% - (2 * var(--padding, 4px)));
+  height: calc(100% - (2 * var(--padding, 4px)));
+  padding: 0 16px;
+  border-radius: calc(var(--border-radius, 999px) - var(--padding, 4px));
+}
+
+/* Button Typography Helper */
+.product-card .btn-txt {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+  white-space: nowrap;
+}
+
+/* Directional Arrow Animation */
+.product-cta span,
+.product-cta > span,
+.product-card .btn-arrow {
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  display: inline-block;
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ==========================================================================
+   Hover State (Tactile Lift + Subtle Glow + Arrow Nudge)
+   ========================================================================== */
+.product-card:hover .product-cta,
+.product-cta:hover,
+.product-card:hover .btn-order,
+.product-card .btn-order:hover,
+.product-card:hover .btn-select-order,
+.btn-select-order:hover {
+  background: linear-gradient(180deg, #467039 0%, #34572a 100%);
+  color: #ffffff !important;
+  transform: translateY(-2px);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.35) inset,
+    0 5px 0 #192b14,
+    0 8px 16px rgba(25, 43, 20, 0.35);
+}
+
+.product-card:hover .product-cta span,
+.product-cta:hover span,
+.product-card:hover .btn-order .btn-arrow,
+.product-card .btn-order:hover .btn-arrow,
+.product-card:hover .btn-select-order span,
+.btn-select-order:hover span {
+  transform: translateX(4px);
+}
+
+/* ==========================================================================
+   Active / Press State (Physical Push Into The Well)
+   ========================================================================== */
+.product-card:active .product-cta,
+.product-cta:active,
+.product-card:active .btn-order,
+.product-card .btn-order:active,
+.product-card:active .btn-select-order,
+.btn-select-order:active {
+  transform: translateY(2px);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.15) inset,
+    0 1px 0 #192b14,
+    0 2px 4px rgba(25, 43, 20, 0.2);
+}
+
+.product-card .btn-wrapper:has(.btn-order:active) {
+  box-shadow:
+    1px 1px 2px 0 rgba(255, 255, 255, 0.9),
+    2px 2px 4px rgba(0, 0, 0, 0.15) inset,
+    2px 2px 8px rgba(0, 0, 0, 0.2) inset;
+}
+
+.product-cta:focus-visible,
+.product-card .btn-order:focus-visible {
+  outline: 2px solid #3d6332;
+  outline-offset: 3px;
+}
 
 .pm {
     position: fixed; inset: 0; z-index: 3200; display: none;
@@ -2738,7 +2978,8 @@ body .product-desc { display: none; }
 body .product-card .product-cta, body .product-cta {
         margin: auto 10px 0; width: calc(100% - 20px); justify-content: center; gap: 4px;
         padding: 8px 6px; font-size: .76rem; letter-spacing: .01em;
-        background: var(--green-700); color: #fff;
+        background: var(--green-800, #2d4a22); color: #fff;
+        box-shadow: 0 3px 0 #1b2e15, 0 5px 10px rgba(45, 74, 34, 0.28);
     }
 
 body .product-cta::before { content: "+"; font-weight: 800; font-size: .95rem; line-height: 1; }
