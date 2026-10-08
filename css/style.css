@@ -2205,176 +2205,175 @@ body .visit-grid { grid-template-columns: 1fr 1fr; gap: 64px; align-items: stret
 .product-card:focus-visible { outline: 3px solid var(--green-600); outline-offset: 3px; }
 
 /* ==========================================================================
-   Tactile 3D "Select & Order" Button (Organic Forest Green Theme)
+   Premium Pill CTA Button (Position-Swapping Shopping Bag + Shine)
    ========================================================================== */
 
-/* Outer Inset Bezel / Track Frame (if .btn-wrapper used) */
-.product-card .btn-wrapper {
-  --width: 100%;
-  --max-width: 175px;
-  --height: 44px;
-  --padding: 4px;
-  --border-radius: 999px;
+.cta-pill-btn {
+  /* Dimensions & Theming */
+  --btn-height: 44px;
+  --btn-min-width: 172px;
+  --btn-pad-x: 16px;
+  --icon-size: 30px;
   
-  /* Forest & Leaf Green Palette */
-  --btn-green-base: #2e4d25;
-  --btn-green-light: #3d6332;
-  --btn-green-shadow: #192b14;
+  /* Forest & Hill Cafe Color Palette */
+  --cta-bg: #2e4d25;
+  --cta-bg-hover: #233c1c;
+  --cta-icon-bg: #ffffff;
+  --cta-icon-color: #2e4d25;
+  --cta-shadow: rgba(35, 60, 28, 0.28);
+  --cta-shadow-hover: rgba(35, 60, 28, 0.42);
 
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: var(--width);
-  max-width: var(--max-width);
-  height: var(--height);
-  border-radius: var(--border-radius);
-  background-color: rgba(0, 0, 0, 0.05);
-
-  /* Subtle Inset Well Cavity */
-  box-shadow:
-    1px 1px 2px 0 rgba(255, 255, 255, 0.9),
-    1px 1px 2px rgba(0, 0, 0, 0.08) inset,
-    2px 2px 5px rgba(0, 0, 0, 0.1) inset;
-
+  height: var(--btn-height);
+  min-width: var(--btn-min-width);
+  padding: 0 var(--btn-pad-x);
+  border-radius: 999px;
+  border: none;
+  background-color: var(--cta-bg);
+  box-shadow: 0 4px 12px var(--cta-shadow);
+  cursor: pointer;
+  overflow: hidden;
   user-select: none;
-  box-sizing: border-box;
+  text-decoration: none;
+  margin: 14px 18px 0;
+  align-self: flex-start;
+  transition: 
+    background-color 0.4s ease,
+    box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.product-card .product-desc + .cta-pill-btn {
   margin-top: auto;
 }
 
-/* Inner 3D Popped-Up Button & Direct .product-cta Button */
-.product-cta,
-.product-card .btn,
-.product-card a,
-.btn-select-order,
-.product-card .btn-order {
-  --btn-green-base: #2e4d25;
-  --btn-green-light: #3d6332;
-  --btn-green-shadow: #192b14;
+/* Diagonal Moving Shine Overlay */
+.cta-pill-btn .cta-shine {
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 80%;
+  height: 100%;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0) 30%,
+    rgba(255, 255, 255, 0.35) 50%,
+    rgba(255, 255, 255, 0) 70%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  pointer-events: none;
+  z-index: 2;
+  transition: none;
+}
 
-  margin: 14px 18px 0;
-  align-self: flex-start;
-  display: inline-flex;
+/* Button Text */
+.cta-pill-btn .cta-label {
+  font-family: 'Montserrat', 'Manrope', system-ui, sans-serif;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: #ffffff;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+  z-index: 1;
+  /* Leaves room for the icon on the right by default */
+  transform: translateX(-14px);
+  transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* White Circular Icon Container */
+.cta-pill-btn .cta-icon-wrap {
+  position: absolute;
+  right: 6px;
+  width: var(--icon-size);
+  height: var(--icon-size);
+  border-radius: 50%;
+  background-color: var(--cta-icon-bg);
+  color: var(--cta-icon-color);
+  display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 9px 18px;
-  border-radius: 999px;
-  border: none;
-  cursor: pointer;
-  user-select: none;
-  -webkit-user-select: none;
-
-  /* Mild Organic Green Gradient */
-  background: linear-gradient(180deg, var(--btn-green-light) 0%, var(--btn-green-base) 100%);
-  
-  /* Crisp 3D Bevel & Raised Drop Shadow */
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.28) inset,
-    0 3px 0 var(--btn-green-shadow),
-    0 5px 10px rgba(25, 43, 20, 0.25);
-
-  /* Typography */
-  font-family: inherit;
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: #ffffff !important;
-  letter-spacing: 0.02em;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
-  white-space: nowrap;
-
-  transition:
-    transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1),
-    box-shadow 0.18s cubic-bezier(0.34, 1.56, 0.64, 1),
-    background 0.2s ease,
-    filter 0.2s ease;
-  will-change: transform, box-shadow;
-  box-sizing: border-box;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.16);
+  z-index: 1;
+  transform: translateX(0) rotate(0deg);
+  transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.product-card .btn-order {
-  margin: 0;
-  width: calc(100% - (2 * var(--padding, 4px)));
-  height: calc(100% - (2 * var(--padding, 4px)));
-  padding: 0 16px;
-  border-radius: calc(var(--border-radius, 999px) - var(--padding, 4px));
-}
-
-/* Button Typography Helper */
-.product-card .btn-txt {
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: #ffffff;
-  letter-spacing: 0.02em;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
-  white-space: nowrap;
-}
-
-/* Directional Arrow Animation */
-.product-cta span,
-.product-cta > span,
-.product-card .btn-arrow {
-  color: #ffffff;
-  font-size: 0.9rem;
-  font-weight: 700;
-  display: inline-block;
-  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+.cta-pill-btn .cta-icon-svg {
+  display: block;
+  stroke: var(--cta-icon-color);
+  transition: transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* ==========================================================================
-   Hover State (Tactile Lift + Subtle Glow + Arrow Nudge)
+   Hover State Transitions (on button hover or card hover)
    ========================================================================== */
-.product-card:hover .product-cta,
-.product-cta:hover,
-.product-card:hover .btn-order,
-.product-card .btn-order:hover,
-.product-card:hover .btn-select-order,
-.btn-select-order:hover {
-  background: linear-gradient(180deg, #467039 0%, #34572a 100%);
-  color: #ffffff !important;
-  transform: translateY(-2px);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.35) inset,
-    0 5px 0 #192b14,
-    0 8px 16px rgba(25, 43, 20, 0.35);
+.cta-pill-btn:hover,
+.product-card:hover .cta-pill-btn {
+  background-color: var(--cta-bg-hover);
+  box-shadow: 0 8px 20px var(--cta-shadow-hover);
 }
 
-.product-card:hover .product-cta span,
-.product-cta:hover span,
-.product-card:hover .btn-order .btn-arrow,
-.product-card .btn-order:hover .btn-arrow,
-.product-card:hover .btn-select-order span,
-.btn-select-order:hover span {
-  transform: translateX(4px);
+/* 1. Sweep Diagonal Shine */
+.cta-pill-btn:hover .cta-shine,
+.product-card:hover .cta-pill-btn .cta-shine {
+  left: 140%;
+  transition: left 750ms ease-in-out;
+}
+
+/* 2. Swap Icon: Glide from Right to Left edge */
+.cta-pill-btn:hover .cta-icon-wrap,
+.product-card:hover .cta-pill-btn .cta-icon-wrap {
+  /* Translates across the button width to sit at the left edge */
+  transform: translateX(calc(-1 * (var(--btn-min-width) - var(--icon-size) - 12px)));
+}
+
+/* 3. Swap Label: Shift rightward to take the icon's spot */
+.cta-pill-btn:hover .cta-label,
+.product-card:hover .cta-pill-btn .cta-label {
+  transform: translateX(14px);
+}
+
+/* 4. Subtle Shopping Bag Cart Tilt */
+.cta-pill-btn:hover .cta-icon-svg,
+.product-card:hover .cta-pill-btn .cta-icon-svg {
+  transform: rotate(15deg) scale(1.08);
 }
 
 /* ==========================================================================
-   Active / Press State (Physical Push Into The Well)
+   Active / Press & Accessibility Focus State
    ========================================================================== */
-.product-card:active .product-cta,
-.product-cta:active,
-.product-card:active .btn-order,
-.product-card .btn-order:active,
-.product-card:active .btn-select-order,
-.btn-select-order:active {
-  transform: translateY(2px);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.15) inset,
-    0 1px 0 #192b14,
-    0 2px 4px rgba(25, 43, 20, 0.2);
+.cta-pill-btn:active {
+  transform: scale(0.98);
+  box-shadow: 0 2px 8px var(--cta-shadow);
 }
 
-.product-card .btn-wrapper:has(.btn-order:active) {
-  box-shadow:
-    1px 1px 2px 0 rgba(255, 255, 255, 0.9),
-    2px 2px 4px rgba(0, 0, 0, 0.15) inset,
-    2px 2px 8px rgba(0, 0, 0, 0.2) inset;
-}
-
-.product-cta:focus-visible,
-.product-card .btn-order:focus-visible {
-  outline: 2px solid #3d6332;
+.cta-pill-btn:focus-visible {
+  outline: 3px solid rgba(46, 77, 37, 0.4);
   outline-offset: 3px;
+}
+
+.cta-pill-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Mobile Screens */
+@media (max-width: 480px) {
+  .cta-pill-btn {
+    --btn-height: 42px;
+    --btn-min-width: 156px;
+    --icon-size: 28px;
+    padding: 0 12px;
+    margin: auto 10px 0;
+    width: calc(100% - 20px);
+  }
 }
 
 .pm {
