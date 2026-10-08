@@ -1342,3 +1342,223 @@
 
     requestAnimationFrame(tick);
 })();
+
+
+/* ======================================================================
+   Forest Cafe — Menu Orbit
+   ====================================================================== */
+
+(function () {
+    'use strict';
+
+    var scope = document.querySelector('.menu-orbit-media');
+
+    if (!scope) {
+        return;
+    }
+
+    var items = Array.prototype.slice.call(
+        scope.querySelectorAll('.menu-orbit-item')
+    );
+
+    var label = scope.querySelector('.menu-orbit-label');
+    var activeName = scope.querySelector('#activeName');
+
+    if (!items.length || !label || !activeName) {
+        return;
+    }
+
+    var names = [
+        'Grilled Sandwich',
+        'Fruit Nut Cake',
+        'Pizza',
+        'Brownie',
+        'Bread Omelette',
+        'Cappuccino',
+        'Paneer Roll',
+        'Chocolate Cake'
+    ];
+
+    var active = 0;
+    var timer = null;
+    var labelTimer = null;
+
+
+    /* --------------------------------------------------------------
+       Calculate orbit radius
+       -------------------------------------------------------------- */
+
+    function getRadius() {
+
+        var stage = scope.querySelector(
+            '.menu-orbit-stage'
+        );
+
+        if (!stage) {
+            return 0;
+        }
+
+        return Math.min(
+            stage.clientWidth,
+            stage.clientHeight
+        ) * 0.365;
+    }
+
+
+    /* --------------------------------------------------------------
+       Position menu items
+       -------------------------------------------------------------- */
+
+    function layoutOrbit() {
+
+        var radius = getRadius();
+
+        var step =
+            (Math.PI * 2) / items.length;
+
+
+        items.forEach(function (item, index) {
+
+            var slot =
+                (index - active + items.length) %
+                items.length;
+
+
+            /*
+             * -Math.PI / 2 = 12 o'clock
+             */
+
+            var angle =
+                -Math.PI / 2 +
+                slot * step;
+
+
+            var x =
+                Math.cos(angle) * radius;
+
+
+            var y =
+                Math.sin(angle) * radius;
+
+
+            var isActive =
+                index === active;
+
+
+            item.style.setProperty(
+                '--x',
+                x + 'px'
+            );
+
+
+            item.style.setProperty(
+                '--y',
+                y + 'px'
+            );
+
+
+            item.classList.toggle(
+                'is-active',
+                isActive
+            );
+
+
+            item.setAttribute(
+                'aria-current',
+                isActive
+                    ? 'true'
+                    : 'false'
+            );
+
+        });
+
+
+        /* Fade label */
+
+        label.classList.add('fade');
+
+        window.clearTimeout(labelTimer);
+
+        labelTimer = window.setTimeout(
+            function () {
+
+                activeName.textContent =
+                    names[active];
+
+                label.classList.remove('fade');
+
+            },
+            180
+        );
+    }
+
+
+    /* --------------------------------------------------------------
+       Next item
+       -------------------------------------------------------------- */
+
+    function next() {
+
+        active =
+            (active + 1) %
+            items.length;
+
+        layoutOrbit();
+    }
+
+
+    /* --------------------------------------------------------------
+       Automatic rotation
+       -------------------------------------------------------------- */
+
+    function start() {
+
+        window.clearInterval(timer);
+
+        timer = window.setInterval(
+            next,
+            2600
+        );
+    }
+
+
+    /* --------------------------------------------------------------
+       Click interaction
+       -------------------------------------------------------------- */
+
+    items.forEach(function (item, index) {
+
+        item.addEventListener(
+            'click',
+            function () {
+
+                active = index;
+
+                layoutOrbit();
+
+                start();
+            }
+        );
+
+    });
+
+
+    /* --------------------------------------------------------------
+       Resize
+       -------------------------------------------------------------- */
+
+    window.addEventListener(
+        'resize',
+        layoutOrbit
+    );
+
+
+    /* --------------------------------------------------------------
+       Start
+       -------------------------------------------------------------- */
+
+    layoutOrbit();
+
+    start();
+
+}());
