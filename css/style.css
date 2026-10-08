@@ -5417,3 +5417,56 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
         font-size: 0.82rem;
     }
 }
+
+/* ==========================================================================
+   Stay / Hill Retreat Ribbon Divider
+   ========================================================================== */
+.stay-divider img,
+.stay-ribbon-img {
+    display: block;
+    width: 100%;
+    max-width: 1200px;
+    height: auto;
+    margin: 0 auto;
+    object-fit: contain;
+}
+
+/* ==========================================================================
+   Story Section Buttons — Perfect Vertical Alignment & Shared Baseline
+   ========================================================================== */
+.ad-story-actions,
+.story-actions,
+.story-btns,
+.story-cta-group {
+    display: flex !important;
+    align-items: center !important;
+    gap: 16px !important;
+    flex-wrap: wrap;
+}
+
+.ad-story-actions .btn,
+.ad-story-actions button,
+.ad-story-actions a,
+.story-actions .btn,
+.story-actions a,
+.story-btns .btn,
+.story-btns a {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 46px !important;
+    line-height: 1 !important;
+    vertical-align: middle !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+}
+
+.ad-story-actions .btn--ghost,
+.ad-story-actions .ad-cinema-toggle,
+.story-actions .btn-outline,
+.story-actions a:last-child {
+    margin-top: 0 !important;
+    transform: none !important;
+}
+
+

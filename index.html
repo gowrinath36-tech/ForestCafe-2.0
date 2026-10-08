@@ -749,9 +749,9 @@
             </div>
         </section>
         <!-- ============ RIBBON (STAY) ============ -->
-        <div aria-hidden="true" class="ribbon">
+        <div aria-hidden="true" class="ribbon stay-divider">
             <div class="ribbon-inner">
-                <img alt="" loading="lazy" src="images/rooms/tiny_cot_ribbon_nature.png" />
+                <img src="images/rooms/Hill%20Retreat%20Ribbon.png" alt="Hill Retreat Ribbon Divider" class="stay-ribbon-img" loading="lazy" />
             </div>
         </div>
 
@@ -768,14 +768,14 @@
                             WELCOME TO
                         </span>
                         <h2 class="headline" style="color: var(--stay-700);">Our Tiny Cot</h2>
-                        <p class="lede">
-                            Designed not just as rooms, but as a quiet mountain home nestled gently among shade-grown coffee and pepper vines. Wake up to cool morning mist drifting through wooden windows, the soft hum of birds, and evenings under starlit hill skies. Built low and private to let nature breathe, it is a calm, peaceful sanctuary for families and close friends to slow down, share stories, and feel completely at ease away from city rush.
+                        <p class="stay-desc" style="line-height: 1.6; color: #5c4a3e; margin-bottom: 20px; max-width: 540px;">
+                            A quiet hill corner where mountain breeze sets the pace and time slows down. Step out into cool air, let the kids explore the gardens and our secret attic, and share warm meals made fresh from local harvests. Unwind, rest deep, and linger a little longer.
                         </p>
 
-                        <!-- Restored Classic Warm Note -->
-                        <div class="stay-warm-note">
-                            <p>
-                                “A cozy hill home where the only morning alarm is the mountain breeze and the scent of fresh estate coffee.”
+                        <!-- Restored Original Blue Gradient Quote -->
+                        <div class="stay-quote" style="border-left: 3px solid #2b6cb0; padding-left: 14px; margin-bottom: 22px;">
+                            <p style="font-family: 'CoffeeTown', cursive, sans-serif; font-size: 0.95rem; margin: 0; text-transform: uppercase; letter-spacing: 0.04em; background: linear-gradient(90deg, #1b4965 0%, #2b6cb0 50%, #468faf 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                                "EVERY MORNING STARTS FRESH IN OUR KITCHEN — WHOLESOME MEALS CRAFTED FROM LOCAL HILL HARVESTS."
                             </p>
                         </div>
 
@@ -894,7 +894,18 @@
                 <div class="horizon-slat-container" id="roomsSlatGallery" tabindex="0" role="region"
                     aria-roledescription="carousel" aria-label="Rooms and Spaces Gallery">
                     <div class="horizon-slat__stage" id="slatStage">
-                        <!-- Dynamically populated via JS -->
+                        <!-- The Secret Attic Placeholder Card -->
+                        <div class="room-card room-placeholder-card">
+                            <div class="room-img-wrap" style="aspect-ratio: 16/10; background: #e8e2d8; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 12px; border: 2px dashed #b8ab99; color: #6d432b; text-align: center; padding: 20px;">
+                                <span style="font-size: 1.8rem; margin-bottom: 6px;">✨🪟</span>
+                                <strong style="font-size: 0.9rem; letter-spacing: 0.02em;">Attic Photo Coming Soon</strong>
+                                <span style="font-size: 0.75rem; color: #8c6d58; margin-top: 4px;">4 Windows • Night Sky View</span>
+                            </div>
+                            <div class="room-info" style="margin-top: 10px;">
+                                <h4 style="font-size: 1rem; color: #2e4d25; margin: 0 0 4px 0;">The Secret Attic</h4>
+                                <p style="font-size: 0.8rem; color: #5c4a3e; margin: 0;">Cozy stargazing hideout with 4 panoramic windows for clear hill night skies.</p>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Sleek Round Navigation Buttons -->
@@ -973,11 +984,14 @@
                     <h3 class="ad-subtitle ad-title-break">
                         From Cinema Sets to Coffee Slopes
                     </h3>
-                    <p class="ad-story-highlight">Every wooden table, the stone-paved garden paths, the warm cafe interiors, and each cozy corner of the Tiny Cot cottages were envisioned, hand-carved, and brought to life by the hands of this one man—translating twenty years of cinematic artistry into living nature.</p>
 
                     <div class="ad-story-grid">
                         <div class="ad-story-copy">
                         <ul class="ad-journey-list">
+                            <li>
+                                <span class="ad-check">✓</span>
+                                <div><strong>Handcrafted Ecosystem:</strong> Every table, floor, and cottage corner was shaped from reusable materials by me—a space where every detail will genuinely surprise you.</div>
+                            </li>
                             <li>
                                 <span class="ad-check">✓</span>
                                 <div><strong>Chennai Cinema Foundations:</strong> Two decades crafting 300+ films and ad campaigns into memorable visual stories.</div>
@@ -1252,8 +1266,8 @@
                     Finding us
                 </span>
                 <h2 class="headline">Come up the hill</h2>
-                <p class="lede">
-                    Just an easy two-hour scenic drive from Salem and an accessible four-hour weekend getaway from Chennai or Bengaluru. Situated right on Vellimalai Road in Servaipattu, our cafe and cottages serve as the ideal peaceful base camp to explore the untouched beauty of the Kalvarayan Hills—from the cascading waters of Periyar Falls and Megam Falls to the serene Gomukhi Dam reservoir and misty valley viewpoints.
+                <p class="visit-desc" style="line-height: 1.6; color: #5c4a3e; margin-bottom: 24px; max-width: 520px; font-size: 1.02rem;">
+                    Drive up into the cool mist of the Kalvarayan Hills to experience our handcrafted ecosystem. Located along Vellimalai Road in Servaipattu, we sit right at the gateway to pristine forest trails, Megam Falls, and Periyar Falls—the perfect scenic rest stop for your hill road trip.
                 </p>
                 <ul class="contact-list">
                     <li>
@@ -1265,9 +1279,11 @@
                         <div>
                             <div class="contact-label">Address</div>
                             <div class="contact-value">
-                                Forest Cafe &amp; Our Tiny Cot,<br />
-                                Vellimalai Road, Servaipattu, Chinnakalrayanhillsvadakkunadu,<br />
-                                Salem District, Tamil Nadu – 636 138, India.
+                                <p class="address-text" style="margin: 0;">
+                                    <strong>Forest Cafe</strong><br />
+                                    Vellimalai Road, Servaipattu, Chinnakalrayanhillsvadakkunadu,<br />
+                                    Salem District, Tamil Nadu – 636 138, India.
+                                </p>
                             </div>
                         </div>
                     </li>
@@ -1390,7 +1406,7 @@
             <div class="footer-col">
                 <h4 class="footer-heading">VISIT</h4>
                 <div class="footer-contact">
-                    <p>Forest Cafe &amp; Our Tiny Cot,<br />
+                    <p><strong>Forest Cafe</strong><br />
                     Vellimalai Road, Servaipattu, Chinnakalrayanhillsvadakkunadu,<br />
                     Salem District, Tamil Nadu – 636 138, India.</p>
                 </div>

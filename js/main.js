@@ -512,6 +512,7 @@
         { label: "Interior suite",   title: "Bedroom\nRetreat",   image: "images/rooms/1.webp", category: "interior" },
         { label: "Living space",     title: "Central\nHall",      image: "images/rooms/2.webp", category: "interior" },
         { label: "Lounge corner",    title: "Cozy Steps\nLounge", image: "images/rooms/6.webp", category: "interior" },
+        { label: "The Secret Attic", title: "The Secret\nAttic",  image: "", category: "interior", isPlaceholder: true },
         { label: "Canopy retreat",   title: "Forest\nGlade",      image: "images/rooms/3.webp", category: "exterior" },
         { label: "Entrance deck",    title: "Front\nTerrace",     image: "images/rooms/4.webp", category: "exterior" },
         { label: "Outdoor ambience", title: "Garden\nDeck",       image: "images/rooms/5.webp", category: "exterior" }
@@ -523,7 +524,23 @@
     let panels = [];
 
     function render() {
-        stage.innerHTML = slides.map((s, i) => `
+        stage.innerHTML = slides.map((s, i) => {
+            if (s.isPlaceholder) {
+                return `
+            <button type="button" class="rooms-panel rooms-panel--placeholder" data-index="${i}" aria-label="Show ${s.label}" aria-pressed="false" style="background: #e8e2d8;">
+                <div class="rooms-panel__placeholder-wrap" style="position: absolute; inset: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px dashed #b8ab99; border-radius: 14px; color: #6d432b; text-align: center; padding: 16px; z-index: 1;">
+                    <span style="font-size: 2rem; margin-bottom: 6px;">✨🪟</span>
+                    <strong style="font-size: 0.95rem; letter-spacing: 0.02em;">Attic Photo Coming Soon</strong>
+                    <span style="font-size: 0.75rem; color: #8c6d58; margin-top: 4px;">4 Windows • Night Sky View</span>
+                </div>
+                <span class="rooms-panel__side">${s.label}</span>
+                <span class="rooms-panel__content">
+                    <span class="rooms-panel__tag">${s.label}</span>
+                    <span class="rooms-panel__title">${s.title.replace("\n", "<br>")}</span>
+                </span>
+            </button>`;
+            }
+            return `
             <button type="button" class="rooms-panel" data-index="${i}" aria-label="Show ${s.label}" aria-pressed="false">
                 <img class="rooms-panel__img" src="${s.image}" alt="${s.label}" draggable="false">
                 <span class="rooms-panel__shade"></span>
@@ -532,7 +549,8 @@
                     <span class="rooms-panel__tag">${s.label}</span>
                     <span class="rooms-panel__title">${s.title.replace("\n", "<br>")}</span>
                 </span>
-            </button>`).join("");
+            </button>`;
+        }).join("");
         panels = Array.from(stage.querySelectorAll(".rooms-panel"));
         panels.forEach((p, i) => {
             p.addEventListener("click", () => setActive(i));
@@ -573,7 +591,7 @@
         if (e.key === "ArrowRight") { e.preventDefault(); setActive(active + 1); }
     });
 
-    allSlides.forEach(s => { const img = new Image(); img.src = s.image; });
+    allSlides.forEach(s => { if (s.image) { const img = new Image(); img.src = s.image; } });
     render();
 })();
 
