@@ -6275,3 +6275,124 @@ Menu orbit showcase
     margin: 0;
     width: 100%;
 }
+
+/* Google Reviews Showcase - Matches Screenshot 719 */
+.google-cards-showcase-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 22px;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.g-card-item {
+  background: #261912 !important; /* Rich roasted coffee bean dark brown */
+  border: 1px solid rgba(223, 139, 67, 0.22) !important;
+  border-radius: 20px !important;
+  padding: 26px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  min-height: 230px;
+  box-shadow: 0 10px 25px rgba(38, 25, 18, 0.15) !important;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease !important;
+}
+
+.g-card-item:hover {
+  transform: translateY(-4px) !important;
+  border-color: #df8b43 !important;
+  box-shadow: 0 14px 32px rgba(38, 25, 18, 0.24) !important;
+}
+
+.g-card-stars {
+  color: #ffb800 !important;
+  font-size: 1.15rem !important;
+  letter-spacing: 2px !important;
+  margin-bottom: 12px !important;
+}
+
+.g-card-text {
+  color: #fbf7f0 !important;
+  font-size: 0.93rem !important;
+  line-height: 1.6 !important;
+  margin: 0 0 20px 0 !important;
+}
+
+.g-card-footer {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  border-top: 1px solid rgba(251, 247, 240, 0.08) !important;
+  padding-top: 14px !important;
+}
+
+.g-user-meta {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+
+.g-avatar {
+  width: 34px !important;
+  height: 34px !important;
+  border-radius: 50% !important;
+  color: #ffffff !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-weight: 700 !important;
+  font-size: 0.8rem !important;
+}
+
+.g-user-names {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.g-name {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  font-size: 0.85rem !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+}
+
+.g-check {
+  color: #60a5fa !important;
+  font-size: 0.75rem !important;
+}
+
+.g-sub {
+  color: rgba(251, 247, 240, 0.6) !important;
+  font-size: 0.72rem !important;
+}
+
+.g-btn-pill {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 13px 26px !important;
+  background: #df8b43 !important;
+  color: #1a2a1b !important;
+  font-weight: 700 !important;
+  font-size: 0.92rem !important;
+  border-radius: 100px !important;
+  text-decoration: none !important;
+  box-shadow: 0 4px 14px rgba(223, 139, 67, 0.28) !important;
+  transition: transform 0.2s ease, background 0.2s ease !important;
+}
+
+.g-btn-pill:hover {
+  transform: translateY(-2px) !important;
+  background: #e89953 !important;
+}
+
+@media (max-width: 680px) {
+  .google-cards-showcase-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+
