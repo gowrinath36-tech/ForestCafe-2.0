@@ -5689,6 +5689,41 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
     transform: none !important;
 }
 
+/* ======================================================================
+   Menu orbit showcase
+   ====================================================================== */
+.menu-media .menu-orbit-media {
+    --orbit-cream: #f2ecdf;
+    --orbit-coffee: #714b35;
+    --orbit-coffee-dark: #4f3324;
+    --orbit-size: min(100%, 540px);
+    position: relative;
+    width: 100%;
+    max-width: 460px;
+    margin-left: auto;
+    margin-right: auto;
+    display: grid;
+    place-items: center;
+    padding: 8px 0 42px;
+}
+
+.menu-media .menu-orbit-stage {
+    width: var(--orbit-size);
+    aspect-ratio: 1;
+    position: relative;
+    isolation: isolate;
+    min-width: 0;
+}
+
+.menu-media .menu-orbit-glow {
+    position: absolute;
+    inset: 4%;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(184,146,94,.2) 0%, rgba(184,146,94,0) 68%);
+    filter: blur(16px);
+    z-index: 0;
+    pointer-events: none;
+}
 
 /* ======================================================================
 Menu orbit showcase
@@ -5852,6 +5887,193 @@ Menu orbit showcase
     transition: opacity 250ms ease;
 }
 
+.menu-media .menu-orbit-ring {
+    position: absolute;
+    inset: 11%;
+    border-radius: 50%;
+    background: var(--orbit-coffee);
+    box-shadow: 0 30px 55px rgba(62, 38, 24, .18), inset 0 0 0 1px rgba(255,255,255,.05);
+    z-index: 1;
+}
+
+.menu-media .menu-orbit {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+}
+
+.menu-media .menu-orbit-item {
+    --x: 0px;
+    --y: 0px;
+    --scale: .76;
+    --z: 2;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: clamp(92px, 29%, 156px);
+    aspect-ratio: 1;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    transform: translate(-50%, -50%) translate3d(var(--x), var(--y), 0) scale(var(--scale));
+    z-index: var(--z);
+    transition: transform 950ms cubic-bezier(.2,.8,.2,1), filter 700ms ease;
+    filter: drop-shadow(0 15px 15px rgba(32,20,13,.12));
+    will-change: transform;
+}
+
+.menu-media .menu-orbit-card {
+    width: 90%;
+    height: 90%;
+    display: grid;
+    place-items: center;
+    position: relative;
+}
+
+    .menu-media .menu-orbit-card img {
+        width: 100%;
+        height: 100%;
+        max-width: none;
+        object-fit: contain;
+        display: block;
+        user-select: none;
+        -webkit-user-drag: none;
+    }
+
+.menu-media .menu-orbit-item.is-active {
+    --scale: 1.08;
+    --z: 20;
+    filter: drop-shadow(0 22px 18px rgba(34,20,12,.22));
+}
+
+    .menu-media .menu-orbit-item.is-active .menu-orbit-card {
+        animation: menuOrbitPopup 950ms cubic-bezier(.18,.9,.2,1);
+    }
+
+@keyframes menuOrbitPopup {
+    0% {
+        transform: translateY(24px) scale(.78);
+    }
+
+    45% {
+        transform: translateY(-18px) scale(1.12);
+    }
+
+    72% {
+        transform: translateY(3px) scale(1.05);
+    }
+
+    100% {
+        transform: translateY(0) scale(1);
+    }
+}
+
+.menu-media .menu-orbit-brand {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 34%;
+    min-width: 132px;
+    max-width: 190px;
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    display: grid;
+    place-items: center;
+}
+
+.menu-media .menu-orbit-brand-disc {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+}
+
+    .menu-media .menu-orbit-brand-disc img {
+        width: 92%;
+        height: 92%;
+        max-width: none;
+        object-fit: contain;
+        display: block;
+    }
+
+.menu-media .menu-orbit-label {
+    position: absolute;
+    left: 50%;
+    bottom: -54px;
+    transform: translateX(-50%);
+    z-index: 30;
+    min-width: 190px;
+    text-align: center;
+    color: var(--orbit-coffee-dark);
+    opacity: 1;
+    transition: opacity 250ms ease;
+}
+
+    .menu-media .menu-orbit-label.fade {
+        opacity: 0;
+    }
+
+.menu-media .menu-orbit-kicker {
+    display: block;
+    font: 700 9px/1.2 Arial, sans-serif;
+    letter-spacing: .25em;
+    opacity: .7;
+    margin-bottom: 4px;
+}
+
+.menu-media .menu-orbit-label strong {
+    font-size: clamp(16px, 2.2vw, 23px);
+    letter-spacing: .03em;
+}
+
+.menu-media .menu-orbit-hint {
+    position: absolute;
+    bottom: 0;
+    margin: 0;
+    font: 600 9px/1 Arial, sans-serif;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: rgba(79,51,36,.58);
+}
+
+@media (max-width: 700px) {
+    .menu-media .menu-orbit-media {
+        max-width: 520px;
+        padding-bottom: 24px;
+    }
+
+    .menu-media .menu-orbit-item {
+        width: clamp(76px, 23vw, 120px);
+    }
+
+    .menu-media .menu-orbit-brand {
+        min-width: 112px;
+    }
+
+    .menu-media .menu-orbit-label {
+        bottom: -8px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .menu-media .menu-orbit-item,
+    .menu-media .menu-orbit-item.is-active .menu-orbit-card,
+    .menu-media .menu-orbit-label {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+
+/* Orbit replacement uses the full menu-media column. */
+.menu-media:has(.menu-orbit-media) {
+    padding-left: 0;
+    justify-content: center;
+}
     .menu-media .menu-orbit-label.fade {
         opacity: 0;
     }
