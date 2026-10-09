@@ -1096,50 +1096,6 @@
 
 
 /* ==========================================================================
-   SOIL TO SIP — video plays only while it is on screen; title board drops in;
-   the board image is found whatever extension it was saved with.
-   ========================================================================== */
-(() => {
-    const v = document.getElementById("stsVideo");
-    const board = document.getElementById("stsBoard");
-    if (!v) return;
-    const media = v.closest(".sts-media");
-    const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    // title board: try png → webp → jpg → jpeg until one exists
-    if (board) {
-        const exts = (board.dataset.exts || "png").split(",");
-        const base = board.getAttribute("src").replace(/\.[a-z]+$/i, "");
-        let k = 0;
-        board.addEventListener("load", () => { board.style.opacity = ""; });
-        board.addEventListener("error", () => { k++; if (k < exts.length) board.src = base + "." + exts[k]; });
-    }
-
-    const ready = () => media.classList.remove("is-loading");
-    v.addEventListener("loadeddata", ready);
-    v.addEventListener("playing", ready);
-    v.addEventListener("error", ready, true);   // no video file → just show the dark backdrop + board
-    if (v.readyState >= 2) ready();
-
-    if (!("IntersectionObserver" in window)) { media.classList.add("is-in"); if (!reduce) v.play().catch(() => {}); return; }
-
-    // start downloading a little before it scrolls in
-    new IntersectionObserver((es, o) => {
-        es.forEach(en => { if (en.isIntersecting) { v.preload = "auto"; o.disconnect(); } });
-    }, { rootMargin: "700px 0px" }).observe(media);
-
-    // play only while visible
-    new IntersectionObserver(es => {
-        es.forEach(en => {
-            if (en.isIntersecting) {
-                media.classList.add("is-in");
-                if (!reduce) { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
-            } else if (!v.paused) v.pause();
-        });
-    }, { threshold: 0.25 }).observe(media);
-})();
-
-/* ==========================================================================
    CINEMA WORKS — Magnetic Deck (Cursor Speed Scatter + Spring Integration)
    ========================================================================== */
 (() => {
@@ -1429,7 +1385,7 @@
              */
 
             var angle =
-                -Math.PI / 2 +
+                Math.PI / 2 +
                 slot * step;
 
 
