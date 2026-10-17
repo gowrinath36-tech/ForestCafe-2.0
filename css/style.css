@@ -1305,39 +1305,43 @@ textarea {
     border: none !important;
     box-shadow: none !important;
 }
-/* Seamless Vertical Gradient for the Menu-to-Farm Divider */
+/* 1. Close the Gap Above the Ribbon */
+p.menu-note,
+.menu-custom-note,
+.menu-disclaimer,
+.menu-subnote {
+    margin-bottom: 8px !important;
+    padding-bottom: 0 !important;
+}
+
+#menu,
+.theme-menu,
+body #menu {
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+    min-height: unset !important;
+}
+
 /* =========================================================
-   MENU DIVIDER / RIBBON
-   Smoothly blends the menu background into the ribbon
+   2. RE-POSITION THE RIBBON UPWARD
    ========================================================= */
 
 .menu-divider,
-.ribbon-separator {
-    position: relative;
-    width: 100%;
-    margin: 0 !important;
-    padding: 28px 0 !important;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.ribbon-separator,
+.ribbon {
+    position: relative !important;
+    width: 100% !important;
+    margin-top: -30px !important; /* Pulls ribbon upward toward the menu note */
+    margin-bottom: -25px !important; /* Pulls the following farm section closer */
+    padding: 0 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    z-index: 2 !important;
     /* Smooth transition — no hard line */
     background: linear-gradient( to bottom, #EFEADB 0%, #F0ECE1 20%, #F2EFE7 40%, #F5F2EB 65%, #F7F4EB 85%, #F7F4EB 100% ) !important;
 }
 
-/* =========================================================
-   RIBBON
-   ========================================================= */
-
-.ribbon {
-    width: 100%;
-    min-height: 0;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-    /* Smooth full-height background */
-    background: linear-gradient( to bottom, #EFEADB 0%, #F0ECE2 18%, #F2EFE7 38%, #F5F2EC 62%, #F7F4EB 82%, #F7F4EB 100% );
-    position: relative;
-}
 
 /* =========================================================
    RIBBON INNER
@@ -1352,26 +1356,88 @@ textarea {
     z-index: 1;
 }
 
-    /* =========================================================
+/* =========================================================
    RIBBON IMAGE
    ========================================================= */
 
-    .ribbon-inner img {
-        display: block;
-        width: 100%;
-        height: auto;
-        max-width: none;
-        /* Removes any inline gap below image */
-        vertical-align: middle;
-    }
+.menu-divider img,
+.ribbon-separator img,
+.ribbon img,
+.ribbon-inner img {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    display: block !important;
+    object-fit: contain !important;
+}
 /* =========================================================
-   LITTLE FARMER HEADING
-========================================================= */
+   LITTLE FARMER HEADING & BADGE SCALING
+   ========================================================= */
 
-#farm {
+#farm,
+.theme-farm,
+body #farm {
     position: relative;
     z-index: 2;
+    margin-top: 0 !important;
     margin-bottom: 0;
+    padding-top: 10px !important;
+}
+
+/* 1. Enlarge the Section Headline ("LITTLE FARMER") */
+#farm h2,
+#farm .farm-copy h2,
+.theme-farm .farm-copy h2,
+.farm-title {
+    font-size: clamp(2.4rem, 4.5vw, 3.2rem) !important;
+    line-height: 1.12 !important;
+    letter-spacing: 0.01em;
+}
+
+/* 2. Enlarge the Circular "Little Farmer" Logo Badge & Shift Rightward */
+#farm .farm-media,
+body #farm .farm-media,
+.farm-logo-col,
+.farm-media {
+    display: flex !important;
+    justify-content: flex-end !important;
+    align-items: center !important;
+    padding-right: 24px !important;
+    flex: 0 0 clamp(380px, 42%, 480px) !important;
+    max-width: 480px !important;
+}
+
+img[src*="little-farmer"],
+#farm .farm-emblem-logo,
+#farm .farm-media img,
+.farm-badge-img,
+.farm-logo-col img {
+    width: clamp(340px, 35vw, 460px) !important; /* ~440px-460px on desktop */
+    max-width: 100% !important;
+    height: auto !important;
+    display: block !important;
+    object-fit: contain !important;
+    filter: drop-shadow(0 12px 28px rgba(38, 25, 18, 0.12));
+}
+
+@media (max-width: 768px) {
+    #farm .farm-media,
+    body #farm .farm-media,
+    .farm-logo-col,
+    .farm-media {
+        justify-content: center !important;
+        padding-right: 0 !important;
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+        margin-bottom: 24px !important;
+    }
+    img[src*="little-farmer"],
+    #farm .farm-emblem-logo,
+    #farm .farm-media img,
+    .farm-badge-img,
+    .farm-logo-col img {
+        width: clamp(240px, 68vw, 320px) !important;
+    }
 }
 
 #farm::after {
@@ -5216,14 +5282,44 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
 /* ==========================================================================
    Stay / Hill Retreat Ribbon Divider
    ========================================================================== */
+/* Hill Retreat Ribbon Divider */
+.hill-retreat-divider {
+  position: relative !important;
+  width: 100% !important;
+  max-width: 100vw !important;
+  margin: 0 !important;
+  padding: clamp(35px, 4vw, 55px) 0 !important; /* ~2 cm clean breathing room */
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  /* Seamless unnoticeable gradient transition from Farm Shop to Stay */
+  background: linear-gradient(to bottom, #EFEADB 0%, #F5F1E8 50%, #FAF7F0 100%) !important;
+  overflow: hidden !important;
+  z-index: 2 !important;
+}
+
+.hill-retreat-ribbon-img,
 .stay-divider img,
 .stay-ribbon-img {
-    display: block;
-    width: 100%;
-    max-width: 2200px;
-    height: auto;
-    margin: 0 auto;
-    object-fit: contain;
+  width: 100% !important;
+  max-width: 100% !important; /* Full width edge-to-edge */
+  height: auto !important;
+  display: block !important;
+  object-fit: contain !important;
+}
+
+/* Ensure no harsh top padding pulls Stay into the ribbon */
+#stay,
+.theme-stay,
+.stay-section {
+  padding-top: clamp(24px, 3vw, 40px) !important;
+  background-color: #FAF7F0 !important;
+}
+
+/* Ensure 'View more products' button has breathing space above the divider */
+.farm-shop-action,
+.view-more-container {
+  margin-bottom: 18px !important;
 }
 
 /* ==========================================================================
