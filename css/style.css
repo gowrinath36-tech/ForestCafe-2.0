@@ -4427,7 +4427,7 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
     width: 100%;
     position: relative;
     /* Elevated so the top of hair touches the main headline line */
-    margin-top: -210px !important;
+    margin-top: -160px !important;
     z-index: 10;
 }
 
@@ -4454,17 +4454,16 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
     display: block;
     background: transparent !important;
     /* Zoom factor expanding shoulders and torso to the drawn margins */
-    transform: scale(1.28) !important;
+    transform: scale(1.12) !important;
     transform-origin: top center;
-    filter: drop-shadow(0 24px 44px rgba(0, 0, 0, 0.92));
-    /* Clean dissolve right above the stats cards */
-    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 85%, transparent 99%);
-    mask-image: linear-gradient(to bottom, #000 0%, #000 85%, transparent 99%);
+    filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.55)) !important;
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
     transition: transform 0.3s ease;
 }
 
 .ad-story-portrait-wrap:hover .ad-story-portrait-img {
-    transform: scale(1.30) !important;
+    transform: scale(1.15) !important;
 }
 
 .ad-story-stats {
