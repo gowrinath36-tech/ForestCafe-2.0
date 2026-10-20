@@ -157,9 +157,9 @@
   }());
 
   var galleryImages = [
-    'images/cafe/cafe-01.webp', 'images/cafe/cafe-05.webp', 'images/cafe/cafe-06.webp',
-    'images/cafe/cafe-11.webp', 'images/cafe/cafe-14.webp', 'images/cafe/cafe-18.webp',
-    'images/cafe/cafe-19.webp', 'images/cafe/cafe-20.webp', 'images/cafe/cafe-22.webp'
+    'images/cafe/1.webp', 'images/cafe/2.webp', 'images/cafe/9.webp',
+    'images/cafe/8.webp', 'images/cafe/5.webp', 'images/cafe/15.webp',
+    'images/cafe/16.webp', 'images/cafe/6.webp', 'images/cafe/12.webp'
   ];
 
   (function stack() {

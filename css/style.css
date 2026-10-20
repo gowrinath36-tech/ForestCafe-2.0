@@ -4868,7 +4868,7 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
     inset: 0;
     z-index: -1;
     background-image: url('../images/sts/coffee-doodles-overlay.webp');
-    opacity: 0.25;
+    opacity: 0.10;
     pointer-events: none;
 }
 
