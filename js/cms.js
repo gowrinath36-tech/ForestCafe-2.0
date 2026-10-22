@@ -28,7 +28,9 @@
     emailText: 'forestcafe.khilla@gmail.com',
     emailLink: 'mailto:forestcafe.khilla@gmail.com',
     instaLink: 'https://www.instagram.com/forestcafe.khills?utm_source=ig_web_button_share_sheet&stkn=ZDNlZDc0MzIxNw==',
-    waLink: 'https://wa.me/919444060619?text=Hi%20Forest%20Cafe%2C%20I%20want%20to%20know%20more%20about%20your%20stay%20and%20cafe.'
+    waLink: 'https://wa.me/919444060619?text=Hi%20Forest%20Cafe%2C%20I%20want%20to%20know%20more%20about%20your%20stay%20and%20cafe.',
+    facebookLink: 'https://www.facebook.com/gc.anandhan',
+    youtubeLink: 'https://www.youtube.com/@littlefarmer7566'
   };
 
   // Which text fields must be a particular kind of link
@@ -36,7 +38,9 @@
     phoneLink: /^tel:\+?[0-9\-\s]+$/i,
     emailLink: /^mailto:[^\s@]+@[^\s@]+\.[^\s@]+/i,
     instaLink: /^https:\/\//i,
-    waLink: /^https:\/\//i
+    waLink: /^https:\/\//i,
+    facebookLink: /^https:\/\//i,
+    youtubeLink: /^https:\/\//i
   };
 
   // Farm-shop product cards (ids match data-id in index.html)
@@ -397,6 +401,8 @@
     }
     if (has(content, 'instaLink')) setHref('[data-cms="instaLink"]', content.text.instaLink);
     if (has(content, 'waLink')) setHref('[data-cms="waLink"]', content.text.waLink);
+    if (has(content, 'facebookLink')) setHref('[data-cms="facebookLink"]', content.text.facebookLink);
+    if (has(content, 'youtubeLink')) setHref('[data-cms="youtubeLink"]', content.text.youtubeLink);
 
     // Menu prices
     Object.keys(content.prices).forEach(function (id) {

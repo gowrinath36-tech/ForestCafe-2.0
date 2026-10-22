@@ -239,16 +239,24 @@
   var lbImg = $('#lbImage');
   var lbCounter = $('#lbCounter');
   var lbIndex = 0;
+    var lbImages = galleryImages;
+    var lbAltTexts = null;
 
-  function openLightbox(i) {
+    function showLightboxImage(i) {
+        lbIndex = (i + lbImages.length) % lbImages.length;
+        lbImg.src = lbImages[lbIndex];
+        lbImg.alt = lbAltTexts ? lbAltTexts[lbIndex] : 'Forest Cafe photo ' + (lbIndex + 1) + ' of ' + lbImages.length;
+        lbCounter.textContent = (lbIndex + 1) + ' / ' + lbImages.length;
+    }
+    function openLightbox(i, images, altTexts) {
     if (!lb) return;
-    lbIndex = (i + galleryImages.length) % galleryImages.length;
-    lbImg.src = galleryImages[lbIndex];
-    lbImg.alt = 'Forest Cafe photo ' + (lbIndex + 1) + ' of ' + galleryImages.length;
-    lbCounter.textContent = (lbIndex + 1) + ' / ' + galleryImages.length;
+        lbImages = images && images.length ? images : galleryImages;
+        lbAltTexts = altTexts || null;
+        showLightboxImage(i);
     lb.classList.add('is-open');
     lockScroll();
   }
+    window.fcOpenLightbox = openLightbox;
   function closeLightbox() {
     if (!lb) return;
     lb.classList.remove('is-open');
@@ -256,8 +264,8 @@
   }
   if (lb) {
     $('#lbClose').addEventListener('click', closeLightbox);
-    $('#lbPrev').addEventListener('click', function () { openLightbox(lbIndex - 1); });
-    $('#lbNext').addEventListener('click', function () { openLightbox(lbIndex + 1); });
+        $('#lbPrev').addEventListener('click', function () { showLightboxImage(lbIndex - 1); });
+        $('#lbNext').addEventListener('click', function () { showLightboxImage(lbIndex + 1); });
     lb.addEventListener('click', function (e) { if (e.target === lb) closeLightbox(); });
   }
 
@@ -301,8 +309,8 @@
       return;
     }
     if ($('#lightbox') && $('#lightbox').classList.contains('is-open')) {
-      if (e.key === 'ArrowLeft') openLightbox(lbIndex - 1);
-      if (e.key === 'ArrowRight') openLightbox(lbIndex + 1);
+            if (e.key === 'ArrowLeft') showLightboxImage(lbIndex - 1);
+            if (e.key === 'ArrowRight') showLightboxImage(lbIndex + 1);
     }
   });
 
@@ -334,6 +342,7 @@
         { label: "Outdoor ambience", title: "Garden\nDeck",       image: "images/rooms/5.webp", category: "exterior" }
     ];
 
+    const canHover = window.matchMedia("(hover: hover)").matches;
     let category = "interior";
     let slides = allSlides.filter(s => s.category === category);
     let active = 0;
@@ -357,7 +366,7 @@
             </button>`;
             }
             return `
-            <button type="button" class="rooms-panel" data-index="${i}" aria-label="Show ${s.label}" aria-pressed="false">
+            <button type="button" class="rooms-panel" data-index="${i}" aria-label="View ${s.label} photo" aria-pressed="false">
                 <img class="rooms-panel__img" src="${s.image}" alt="${s.label}" draggable="false">
                 <span class="rooms-panel__shade"></span>
                 <span class="rooms-panel__side">${s.label}</span>
@@ -369,8 +378,21 @@
         }).join("");
         panels = Array.from(stage.querySelectorAll(".rooms-panel"));
         panels.forEach((p, i) => {
-            p.addEventListener("click", () => setActive(i));
-            p.addEventListener("mouseenter", () => setActive(i));
+            p.addEventListener("click", () => {
+                if (container.dataset.swipeHandled === "true") return;
+                const wasActive = p.classList.contains("is-active");
+                setActive(i);
+                if (!canHover && !wasActive) return;   // touch: 1st tap expands, 2nd tap opens photo
+                if (!slides[i].image || !window.fcOpenLightbox) return;
+                const imageSlides = slides.filter(slide => slide.image);
+                const imageIndex = imageSlides.indexOf(slides[i]);
+                window.fcOpenLightbox(
+                    imageIndex,
+                    imageSlides.map(slide => slide.image),
+                    imageSlides.map(slide => `Cottage: ${slide.label}`)
+                );
+            });
+            if (canHover) p.addEventListener("mouseenter", () => setActive(i));
         });
         if (totalEl) totalEl.textContent = String(slides.length).padStart(2, "0");
         setActive(0);
@@ -403,8 +425,9 @@
     if (prevBtn) prevBtn.addEventListener("click", () => setActive(active - 1));
     if (nextBtn) nextBtn.addEventListener("click", () => setActive(active + 1));
     container.addEventListener("keydown", e => {
-        if (e.key === "ArrowLeft")  { e.preventDefault(); setActive(active - 1); }
-        if (e.key === "ArrowRight") { e.preventDefault(); setActive(active + 1); }
+        const vertical = window.matchMedia("(max-width: 767px)").matches;
+        if (e.key === (vertical ? "ArrowUp" : "ArrowLeft")) { e.preventDefault(); setActive(active - 1); }
+        if (e.key === (vertical ? "ArrowDown" : "ArrowRight")) { e.preventDefault(); setActive(active + 1); }
     });
 
     allSlides.forEach(s => { if (s.image) { const img = new Image(); img.src = s.image; } });
@@ -541,22 +564,29 @@
     }
 
     /* ---------- 3. Swipe helper (re-uses the existing arrow buttons) ---------- */
-    function swipe(el, onLeft, onRight) {
+    function swipe(el, onNext, onPrevious, axis) {
         if (!el) return;
         let x0 = 0, y0 = 0;
         el.addEventListener("touchstart", e => { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
         el.addEventListener("touchend", e => {
             const dx = e.changedTouches[0].clientX - x0;
             const dy = e.changedTouches[0].clientY - y0;
-            if (Math.abs(dx) < 45 || Math.abs(dx) < Math.abs(dy) * 1.3) return;
-            (dx < 0 ? onLeft : onRight)();
+            const primary = axis === "y" ? dy : dx;
+            const cross = axis === "y" ? dx : dy;
+            if (Math.abs(primary) < 45 || Math.abs(primary) < Math.abs(cross) * 1.3) return;
+            if (axis === "y") {
+                el.dataset.swipeHandled = "true";
+                window.setTimeout(() => { delete el.dataset.swipeHandled; }, 400);
+            }
+            (primary < 0 ? onNext : onPrevious)();
         }, { passive: true });
     }
     const click = id => () => { const b = document.getElementById(id); if (b) b.click(); };
 
     swipe($("#cardsStack"), click("nextCard"), click("prevCard"));          // cafe photo stack
     swipe($("#lightbox"), click("lbNext"), click("lbPrev"));                 // photo viewer
-    swipe($("#roomsSlatGallery"), click("slatNextBtn"), click("slatPrevBtn")); // rooms gallery
+    const notPhone = fn => () => { if (!window.matchMedia("(max-width: 767px)").matches) fn(); };
+    swipe($("#roomsSlatGallery"), notPhone(click("slatNextBtn")), notPhone(click("slatPrevBtn"))); // rooms gallery (tablet/desktop only)
 
 })();
 
@@ -923,6 +953,7 @@
 
     const cardsEl = Array.from(hub.querySelectorAll(".md-card"));
     const count = cardsEl.length;
+    const phoneMQ = window.matchMedia("(max-width: 767px)");
 
     // Accordion Toggle
     let isDrawerActive = false;
@@ -933,7 +964,11 @@
         if (isDrawerActive) {
             measure();
             syncRest();
-            field.scrollIntoView({ behavior: "smooth", block: "nearest" });
+            if (phoneMQ.matches) {
+                window.setTimeout(() => drawer.scrollIntoView({ behavior: "smooth", block: "start" }), 160);
+            } else {
+                field.scrollIntoView({ behavior: "smooth", block: "nearest" });
+            }
             startLoop();
         }
     });
@@ -1074,6 +1109,10 @@
     function tick() {
         rafId = 0;
         if (!isDrawerActive) return;           // drawer closed → loop stops completely
+        if (phoneMQ.matches) {                 // phone: vertical list, no physics
+            deck.forEach(c => { if (c.el) { c.el.style.transform = ""; c.el.style.zIndex = ""; } });
+            return;
+        }
         if (!window.fcInView(field)) { rafId = requestAnimationFrame(tick); return; }
         {
             const dx = cursor.x - cursor.lastX;
@@ -1117,6 +1156,9 @@
     window.addEventListener("resize", () => {
         measure();
         syncRest();
+    });
+    phoneMQ.addEventListener("change", () => {
+        if (!phoneMQ.matches && isDrawerActive) { measure(); syncRest(); startLoop(); }
     });
 })();
 

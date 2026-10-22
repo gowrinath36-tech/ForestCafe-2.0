@@ -1394,6 +1394,23 @@ body #farm {
     letter-spacing: 0.01em;
 }
 
+.farm-heading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.farm-title-icon {
+    width: 120px !important;
+    height: 120px !important;
+    max-width: 120px !important;
+    margin: 0 !important;
+    object-fit: contain !important;
+    filter: none !important;
+    animation: none !important;
+    flex: none;
+}
+
 /* 2. Enlarge the Circular "Little Farmer" Logo Badge & Shift Rightward */
 #farm .farm-media,
 body #farm .farm-media,
@@ -1403,16 +1420,15 @@ body #farm .farm-media,
     justify-content: flex-end !important;
     align-items: center !important;
     padding-right: 24px !important;
-    flex: 0 0 clamp(380px, 42%, 480px) !important;
-    max-width: 480px !important;
+    flex: 0 0 clamp(420px, 44%, 560px) !important;
+    max-width: 560px !important;
 }
 
-img[src*="little-farmer"],
 #farm .farm-emblem-logo,
 #farm .farm-media img,
 .farm-badge-img,
 .farm-logo-col img {
-    width: clamp(340px, 35vw, 460px) !important; /* ~440px-460px on desktop */
+    width: clamp(400px, 42vw, 560px) !important;
     max-width: 100% !important;
     height: auto !important;
     display: block !important;
@@ -1431,13 +1447,13 @@ img[src*="little-farmer"],
         max-width: 100% !important;
         margin-bottom: 24px !important;
     }
-    img[src*="little-farmer"],
     #farm .farm-emblem-logo,
     #farm .farm-media img,
     .farm-badge-img,
     .farm-logo-col img {
-        width: clamp(240px, 68vw, 320px) !important;
+        width: clamp(280px, 78vw, 360px) !important;
     }
+    .farm-title-icon { width: 34px !important; height: 34px !important; max-width: 34px !important; }
 }
 
 #farm::after {
@@ -4039,6 +4055,12 @@ img.img-in { animation: fcImgIn .6s ease both; }
     overflow: hidden;
 }
 
+.ad-placeholder > img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
 .ad-placeholder-label {
     padding: 10px 14px;
     font-size: 0.78rem;
@@ -4147,7 +4169,7 @@ img.img-in { animation: fcImgIn .6s ease both; }
 }
 
 .ad-future-media {
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 16 / 9;
     width: 100%;
 }
 
@@ -4170,7 +4192,7 @@ img.img-in { animation: fcImgIn .6s ease both; }
 }
 
 .ad-article-media {
-    aspect-ratio: 16 / 11;
+    aspect-ratio: 16 / 9;
     width: 100%;
 }
 
@@ -4250,6 +4272,8 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
 .rooms-panel.is-active { flex-grow: 5.5; box-shadow: 0 24px 48px rgba(30, 60, 72, .28); }
 
 .rooms-panel:focus-visible { outline: 3px solid var(--stay-500); outline-offset: 3px; }
+
+.rooms-panel:not(.rooms-panel--placeholder) { cursor: zoom-in; }
 
 .rooms-panel__img {
     position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
@@ -4427,7 +4451,7 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
     width: 100%;
     position: relative;
     /* Elevated so the top of hair touches the main headline line */
-    margin-top: -160px !important;
+    margin-top: -210px !important;
     z-index: 10;
 }
 
@@ -4454,16 +4478,17 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
     display: block;
     background: transparent !important;
     /* Zoom factor expanding shoulders and torso to the drawn margins */
-    transform: scale(1.12) !important;
+    transform: scale(1.28) !important;
     transform-origin: top center;
-    filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.55)) !important;
-    -webkit-mask-image: none !important;
-    mask-image: none !important;
+    filter: drop-shadow(0 24px 44px rgba(0, 0, 0, 0.92));
+    /* Clean dissolve right above the stats cards */
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 85%, transparent 99%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 85%, transparent 99%);
     transition: transform 0.3s ease;
 }
 
 .ad-story-portrait-wrap:hover .ad-story-portrait-img {
-    transform: scale(1.15) !important;
+    transform: scale(1.30) !important;
 }
 
 .ad-story-stats {
@@ -5799,8 +5824,8 @@ img { max-width: 100%; }
     color: #b9f0a8;
 }
 .open-badge::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; box-shadow: 0 0 0 3px rgba(185, 240, 168, .22); flex: none; }
-.open-badge.is-closed { color: #ffb4a0; }
-.open-badge.is-closed::before { box-shadow: 0 0 0 3px rgba(255, 180, 160, .22); }
+.open-badge.is-closed { color: #c51013; }
+.open-badge.is-closed::before { box-shadow: 0 0 0 3px rgba(255, 77, 79, .22); }
 .open-badge[hidden] { display: none; }
 
 /* ---------- quick-action bar (phones only) ---------- */
@@ -5837,8 +5862,8 @@ img { max-width: 100%; }
 @media (max-width: 900px) {
     .ad-future, .ad-article-card { grid-template-columns: minmax(0, 1fr); gap: 24px; }
     .ad-article-card { padding: 20px; }
-    .ad-future-media { aspect-ratio: 16 / 10; }
-    .ad-article-media { aspect-ratio: 16 / 10; }
+    .ad-future-media { aspect-ratio: 16 / 9; }
+    .ad-article-media { aspect-ratio: 16 / 9; }
     .ad-article-actions .btn, .ad-future-copy .btn { flex: 1 1 160px; justify-content: center; }
 }
 
@@ -5856,7 +5881,7 @@ img { max-width: 100%; }
     body .split .eyebrow { font-size: .74rem; letter-spacing: .14em; }
     body .split .btn { padding: 13px 24px; font-size: .95rem; }
     .about-media .floating-img { width: min(88%, 420px); margin: 0 auto; display: block; }
-    .farm-media img, .farm-emblem-logo { max-width: 300px !important; margin: 0 auto; }
+    .farm-media img, .farm-emblem-logo { max-width: 360px !important; margin: 0 auto; }
     .cot-media img { width: min(100%, 460px); margin: 0 auto; display: block; }
     body .about-copy .pill-row, .pill-row { gap: 8px; }
 
@@ -5883,6 +5908,26 @@ img { max-width: 100%; }
     /* rooms gallery arrows stay on screen */
     .horizon-slat__arrow--left { left: 8px; }
     .horizon-slat__arrow--right { right: 8px; }
+    .horizon-slat-container {
+        height: clamp(460px, 68vh, 600px) !important;
+        padding: 60px 0;
+        touch-action: pan-x pinch-zoom;
+    }
+    .horizon-slat__stage { flex-direction: column; }
+    .rooms-panel { flex: 1 1 0; min-height: 0; }
+    .rooms-panel__side {
+        left: 50%; top: 50%; bottom: auto; transform: translate(-50%, -50%);
+        writing-mode: horizontal-tb; rotate: 0; font-size: .78rem;
+    }
+    .rooms-panel__content { left: 18px; right: 18px; bottom: 18px; }
+    .horizon-slat-container .horizon-slat__arrow--left {
+        top: 8px; left: 50%; right: auto; margin-top: 0; transform: translateX(-50%);
+    }
+    .horizon-slat-container .horizon-slat__arrow--right {
+        top: auto; right: 50%; bottom: 8px; left: auto; margin-top: 0; transform: translateX(50%);
+    }
+    .horizon-slat__arrow--left svg,
+    .horizon-slat__arrow--right svg { transform: rotate(90deg); }
     .rooms-pill-btn { min-height: 44px; }
 
     /* readable small text (nothing under 12px) */
@@ -5929,7 +5974,7 @@ img { max-width: 100%; }
 
     /* open badge on the white info card */
     .info-strip .open-badge { color: #2d7a2d; justify-content: center; font-size: .7rem; }
-    .info-strip .open-badge.is-closed { color: #b4442b; }
+    .info-strip .open-badge.is-closed { color: #c62828; }
     .info-strip .open-badge::before { box-shadow: none; }
 }
 
@@ -5937,3 +5982,274 @@ img { max-width: 100%; }
     .farm-features-grid, .cot-features-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 1100px) { .sts-stage h3, .sts-stage p { text-shadow: 0 1px 0 rgba(255, 255, 255, .55); } }
+
+
+/* ==========================================================================
+   ROUND 9 — ART DIRECTOR / OUR STORY : clean alternating layout
+   Scoped to #art-director only. Rows alternate:
+   Story = text LEFT / photo RIGHT · Workshops = photo LEFT / text RIGHT
+   Articles = text LEFT / photo RIGHT
+   ========================================================================== */
+#art-director .ad-block {
+    width: 100%;
+    max-width: 1180px !important;
+    margin: 0 auto !important;
+    padding: 0 clamp(20px, 4vw, 48px) !important;
+    box-sizing: border-box;
+}
+#art-director .ad-intro { margin-bottom: clamp(24px, 3.5vw, 40px) !important; }
+
+/* ---- shared two-column row: equal columns so every edge lines up ---- */
+#art-director .ad-story-grid,
+#art-director .ad-future,
+#art-director .ad-article-card {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: clamp(32px, 5vw, 80px) !important;
+    align-items: center !important;
+}
+#art-director .ad-future,
+#art-director .ad-articles {
+    margin-top: clamp(56px, 7vw, 96px) !important;
+    padding-top: clamp(48px, 6vw, 80px) !important;
+    border-top: 1.5px dashed rgba(242, 182, 118, .22);
+}
+#art-director .ad-article-card {
+    padding: 0 !important;
+    background: none !important;
+    border: 0 !important;
+}
+
+/* ---- headings: tidy spacing now that they live inside the text column ---- */
+#art-director .ad-story .ad-subtitle,
+#art-director .ad-future .ad-subtitle,
+#art-director .ad-articles .ad-subtitle {
+    margin: 4px 0 26px !important;
+    max-width: 100%;
+}
+#art-director .ad-eyebrow { margin-bottom: 6px; }
+
+/* ---- STORY: text column ---- */
+#art-director .ad-story-copy { align-items: flex-start; }
+#art-director .ad-journey-list { margin: 0 0 8px; }
+#art-director .ad-journey-list li {
+    position: relative;
+    font-size: clamp(.97rem, 1.05vw, 1.04rem) !important;
+    line-height: 1.65 !important;
+    gap: 16px;
+    margin-bottom: 0 !important;
+    padding-bottom: 20px;
+}
+/* chalk-dashed timeline joining the ticks */
+#art-director .ad-journey-list li:not(:last-child)::before {
+    content: "";
+    position: absolute;
+    left: 13px;
+    top: 34px;
+    bottom: 4px;
+    border-left: 1.5px dashed rgba(242, 182, 118, .42);
+}
+#art-director .ad-journey-note {
+    margin: 12px 0 26px !important;
+    padding: 14px 20px !important;
+    font-size: clamp(1.05rem, 1.2vw, 1.22rem) !important;
+}
+#art-director .ad-story-actions { margin-top: 0; }
+
+/* ---- STORY: portrait column (no more negative margin / scale hacks) ---- */
+#art-director .ad-story-media {
+    margin: 0 !important;
+    width: 100%;
+    max-width: 500px;
+    justify-self: center;
+    align-self: center;
+    align-items: stretch;
+}
+#art-director .ad-story-portrait-wrap {
+    position: relative;
+    max-width: 100% !important;
+    margin: 0 !important;
+}
+/* drawn chalk arch behind the cut-out; the hat pops out above it */
+#art-director .ad-story-portrait-wrap::before {
+    content: "";
+    position: absolute;
+    left: 6%; right: 6%; top: 16%; bottom: 0;
+    border-radius: 999px 999px 28px 28px;
+    background: linear-gradient(180deg, rgba(201, 128, 58, .26) 0%, rgba(201, 128, 58, .05) 100%);
+    border: 1.5px dashed rgba(242, 182, 118, .5);
+    -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
+    z-index: 0;
+}
+#art-director .ad-story-portrait-img {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: auto;
+    max-height: none !important;
+    transform: none !important;
+}
+#art-director .ad-story-portrait-wrap:hover .ad-story-portrait-img { transform: none !important; }
+#art-director .ad-story-stats {
+    max-width: 100%;
+    margin: -34px 0 0 !important;
+    z-index: 5;
+}
+
+/* ---- media frames (workshops + articles): natural ratio, no dead letterbox ---- */
+#art-director .ad-future-media,
+#art-director .ad-article-media {
+    aspect-ratio: auto !important;
+    width: 100%;
+    border: 0;
+    background: none;
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+#art-director .ad-future-media > img,
+#art-director .ad-article-media > img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    border-radius: var(--radius);
+    box-shadow: 0 18px 40px -12px rgba(0, 0, 0, .7);
+}
+#art-director .ad-placeholder-label {
+    border: 1.5px dashed rgba(247, 244, 235, .35);
+    border-radius: var(--radius);
+    padding: 44px 20px;
+    width: 100%;
+}
+
+/* ---- text blocks of workshops / articles ---- */
+#art-director .ad-future-copy p,
+#art-director .ad-article-copy p { margin-bottom: 24px; }
+#art-director .ad-article-copy h4 { margin: 0 0 8px; }
+#art-director .ad-article-actions { margin-top: 0; }
+
+/* ---- tablet + phone: single column, photo first, same order in every row ---- */
+@media (max-width: 900px) {
+    #art-director .ad-story-grid,
+    #art-director .ad-future,
+    #art-director .ad-article-card {
+        grid-template-columns: minmax(0, 1fr) !important;
+        gap: 28px !important;
+    }
+    #art-director .ad-story-media,
+    #art-director .ad-article-media { order: -1; }
+    #art-director .ad-story-media { max-width: 400px; }
+    #art-director .ad-future,
+    #art-director .ad-articles { margin-top: 48px !important; padding-top: 40px !important; }
+}
+@media (max-width: 520px) {
+    #art-director .ad-story-media { max-width: 320px; }
+    #art-director .ad-story-stats { margin-top: -24px !important; }
+}
+
+
+/* ==========================================================================
+   ROUND 10 — PHONE FIXES (max-width 767px only)
+   1) Rooms gallery  -> clean VERTICAL accordion (top to bottom)
+   2) Cinema Works   -> vertical stacked list, alternating photo left/right
+   ========================================================================== */
+@media (max-width: 767px) {
+
+    /* ---------- 1) ROOMS GALLERY ---------- */
+    #roomsSlatGallery.horizon-slat-container {
+        height: auto !important;
+        padding: 64px 0;
+        touch-action: pan-y pinch-zoom;   /* page can scroll normally over the gallery */
+    }
+    #roomsSlatGallery .horizon-slat__stage {
+        flex-direction: column;
+        gap: 10px;
+        height: auto;
+    }
+    #roomsSlatGallery .rooms-panel {
+        flex: none;
+        height: 68px;
+        border-radius: 18px;
+        transition: height .6s cubic-bezier(.65, 0, .2, 1), box-shadow .5s ease;
+    }
+    #roomsSlatGallery .rooms-panel.is-active { height: 320px; }
+
+    /* closed strip: horizontal label, readable over the photo */
+    #roomsSlatGallery .rooms-panel__shade {
+        background: linear-gradient(90deg, rgba(18, 48, 58, .85) 0%, rgba(18, 48, 58, .25) 100%);
+    }
+    #roomsSlatGallery .rooms-panel.is-active .rooms-panel__shade {
+        background: linear-gradient(to top, rgba(18, 48, 58, .85) 0%, rgba(18, 48, 58, 0) 60%);
+    }
+    #roomsSlatGallery .rooms-panel__side {
+        left: 20px; right: 20px; top: 50%; bottom: auto;
+        transform: translateY(-50%);
+        writing-mode: horizontal-tb;
+        rotate: none;
+        text-align: left;
+        font-size: .95rem;
+        letter-spacing: .04em;
+    }
+    #roomsSlatGallery .rooms-panel__content { left: 20px; right: 20px; bottom: 20px; }
+    #roomsSlatGallery .rooms-panel__title { font-size: clamp(1.5rem, 7vw, 1.9rem); }
+
+    /* "Secret Attic" placeholder: hide dashed box while closed, brown text on cream */
+    #roomsSlatGallery .rooms-panel--placeholder .rooms-panel__placeholder-wrap {
+        transition: opacity .4s ease;
+        inset: 12px 12px 112px 12px !important;
+    }
+    #roomsSlatGallery .rooms-panel--placeholder:not(.is-active) .rooms-panel__placeholder-wrap { opacity: 0; }
+    #roomsSlatGallery .rooms-panel--placeholder .rooms-panel__side,
+    #roomsSlatGallery .rooms-panel--placeholder .rooms-panel__content { color: #6d432b; }
+    #roomsSlatGallery .rooms-panel--placeholder .rooms-panel__tag { color: #8c6d58; }
+    #roomsSlatGallery .rooms-panel--placeholder .rooms-panel__title { font-size: 1.4rem; }
+
+    /* ---------- 2) CINEMA WORKS ---------- */
+    #art-director .ad-cinema-drawer { scroll-margin-top: 84px; }
+    #art-director .ad-cinema-drawer.is-open { margin-top: 36px; }
+    #art-director .ad-cinema-header { margin-bottom: 18px; }
+
+    #art-director .md-field {
+        height: auto;
+        cursor: auto;
+        touch-action: auto;
+        padding: 4px 0 8px;
+    }
+    #art-director .md-hub {
+        position: static;
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+    }
+    #art-director .md-card {
+        position: relative;
+        top: auto; left: auto;
+        width: 100%;
+        height: 128px;
+        flex-direction: row;
+        transform: none !important;     /* ignore the desktop physics transform */
+        z-index: auto !important;
+        will-change: auto;
+    }
+    #art-director .md-card:nth-child(even) { flex-direction: row-reverse; }   /* alternate left / right */
+    #art-director .md-photo { flex: 0 0 42%; width: auto; }
+    #art-director .md-caption {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 12px 16px;
+        border-top: 0;
+        border-left: 1px solid rgba(242, 182, 118, .22);
+    }
+    #art-director .md-card:nth-child(even) .md-caption {
+        border-left: 0;
+        border-right: 1px solid rgba(242, 182, 118, .22);
+    }
+    #art-director .md-role { line-height: 1.35; }
+    #art-director .md-name { font-size: 1.02rem; margin-top: 4px; }
+}
