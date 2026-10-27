@@ -244,7 +244,7 @@
 
     function showLightboxImage(i) {
         lbIndex = (i + lbImages.length) % lbImages.length;
-        lbImg.src = lbImages[lbIndex];
+        lbImg.src = window.fcImg ? window.fcImg(lbImages[lbIndex]) : lbImages[lbIndex];   // uses a photo uploaded in the dashboard, if any
         lbImg.alt = lbAltTexts ? lbAltTexts[lbIndex] : 'Forest Cafe photo ' + (lbIndex + 1) + ' of ' + lbImages.length;
         lbCounter.textContent = (lbIndex + 1) + ' / ' + lbImages.length;
     }
@@ -367,7 +367,7 @@
             }
             return `
             <button type="button" class="rooms-panel" data-index="${i}" aria-label="View ${s.label} photo" aria-pressed="false">
-                <img class="rooms-panel__img" src="${s.image}" alt="${s.label}" draggable="false">
+                <img class="rooms-panel__img" src="${window.fcImg ? window.fcImg(s.image) : s.image}" data-fc-src="${s.image}" alt="${s.label}" draggable="false">
                 <span class="rooms-panel__shade"></span>
                 <span class="rooms-panel__side">${s.label}</span>
                 <span class="rooms-panel__content">
@@ -654,7 +654,9 @@
    ========================================================================== */
 (() => {
     // 👉 Owner's WhatsApp number (country code + number, no + or spaces)
-    const WA_NUMBER = "919444060619";
+    // (fallback only - the live number comes from the dashboard "WhatsApp link" via window.fcWaNumber)
+    const WA_FALLBACK = "919444060619";
+    const waNumber = () => window.fcWaNumber || WA_FALLBACK;
 
     const modal = document.getElementById("productModal");
     const grid = document.getElementById("productsGrid");
@@ -665,6 +667,9 @@
     const linesBox = $("pmLines"), qtyLabel = $("pmQtyLabel");
     const buy = $("pmBuy"), buyText = $("pmBuyText");
     const nameIn = $("pmName"), noteIn = $("pmNote"), summary = $("pmSummary");
+    const priceEl = $("pmPrice");
+    const num = t => (window.fcPriceNum ? window.fcPriceNum(t) : null);
+    const money = n => (window.fcMoney ? window.fcMoney(n) : "\u20b9" + n);
     let current = null, lastFocus = null;
 
     const clamp = n => Math.min(99, Math.max(0, parseInt(n, 10) || 0));
@@ -699,23 +704,35 @@
         buy.classList.remove("is-disabled");
         buy.removeAttribute("aria-disabled");
 
-        summary.textContent = current.name + " — " + sel.map(l => (single ? "" : l.label + " ") + "× " + l.qty).join(", ").replace(/^\s+/, "");
+        // estimated total only when every chosen line has a plain rupee price
+        const nums = sel.map(l => num(l.price));
+        const grand = nums.every(n => n != null) ? sel.reduce((sum, l, k) => sum + nums[k] * l.qty, 0) : null;
+        const each = l => (l.price ? l.price + (num(l.price) != null ? " each" : "") : "");
+
+        summary.textContent = current.name + " \u2014 " +
+            sel.map(l => (single ? "" : l.label + " ") + "\u00d7 " + l.qty).join(", ").replace(/^\s+/, "") +
+            (grand != null ? " \u00b7 Total " + money(grand) : "");
         buyText.textContent = "Send order on WhatsApp";
 
         const out = [
-            "Hello Forest Cafe! 🌿",
+            "Hello Forest Cafe! \ud83c\udf3f",
             "I would like to order from your Farm Shop:",
             "",
-            "🛒 *" + current.name + "*"
+            "\ud83d\uded2 *" + current.name + "*"
         ];
-        if (single) out.push("🔢 Quantity: " + sel[0].qty);
-        else sel.forEach(l => out.push("📦 " + l.label + " × " + l.qty));
-        out.push("", "🖼️ Product photo:", photoUrl(current.img));
+        if (single) {
+            out.push("\ud83d\udd22 Quantity: " + sel[0].qty);
+            if (sel[0].price) out.push("\ud83d\udcb0 Price: " + each(sel[0]));
+        } else {
+            sel.forEach(l => out.push("\ud83d\udce6 " + l.label + " \u00d7 " + l.qty + (l.price ? " (" + each(l) + ")" : "")));
+        }
+        if (grand != null) out.push("", "\ud83e\uddfe Estimated total: " + money(grand));
+        out.push("", "\ud83d\uddbc\ufe0f Product photo:", photoUrl(current.img));
         const nm = nameIn.value.trim(), nt = noteIn.value.trim();
-        if (nt) out.push("", "📝 Note: " + nt);
-        if (nm) out.push("", "👤 Name: " + nm);
-        out.push("", "Kindly confirm the price, availability and how I can collect it or have it delivered. Thank you! 🙏");
-        buy.href = "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent(out.join("\n"));
+        if (nt) out.push("", "\ud83d\udcdd Note: " + nt);
+        if (nm) out.push("", "\ud83d\udc64 Name: " + nm);
+        out.push("", "Kindly confirm the price, availability and how I can collect it or have it delivered. Thank you! \ud83d\ude4f");
+        buy.href = "https://wa.me/" + waNumber() + "?text=" + encodeURIComponent(out.join("\n"));
     }
 
     function buildLines() {
@@ -728,6 +745,12 @@
             const name = document.createElement("span");
             name.className = "pm-line-name";
             name.textContent = multi ? l.label : "Quantity";
+            if (multi && l.price) {
+                const pr = document.createElement("small");
+                pr.className = "pm-line-price";
+                pr.textContent = l.price;
+                name.appendChild(pr);
+            }
             const step = document.createElement("div");
             step.className = "pm-qty";
             const minus = document.createElement("button"); minus.type = "button"; minus.textContent = "−"; minus.setAttribute("aria-label", "Decrease " + l.label);
@@ -752,13 +775,19 @@
         current = {
             name: name,
             img: src.getAttribute("src"),
-            lines: (sizes.length ? sizes : ["Quantity"]).map((s, i) => ({ label: s, qty: i === 0 ? 1 : 0 }))
+            lines: (sizes.length ? sizes : ["Quantity"]).map((s, i) => ({
+                label: s,
+                qty: i === 0 ? 1 : 0,
+                price: window.fcGetPrice ? window.fcGetPrice(card.dataset.id, sizes.length ? s : "") : ""
+            }))
         };
         img.src = src.getAttribute("src");
         img.alt = src.alt || name;
         title.textContent = name;
         tag.textContent = card.querySelector(".product-weight").textContent.trim();
         desc.textContent = card.querySelector(".product-desc").textContent.trim();
+        const onePrice = current.lines.length === 1 ? current.lines[0].price : "";
+        if (priceEl) { priceEl.textContent = onePrice; priceEl.hidden = !onePrice; }
         buildLines();
         refresh();
         lastFocus = document.activeElement;

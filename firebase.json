@@ -1,0 +1,19 @@
+{
+  "firestore": { "rules": "firestore.rules" },
+  "hosting": {
+    "public": ".",
+    "ignore": [
+      "firebase.json", ".firebaserc", "firestore.rules", "README-SETUP.md",
+      "**/.*", "**/node_modules/**"
+    ],
+    "headers": [
+      { "source": "/dashboard.html", "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow" },
+        { "key": "Cache-Control", "value": "no-cache" } ] },
+      { "source": "/index.html", "headers": [ { "key": "Cache-Control", "value": "no-cache" } ] },
+      { "source": "/js/**", "headers": [ { "key": "Cache-Control", "value": "no-cache" } ] },
+      { "source": "**/*.@(webp|jpg|jpeg|png|svg|webm|mp4|woff2)", "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=2592000" } ] }
+    ]
+  }
+}
