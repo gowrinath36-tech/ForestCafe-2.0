@@ -21,6 +21,7 @@
     }
 
     * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
 
     body {
       margin: 0;
@@ -74,13 +75,18 @@
       flex-wrap: wrap;
     }
 
-    .nav-links a {
+    .nav-links a, .nav-links button {
       color: white;
       text-decoration: none;
       border: 1px solid rgba(255,255,255,0.2);
       border-radius: 999px;
       padding: 8px 12px;
       opacity: 0.9;
+      background: transparent;
+      font: inherit;
+      font-size: 1rem;
+      font-weight: 400;
+      cursor: pointer;
     }
 
     .layout {
@@ -151,9 +157,10 @@
       grid-column: span 1;
     }
 
-    .product-toggle-list {
+    /* ---- farm products editor (price + availability) ---- */
+    .product-edit-list {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 12px;
       border: 1px solid var(--border);
       background: rgba(255,255,255,0.7);
@@ -161,31 +168,58 @@
       padding: 12px;
     }
 
-    .product-toggle-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+    .product-edit {
+      display: grid;
       gap: 10px;
-      padding: 10px 12px;
+      align-content: start;
+      padding: 12px;
       border: 1px solid rgba(37,60,32,0.08);
       border-radius: 12px;
       background: #faf7f2;
     }
 
-    .product-toggle-row label {
-      font-weight: 600;
-      color: var(--ink);
-      cursor: pointer;
-      flex: 1;
+    .product-edit.is-off { background: #f6e6e2; border-color: rgba(161,43,28,0.25); }
+
+    .product-edit-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
     }
 
-    .product-toggle-row input[type="checkbox"] {
+    .product-edit-head strong { color: var(--green); }
+
+    .product-off {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .product-off input[type="checkbox"] {
       width: 18px;
       height: 18px;
-      accent-color: var(--green);
+      accent-color: #a12b1c;
       cursor: pointer;
       margin: 0;
     }
+
+    .product-price-row {
+      display: grid;
+      grid-template-columns: 1fr 120px;
+      align-items: center;
+      gap: 10px;
+      padding: 4px 6px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+    }
+
+    .product-price-row label { font-weight: 600; color: var(--ink); font-size: 0.88rem; }
+    .product-price-row input { padding: 8px 10px; border-radius: 10px; }
+    .product-price-row.is-set { border-color: var(--honey); background: #fff4dc; }
 
     label {
       font-weight: 700;
@@ -235,6 +269,8 @@
       justify-content: center;
     }
 
+    button:disabled { opacity: 0.55; cursor: not-allowed; }
+
     .primary {
       background: var(--green);
       color: white;
@@ -257,6 +293,7 @@
 
     html { scroll-behavior: smooth; }
     section[id] { scroll-margin-top: 20px; }
+    h2[id] { scroll-margin-top: 20px; }
 
     .sidebar a {
       display: block;
@@ -304,6 +341,50 @@
     .file-btn { cursor: pointer; }
     button:focus-visible, .secondary-link:focus-visible, summary:focus-visible { outline: 3px solid rgba(37,60,32,0.35); outline-offset: 2px; }
 
+    /* ---- login screen ---- */
+    .login-wrap {
+      min-height: calc(100vh - 110px);
+      display: grid;
+      place-items: center;
+      padding: 32px 0;
+    }
+    .login-card { width: min(430px, 100%); padding: 30px 28px; }
+    .login-card h1 { margin: 0 0 6px; color: var(--green); font-size: 1.9rem; }
+    .login-card p { margin: 0 0 20px; color: var(--muted); font-size: 0.92rem; }
+    .login-card form { display: grid; gap: 14px; }
+    .login-card .primary { width: 100%; }
+
+    /* ---- photo editor ---- */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 12px;
+      padding: 4px 0 6px;
+    }
+    .photo-edit {
+      display: grid;
+      gap: 10px;
+      align-content: start;
+      padding: 10px;
+      border: 1px solid rgba(37,60,32,0.08);
+      border-radius: 14px;
+      background: #faf7f2;
+    }
+    .photo-edit.is-custom { border-color: var(--honey); background: #fff4dc; }
+    .photo-thumb {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border-radius: 10px;
+      background: var(--green-soft);
+      display: block;
+    }
+    .photo-meta { display: grid; gap: 2px; }
+    .photo-meta strong { color: var(--green); font-size: 0.88rem; }
+    .photo-state { font-size: 0.78rem; color: var(--muted); }
+    .photo-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .photo-actions .secondary-link, .photo-actions button { padding: 8px 12px; font-size: 0.82rem; }
+
     @media (max-width: 560px) {
       .price-row { grid-template-columns: 1fr 110px; }
       .price-row .price-default { grid-column: 1; grid-row: 2; }
@@ -314,6 +395,8 @@
       .layout {
         grid-template-columns: 1fr;
       }
+
+      .sidebar { position: static; }
 
       .form-grid {
         grid-template-columns: 1fr;
@@ -335,11 +418,36 @@
       <nav class="nav-links" aria-label="Dashboard navigation">
         <a href="index.html?preview=1" target="_blank" rel="noopener">Preview draft</a>
         <a href="dashboard.html">Refresh</a>
+        <button type="button" id="signOutBtn" hidden>Sign out</button>
       </nav>
     </div>
   </header>
 
-  <main class="shell layout">
+  <noscript>
+    <p style="text-align:center;padding:24px;font-weight:600">Please turn on JavaScript to use the dashboard.</p>
+  </noscript>
+
+  <!-- Owner login (shown only when the database is connected and you are signed out) -->
+  <section class="shell login-wrap" id="loginBox" hidden>
+    <div class="panel login-card">
+      <h1>Owner login</h1>
+      <p>Sign in to edit the Forest Cafe website.</p>
+      <form id="loginForm" novalidate>
+        <div class="field">
+          <label for="loginEmail">Email</label>
+          <input id="loginEmail" name="loginEmail" type="email" autocomplete="username" inputmode="email" />
+        </div>
+        <div class="field">
+          <label for="loginPassword">Password</label>
+          <input id="loginPassword" name="loginPassword" type="password" autocomplete="current-password" />
+        </div>
+        <button class="primary" id="loginBtn" type="submit">Sign in</button>
+        <div class="status" id="loginStatus" role="alert"></div>
+      </form>
+    </div>
+  </section>
+
+  <main class="shell layout" id="dashMain" hidden>
     <aside class="panel sidebar">
       <h2>Quick edit areas</h2>
       <ul>
@@ -347,8 +455,10 @@
         <li><a href="#sec-about">About us text</a></li>
         <li><a href="#sec-contact">Contact phone &amp; email</a></li>
         <li><a href="#sec-social">Social links</a></li>
+        <li><a href="#sec-articles">Articles &amp; blog links</a></li>
         <li><a href="#sec-menu">Menu prices</a></li>
-        <li><a href="#sec-products">Farm product availability</a></li>
+        <li><a href="#sec-products">Farm products: price &amp; availability</a></li>
+        <li><a href="#sec-photos">Photos: cafe &amp; Tiny Cot</a></li>
       </ul>
     </aside>
 
@@ -356,8 +466,13 @@
       <h1>Site content dashboard</h1>
 
       <div class="chips" aria-live="polite">
-        <span class="chip" id="liveState">Checking live file&hellip;</span>
+        <span class="chip" id="liveState">Checking live content&hellip;</span>
         <span class="chip" id="draftState">Draft: &hellip;</span>
+      </div>
+
+      <div class="howto" id="demoNote" hidden>
+        <strong>Demo mode.</strong> The database is not connected yet (the keys in <code>js/firebase-config.js</code> are still dummy values).
+        You can edit, save a draft and preview, but <b>Publish live</b> is switched off until the database is connected.
       </div>
 
       <div class="howto">
@@ -365,7 +480,7 @@
         <ol>
           <li>Edit below and click <b>Save draft</b>.</li>
           <li>Click <b>Preview draft</b> to see it on the real site (only you can see it).</li>
-          <li>Click <b>Download content.json</b> and upload it into the website&rsquo;s <code>data</code> folder (replace the old file). Then everyone sees the change.</li>
+          <li>Click <b>Publish live</b>. Everyone sees the change straight away &mdash; no file upload needed (photos too).</li>
         </ol>
       </div>
 
@@ -419,6 +534,7 @@
             <label for="waLink">WhatsApp link</label>
             <input id="waLink" name="waLink" type="text" placeholder="https://wa.me/91..." />
           </div>
+          <p class="hint">The number in the WhatsApp link is also used for the farm-shop orders, room booking and art-class buttons.</p>
           <div class="field half">
             <label for="facebookLink">Facebook link</label>
             <input id="facebookLink" name="facebookLink" type="url" placeholder="https://www.facebook.com/..." />
@@ -428,6 +544,17 @@
             <input id="youtubeLink" name="youtubeLink" type="url" placeholder="https://www.youtube.com/@..." />
           </div>
 
+          <h2 class="block-title" id="sec-articles">Articles &amp; blog links</h2>
+          <p class="hint">Where the &ldquo;View Articles&rdquo; and &ldquo;Visit Blog&rdquo; buttons on the website open.</p>
+          <div class="field half">
+            <label for="articlesLink">View Articles link</label>
+            <input id="articlesLink" name="articlesLink" type="url" placeholder="https://..." />
+          </div>
+          <div class="field half">
+            <label for="blogLink">Visit Blog link</label>
+            <input id="blogLink" name="blogLink" type="url" placeholder="https://..." />
+          </div>
+
           <h2 class="block-title" id="sec-menu">Menu prices</h2>
           <p class="hint">Type only the new price (for example <b>45</b>). Leave a box empty to keep the current price. Changed items turn yellow. You can also type text such as &ldquo;Market rate&rdquo;.</p>
           <div class="field">
@@ -435,19 +562,26 @@
           </div>
 
           <h2 class="block-title" id="sec-products">Farm products</h2>
+          <p class="hint">Type the price for each product (for example <b>250</b> shows as &#8377;250). Leave it empty to hide the price. Tick <b>Unavailable</b> to show the product as &ldquo;Currently unavailable&rdquo;. Honey has one price per size.</p>
           <div class="field">
-            <label>Tick a product to show it as &ldquo;Currently unavailable&rdquo;</label>
-            <div class="product-toggle-list" id="productAvailabilityList"></div>
+            <div class="product-edit-list" id="productAvailabilityList"></div>
+          </div>
+
+          <h2 class="block-title" id="sec-photos">Photos</h2>
+          <p class="hint">Click <b>Change photo</b> and pick a picture from your phone or computer. It is resized and converted to WebP automatically, so the website stays fast. Then <b>Save draft</b> &rarr; <b>Preview draft</b> &rarr; <b>Publish live</b>. <b>Use original</b> brings the old photo back.</p>
+          <div class="field">
+            <div class="menu-editor" id="photoEditor"></div>
           </div>
         </div>
 
         <div class="actions">
-          <button class="primary" type="submit">Save draft</button>
+          <button class="secondary" type="submit">Save draft</button>
           <a class="secondary-link secondary" href="index.html?preview=1" target="_blank" rel="noopener">Preview draft</a>
-          <button class="primary" id="downloadBtn" type="button">Download content.json</button>
+          <button class="primary" id="publishBtn" type="button">Publish live</button>
         </div>
         <div class="actions">
-          <label class="secondary-link secondary file-btn">Load content.json
+          <button class="secondary" id="downloadBtn" type="button">Download backup</button>
+          <label class="secondary-link secondary file-btn">Load backup file
             <input id="importFile" type="file" accept="application/json,.json" />
           </label>
           <button class="secondary" id="discardBtn" type="button">Discard draft</button>
@@ -459,6 +593,7 @@
     </section>
   </main>
 
+  <script src="js/firebase-config.js"></script>
   <script src="js/cms.js"></script>
 </body>
 </html>

@@ -1,5 +1,24 @@
+# Firebase
+.firebase/
+firebase-debug.log*
+.firebaserc.local
+
+# Node / tools
+node_modules/
+*.log
+
+# OS / editor
+.DS_Store
+Thumbs.db
 .vs/
-bin/
-obj/
+.vscode/
 *.user
-*.suo
+
+# Never commit secrets (service-account keys etc.)
+*service-account*.json
+*-adminsdk-*.json
+.env
+.env.*
+
+# Local zips / backups
+*.zip

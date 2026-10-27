@@ -6253,3 +6253,18 @@ img { max-width: 100%; }
     #art-director .md-role { line-height: 1.35; }
     #art-director .md-name { font-size: 1.02rem; margin-top: 4px; }
 }
+
+/* ==========================================================================
+   FARM SHOP PRICES (added with the CMS price feature)
+   ========================================================================== */
+.product-price { margin: 8px 18px 2px; font-weight: 800; font-size: 1.4rem; letter-spacing: .01em; color: var(--green-800); line-height: 1.15; }
+.product-price[hidden], .pm-price[hidden] { display: none !important; }
+.product-card.is-unavailable .product-price { opacity: .55; }
+.pm-price { margin: 0 0 8px 0 !important; font-size: 1.5rem; font-weight: 800; color: var(--green-800); }
+.pm-line-price { display: block; margin-top: 2px; font-size: .92rem; font-weight: 800; color: var(--green-600); }
+
+@media (max-width: 767px) {
+    .product-price { margin: 4px 13px 8px; font-size: 1.2rem; }
+    body .product-price { margin: 0 10px 8px; font-size: 1.15rem; }
+    .pm-price { font-size: 1.35rem; }
+}
