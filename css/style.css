@@ -1732,6 +1732,27 @@ body #farm .farm-media,
     margin-bottom: 3px;
 }
 
+
+/* Contact & Footer Phone Links */
+.contact-phone-link {
+    display: inline-block;
+    white-space: nowrap;
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.contact-phone-link:hover {
+    color: var(--honey, #C9803A);
+}
+
+.phone-sep {
+    display: inline-block;
+    margin: 0 5px;
+    opacity: 0.65;
+    user-select: none;
+}
+
 .contact-value {
     font-weight: 600;
     color: var(--green-800);
@@ -6049,6 +6070,22 @@ img { max-width: 100%; }
 /* ---- STORY: text column ---- */
 #art-director .ad-story-copy { align-items: flex-start; }
 #art-director .ad-journey-list { margin: 0 0 8px; }
+/* .ad-story-list — compact 3-point highlights replacing the journey checklist */
+.ad-story-list {
+    list-style: disc !important;
+    padding-left: 1.2em !important;
+    margin: 0 0 18px !important;
+}
+.ad-story-list li {
+    font-size: clamp(0.95rem, 1.05vw, 1.02rem);
+    line-height: 1.6;
+    margin-bottom: 12px;
+    color: rgba(247, 244, 235, 0.9);
+}
+.ad-story-list li strong {
+    color: #F2B676;
+    font-weight: 700;
+}
 #art-director .ad-journey-list li {
     position: relative;
     font-size: clamp(.97rem, 1.05vw, 1.04rem) !important;
@@ -6073,45 +6110,546 @@ img { max-width: 100%; }
 }
 #art-director .ad-story-actions { margin-top: 0; }
 
-/* ---- STORY: portrait column (no more negative margin / scale hacks) ---- */
+/* ==========================================================================
+   Art Director Section: Sizing, Stats Pills, and Balanced Layout
+   ========================================================================== */
+
+/* Remove any leftover circle/glow backgrounds */
+.ad-story-portrait-wrap::before,
+.ad-story-portrait-wrap::after,
+.ad-story-media::before {
+  display: none !important;
+}
+
+/* Grid Layout: Desktop Side-by-Side */
+.ad-story-grid,
+#art-director .ad-story-grid {
+  display: grid !important;
+  grid-template-columns: 1.15fr 0.85fr !important;
+  align-items: center !important;
+  gap: clamp(20px, 4vw, 50px) !important;
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding: 0 20px !important;
+}
+
+.ad-tagline {
+  color: #F2B676 !important;
+  font-size: 0.95rem !important;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+  margin-bottom: 8px;
+  display: inline-block;
+}
+
+.ad-story-title {
+  font-family: 'CoffeeTown', cursive, sans-serif !important;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+  font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+  color: #FFF3E3 !important;
+  margin: 4px 0 20px;
+  text-transform: uppercase;
+}
+
+.ad-story-list {
+  padding-left: 1.2em !important;
+  margin: 0 0 16px !important;
+  list-style: disc !important;
+}
+
+.ad-story-list li {
+  font-size: clamp(0.95rem, 1.05vw, 1.02rem);
+  line-height: 1.6;
+  margin-bottom: 12px;
+  color: rgba(247, 244, 235, 0.9);
+}
+
+.ad-story-list li strong {
+  color: #F2B676;
+  font-weight: 700;
+}
+
+.ad-quote-block {
+  font-family: 'CoffeeTown', cursive, sans-serif !important;
+  font-size: clamp(1.02rem, 1.2vw, 1.22rem) !important;
+  line-height: 1.5;
+  color: #FFF3E3 !important;
+  border-left: 3px solid #C9803A !important;
+  background: linear-gradient(90deg, rgba(201, 128, 58, 0.18) 0%, transparent 100%);
+  padding: 12px 18px !important;
+  border-radius: 0 12px 12px 0;
+  margin: 20px 0 0 !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+.ad-quote-block p {
+  margin: 0 !important;
+}
+
+/* Desktop Portrait: Positioned comfortably below top line of heading */
+.ad-story-media,
 #art-director .ad-story-media {
-    margin: 0 !important;
-    width: 100%;
-    max-width: 500px;
-    justify-self: center;
-    align-self: center;
-    align-items: stretch;
+  margin-top: 38px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  width: 100% !important;
+  max-width: 500px;
+  justify-self: center;
 }
+
+.ad-story-portrait-wrap,
 #art-director .ad-story-portrait-wrap {
-    position: relative;
-    max-width: 100% !important;
-    margin: 0 !important;
+  position: relative !important;
+  width: 100% !important;
+  max-width: 440px !important;
+  margin: 0 auto !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: flex-end !important;
 }
-/* drawn chalk arch behind the cut-out; the hat pops out above it */
-#art-director .ad-story-portrait-wrap::before {
-    content: "";
-    position: absolute;
-    left: 6%; right: 6%; top: 16%; bottom: 0;
-    border-radius: 999px 999px 28px 28px;
-    background: linear-gradient(180deg, rgba(201, 128, 58, .26) 0%, rgba(201, 128, 58, .05) 100%);
-    border: 1.5px dashed rgba(242, 182, 118, .5);
-    -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
-    mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
-    z-index: 0;
-}
+
+.ad-story-portrait-img,
 #art-director .ad-story-portrait-img {
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    height: auto;
-    max-height: none !important;
-    transform: none !important;
+  position: relative;
+  z-index: 1;
+  width: 100% !important;
+  height: auto !important;
+  max-height: 510px !important;
+  object-fit: contain !important;
+  object-position: bottom center !important;
+  display: block !important;
+  margin: 0 auto !important;
+  mix-blend-mode: normal !important;
+  /* Seamless soft feather where waist meets the pills */
+  mask-image: linear-gradient(to bottom, black 82%, transparent 99%) !important;
+  -webkit-mask-image: linear-gradient(to bottom, black 82%, transparent 99%) !important;
+  filter: drop-shadow(0 16px 28px rgba(0, 0, 0, 0.75)) !important;
+  transform: none !important;
 }
-#art-director .ad-story-portrait-wrap:hover .ad-story-portrait-img { transform: none !important; }
-#art-director .ad-story-stats {
-    max-width: 100%;
-    margin: -34px 0 0 !important;
-    z-index: 5;
+
+#art-director .ad-story-portrait-wrap:hover .ad-story-portrait-img {
+  transform: none !important;
+}
+
+/* Enlarge the 3 Stat Pills for desktop */
+.ad-story-stats-row {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center !important;
+  gap: 14px !important;
+  margin-top: -24px !important;
+  position: relative !important;
+  z-index: 3 !important;
+}
+
+.ad-stat-pill {
+  background: #3B2416 !important;
+  border: 1.5px solid rgba(242, 182, 118, 0.45) !important;
+  border-radius: 12px !important;
+  padding: 10px 18px !important;
+  min-width: 95px !important;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.6) !important;
+  text-align: center !important;
+}
+
+.ad-stat-num {
+  font-size: 1.35rem !important;
+  font-weight: 800 !important;
+  color: #FFF2DF !important;
+  line-height: 1 !important;
+}
+
+.ad-stat-lbl {
+  font-size: 0.65rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em !important;
+  color: #F2B676 !important;
+  text-transform: uppercase !important;
+  white-space: nowrap !important;
+  margin-top: 4px !important;
+}
+
+#art-director .ad-story-actions {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 16px !important;
+  margin: 32px auto 0 !important;
+}
+
+/* ==========================================================================
+   Mobile Structural Order & Refined Mobile Layout (< 768px)
+   ========================================================================== */
+@media (max-width: 767px) {
+  /* Vertical single-column stack on mobile */
+  .ad-story-grid,
+  #art-director .ad-story-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 16px !important;
+    padding: 0 16px !important;
+  }
+
+  /* 1. Header sits first & left-aligned */
+  .ad-story-copy {
+    display: contents !important;
+  }
+
+  .ad-story-heading-wrap {
+    order: 1 !important;
+    text-align: left !important;
+    align-self: flex-start !important;
+    width: 100% !important;
+  }
+
+  .ad-tagline {
+    font-size: 0.65rem !important;
+    letter-spacing: 0.15em !important;
+    text-align: left !important;
+    display: block !important;
+  }
+
+  .ad-story-title {
+    font-size: 1.35rem !important;
+    line-height: 1.2 !important;
+    margin: 6px 0 12px !important;
+    text-align: left !important;
+  }
+
+  /* 2. Portrait & Stats sit second (centered, max-width: 270px) */
+  .ad-story-media,
+  #art-director .ad-story-media {
+    order: 2 !important;
+    margin-top: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  .ad-story-portrait-wrap,
+  #art-director .ad-story-portrait-wrap {
+    max-width: 270px !important;
+    margin: 0 auto !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+
+  .ad-story-portrait-img,
+  #art-director .ad-story-portrait-img {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 330px !important;
+    object-fit: contain !important;
+    mask-image: linear-gradient(to bottom, black 82%, transparent 99%) !important;
+    -webkit-mask-image: linear-gradient(to bottom, black 82%, transparent 99%) !important;
+  }
+
+  .ad-story-stats-row {
+    margin-top: -18px !important;
+    gap: 8px !important;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+  }
+
+  .ad-stat-pill {
+    padding: 6px 12px !important;
+    min-width: 72px !important;
+  }
+
+  .ad-stat-num {
+    font-size: 1.05rem !important;
+  }
+
+  .ad-stat-lbl {
+    font-size: 0.52rem !important;
+  }
+
+  /* 3. The 4 Highlights Reset: Left-aligned clean bullet list, no card borders/backgrounds */
+  .ad-story-list {
+    order: 3 !important;
+    display: block !important;
+    padding: 0 !important;
+    margin: 14px 0 0 !important;
+    list-style: none !important;
+    width: 100% !important;
+    text-align: left !important;
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  .ad-story-list li {
+    font-size: 0.76rem !important;
+    line-height: 1.45 !important;
+    margin: 0 0 12px 0 !important;
+    color: #E2D9CE !important;
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 0 0 0 18px !important;
+    position: relative !important;
+    text-align: left !important;
+  }
+
+  .ad-story-list li::before {
+    content: "•" !important;
+    color: #F2B676 !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: -1px !important;
+    font-size: 1.15rem !important;
+    line-height: 1 !important;
+    font-weight: bold !important;
+    display: inline-block !important;
+  }
+
+  .ad-story-list li strong {
+    color: #F2B676 !important;
+    display: inline !important;
+    font-size: 0.78rem !important;
+    font-weight: 700 !important;
+    margin-right: 4px !important;
+  }
+
+  /* 4. Compact 2-line Quote Block */
+  .ad-quote-block {
+    order: 4 !important;
+    margin-top: 10px !important;
+    display: block !important;
+    width: 100% !important;
+    font-size: 0.72rem !important;
+    text-align: left !important;
+    border-left: 2px solid #F2B676 !important;
+    background: transparent !important;
+    padding: 4px 0 4px 10px !important;
+    box-sizing: border-box !important;
+    border-radius: 0 !important;
+  }
+
+  .ad-quote-block p {
+    font-size: 0.72rem !important;
+    line-height: 1.35 !important;
+    text-align: left !important;
+    margin: 0 !important;
+    color: #FFF3E3 !important;
+  }
+
+  /* 5. Story Action Buttons side by side */
+  #art-director .ad-story-actions {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 8px !important;
+    justify-content: flex-start !important;
+    width: 100% !important;
+    margin: 16px 0 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  #art-director .ad-story-actions .btn,
+  #art-director .ad-story-actions button {
+    flex: 1 !important;
+    font-size: 0.72rem !important;
+    padding: 10px 8px !important;
+    white-space: nowrap !important;
+    text-align: center !important;
+    justify-content: center !important;
+    height: auto !important;
+    min-height: 40px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* ==========================================================================
+     Creative Workshop Card (< 768px): Header -> Image -> Desc -> Stay Tuned Button
+     ========================================================================== */
+  .ad-future,
+  #art-director .ad-future,
+  .ad-future-card {
+    display: flex !important;
+    flex-direction: column !important;
+    text-align: left !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
+
+  .ad-future-copy {
+    display: contents !important;
+  }
+
+  /* 1. Header on top */
+  .ad-future-title,
+  .ad-future .ad-card-header {
+    order: 1 !important;
+    text-align: left !important;
+    width: 100% !important;
+    margin-bottom: 2px !important;
+  }
+
+  .ad-future-title .ad-eyebrow {
+    text-align: left !important;
+    display: block !important;
+    margin-bottom: 4px !important;
+  }
+
+  .ad-future-title .ad-subtitle {
+    text-align: left !important;
+    margin: 4px 0 8px !important;
+    font-size: 1.35rem !important;
+    line-height: 1.2 !important;
+  }
+
+  /* 2. Image in the middle */
+  .ad-future-media,
+  .ad-future .ad-card-image-wrap {
+    order: 2 !important;
+    width: 100% !important;
+    margin: 0 0 4px !important;
+  }
+
+  /* 3. Description below image */
+  .ad-future-body,
+  .ad-future .ad-card-desc {
+    order: 3 !important;
+    text-align: left !important;
+    width: 100% !important;
+    font-size: 0.8rem !important;
+    line-height: 1.45 !important;
+    margin: 0 !important;
+    color: #E2D9CE !important;
+  }
+
+  /* 4. "Stay Tuned" button (restricted width <= 160px) */
+  .ad-future-actions,
+  .ad-future .ad-card-actions {
+    order: 4 !important;
+    width: auto !important;
+    max-width: 160px !important;
+    align-self: flex-start !important;
+    margin-top: 4px !important;
+    display: block !important;
+  }
+
+  .ad-future-actions .ad-btn,
+  .ad-future-actions .btn,
+  .ad-future .ad-card-actions .ad-btn,
+  .ad-future .ad-card-actions .btn {
+    width: auto !important;
+    max-width: 160px !important;
+    font-size: 0.75rem !important;
+    padding: 10px 18px !important;
+    white-space: nowrap !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    text-align: center !important;
+    justify-content: center !important;
+  }
+
+  /* ==========================================================================
+     Behind the Canvas Card (< 768px):
+     Title -> Image -> Subtitle -> Desc -> Actions Side-by-Side
+     ========================================================================== */
+  .ad-article-card,
+  #art-director .ad-article-card {
+    display: flex !important;
+    flex-direction: column !important;
+    text-align: left !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+  }
+
+  .ad-article-copy {
+    display: contents !important;
+  }
+
+  /* 1. Main category / title on top */
+  .ad-article-title,
+  .ad-article-card .ad-card-header {
+    order: 1 !important;
+    text-align: left !important;
+    width: 100% !important;
+    margin-bottom: 2px !important;
+  }
+
+  .ad-article-title .ad-eyebrow {
+    text-align: left !important;
+    display: block !important;
+    margin-bottom: 4px !important;
+  }
+
+  .ad-article-title .ad-subtitle {
+    text-align: left !important;
+    margin: 4px 0 8px !important;
+    font-size: 1.35rem !important;
+    line-height: 1.2 !important;
+  }
+
+  /* 2. Article image preview */
+  .ad-article-media,
+  .ad-article-card .ad-card-image-wrap {
+    order: 2 !important;
+    width: 100% !important;
+    margin: 0 0 4px !important;
+  }
+
+  /* 3. Subtitle directly BELOW the image */
+  .ad-article-subtitle {
+    order: 3 !important;
+    text-align: left !important;
+    font-size: 0.88rem !important;
+    font-weight: 700 !important;
+    color: #FFF2DF !important;
+    margin: 6px 0 2px !important;
+    width: 100% !important;
+    line-height: 1.3 !important;
+    text-transform: uppercase !important;
+  }
+
+  /* 4. Body description text */
+  .ad-article-body,
+  .ad-article-card .ad-card-desc {
+    order: 4 !important;
+    text-align: left !important;
+    font-size: 0.8rem !important;
+    line-height: 1.45 !important;
+    margin: 0 !important;
+    color: #E2D9CE !important;
+    width: 100% !important;
+  }
+
+  /* 5. Action buttons placed side by side */
+  .ad-article-actions,
+  .ad-article-card .ad-card-actions {
+    order: 5 !important;
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 8px !important;
+    width: 100% !important;
+    margin-top: 6px !important;
+  }
+
+  .ad-article-actions .btn,
+  .ad-article-actions .ad-btn,
+  .ad-article-card .ad-card-actions .btn {
+    flex: 1 !important;
+    padding: 10px 8px !important;
+    font-size: 0.72rem !important;
+    white-space: nowrap !important;
+    text-align: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+    height: auto !important;
+    min-height: 40px !important;
+  }
 }
 
 /* ---- media frames (workshops + articles): natural ratio, no dead letterbox ---- */
@@ -6146,23 +6684,23 @@ img { max-width: 100%; }
 #art-director .ad-article-copy h4 { margin: 0 0 8px; }
 #art-director .ad-article-actions { margin-top: 0; }
 
-/* ---- tablet + phone: single column, photo first, same order in every row ---- */
+/* ---- tablet: workshops & articles single column ---- */
 @media (max-width: 900px) {
-    #art-director .ad-story-grid,
     #art-director .ad-future,
     #art-director .ad-article-card {
         grid-template-columns: minmax(0, 1fr) !important;
         gap: 28px !important;
     }
-    #art-director .ad-story-media,
     #art-director .ad-article-media { order: -1; }
-    #art-director .ad-story-media { max-width: 400px; }
     #art-director .ad-future,
     #art-director .ad-articles { margin-top: 48px !important; padding-top: 40px !important; }
 }
-@media (max-width: 520px) {
-    #art-director .ad-story-media { max-width: 320px; }
-    #art-director .ad-story-stats { margin-top: -24px !important; }
+@media (min-width: 768px) and (max-width: 900px) {
+    #art-director .ad-story-grid {
+        grid-template-columns: minmax(0, 1fr) !important;
+        gap: 28px !important;
+    }
+    #art-director .ad-story-media { order: -1; max-width: 400px; }
 }
 
 
