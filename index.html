@@ -216,7 +216,9 @@
         <section class="section theme-cafe" id="about">
             <div class="shell split split--reverse reveal">
                 <div class="about-media">
-                    <img alt="Illustration of the Forest Cafe building surrounded by trees" class="floating-img" height="700" src="images/farm/item1.webp" width="900" />
+                    <div class="item-wrap has-ground-shadow">
+                        <img alt="Illustration of the Forest Cafe building surrounded by trees" class="floating-img" height="700" src="images/farm/item1.webp" width="900" />
+                    </div>
                 </div>
                 <div class="about-copy">
                     <span class="eyebrow">
@@ -529,7 +531,9 @@
             <div class="shell split reveal">
                 <!-- IMAGE — LEFT: Little Farmer illustration -->
                 <div class="farm-media" style="display: flex; justify-content: center; align-items: center;">
-                    <img src="images/farm/little-farmer.webp" alt="Little Farmer Organic Farming" class="farm-emblem-logo" style="width: 100%; max-width: 380px; height: auto; object-fit: contain; filter: drop-shadow(0 10px 25px rgba(0,0,0,0.08));" />
+                    <div class="farmer-wrap has-ground-shadow">
+                        <img src="images/farm/little-farmer.webp" alt="Little Farmer Organic Farming" class="farm-emblem-logo" style="width: 100%; max-width: 380px; height: auto; object-fit: contain;" />
+                    </div>
                 </div>
                 <!-- TEXT — RIGHT -->
                 <div class="farm-content farm-copy">
@@ -930,8 +934,10 @@
 
                     <div class="cot-media-wrap">
                         <div class="cot-media">
-                            <img alt="Illustration of the Tiny Cot rooms at Forest Cafe" loading="lazy"
-                                src="images/rooms/item15.webp" />
+                            <div class="item-wrap has-ground-shadow">
+                                <img alt="Illustration of the Tiny Cot rooms at Forest Cafe" loading="lazy"
+                                    src="images/rooms/item15.webp" />
+                            </div>
                         </div>
                         <!-- Badges repositioned cleanly beneath cottage artwork -->
                         <div class="cot-badges-row">
@@ -981,12 +987,10 @@
                 <div class="horizon-slat-container" id="roomsSlatGallery" tabindex="0" role="region"
                     aria-roledescription="carousel" aria-label="Rooms and Spaces Gallery">
                     <div class="horizon-slat__stage" id="slatStage">
-                        <!-- The Secret Attic Placeholder Card -->
-                        <div class="room-card room-placeholder-card">
-                            <div class="room-img-wrap" style="aspect-ratio: 16/10; background: #e8e2d8; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 12px; border: 2px dashed #b8ab99; color: #6d432b; text-align: center; padding: 20px;">
-                                <span style="font-size: 1.8rem; margin-bottom: 6px;">✨🪟</span>
-                                <strong style="font-size: 0.9rem; letter-spacing: 0.02em;">Attic Photo Coming Soon</strong>
-                                <span style="font-size: 0.75rem; color: #8c6d58; margin-top: 4px;">4 Windows • Night Sky View</span>
+                        <!-- The Secret Attic Room Card -->
+                        <div class="room-card">
+                            <div class="room-img-wrap">
+                                <img src="images/rooms/attic.webp" alt="Cozy Hill Attic - Forest Cafe" class="room-img" loading="lazy" />
                             </div>
                             <div class="room-info" style="margin-top: 10px;">
                                 <h4 style="font-size: 1rem; color: #2e4d25; margin: 0 0 4px 0;">The Secret Attic</h4>
