@@ -1732,6 +1732,27 @@ body #farm .farm-media,
     margin-bottom: 3px;
 }
 
+
+/* Contact & Footer Phone Links */
+.contact-phone-link {
+    display: inline-block;
+    white-space: nowrap;
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.contact-phone-link:hover {
+    color: var(--honey, #C9803A);
+}
+
+.phone-sep {
+    display: inline-block;
+    margin: 0 5px;
+    opacity: 0.65;
+    user-select: none;
+}
+
 .contact-value {
     font-weight: 600;
     color: var(--green-800);
@@ -3878,11 +3899,12 @@ img.img-in { animation: fcImgIn .6s ease both; }
 
 #art-director,
 .ad-section {
+    --ad-curve-h: clamp(42px, 6vw, 90px);
     position: relative;
     /* Lock only horizontal spillage; NEVER clip vertically so heads poke over freely */
     overflow-x: clip !important;
     overflow-y: visible !important;
-    padding-top: 140px !important;
+    padding-top: calc(var(--ad-curve-h) + 24px) !important;
     padding-bottom: 140px !important;
     background: #0d130b;
     max-width: 100vw;
@@ -3903,15 +3925,15 @@ img.img-in { animation: fcImgIn .6s ease both; }
 .ad-section::before {
     content: "" !important;
     display: block !important;
-    position: absolute;
-    top: -3px;
-    left: -2%;
-    width: 104%;
-    height: 125px;
-    background: var(--cream);
-    border-radius: 0 0 50% 50% / 0 0 100% 100%;
-    z-index: 6; /* Above bg (1) and content (2-5), below minion perch (30) */
-    pointer-events: none;
+    position: absolute !important;
+    top: -2px !important;
+    left: -2% !important;
+    width: 104% !important;
+    height: var(--ad-curve-h) !important;
+    background: var(--cream) !important;
+    border-radius: 0 0 50% 50% / 0 0 100% 100% !important;
+    z-index: 6 !important; /* Above bg (1) and content (2-5), below minion perch (30) */
+    pointer-events: none !important;
 }
 
 .ad-section::after {
@@ -3936,18 +3958,18 @@ img.img-in { animation: fcImgIn .6s ease both; }
 }
 
 .ad-minion-perch-layer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    max-width: 1440px;
-    margin: 0 auto;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    max-width: 1340px !important;
+    margin: 0 auto !important;
     padding: 0;
     z-index: 25 !important;
-    pointer-events: none;
-    display: flex;
-    justify-content: flex-end;
+    pointer-events: none !important;
+    display: flex !important;
+    justify-content: flex-end !important;
     align-items: flex-start;
     box-sizing: border-box;
     overflow: visible !important;
@@ -3960,19 +3982,20 @@ img.img-in { animation: fcImgIn .6s ease both; }
 }
 
 .perched-minion--right {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    /* Dynamically scales with the chalkboard curve depth across all screen widths */
-    transform: translateY(clamp(36px, 5.4vw, 84px)) !important;
-    margin-right: clamp(10px, 3vw, 40px) !important;
+    position: relative !important;
+    display: flex !important;
+    justify-content: center !important;
+    /* Dynamically anchored to the chalkboard curve rim via --ad-curve-h */
+    margin-top: calc(var(--ad-curve-h) * 0.42 + 14px) !important;
+    margin-right: clamp(14px, 4vw, 42px) !important;
+    transform: none !important;
 }
 
 .minion-hanging-img {
-    width: clamp(120px, 14vw, 195px);
-    height: auto;
-    display: block;
-    filter: drop-shadow(0 16px 24px rgba(0, 0, 0, 0.45));
+    width: clamp(78px, 12vw, 155px) !important;
+    height: auto !important;
+    display: block !important;
+    filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.55)) !important;
     transform-origin: top center !important;
     animation: gentleMinionSway 3.2s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate !important;
     will-change: transform;
@@ -4775,29 +4798,25 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
 }
 
 @media (max-width: 900px) {
-.perched-minion--right {
-        transform: translateY(clamp(32px, 5vw, 56px)) !important;
-        margin-right: 18px !important;
-    }
-
-.minion-hanging-img {
-        width: clamp(100px, 16vw, 140px);
-    }
-
 .horizon-slat__counter {
         margin-top: 24px !important;
         margin-bottom: 16px !important;
     }
 }
 
-@media (max-width: 520px) {
-.perched-minion--right {
-        transform: translateY(28px) !important;
-        margin-right: 12px !important;
-    }
+/* @media (max-width: 520px) minion overrides removed — now handled by the 767px block with --ad-curve-h */
 
-.minion-hanging-img {
-        width: 92px;
+@media (max-width: 767px) {
+    .ad-section {
+        --ad-curve-h: 46px !important;
+        padding-top: 64px !important;
+    }
+    .perched-minion--right {
+        margin-top: 29px !important;
+        margin-right: 14px !important;
+    }
+    .minion-hanging-img {
+        width: 82px !important;
     }
 }
 
@@ -5246,60 +5265,79 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
     border-radius: 16px;
     overflow: hidden;
     will-change: transform;
-    background: #181f16;
-    border: 1px solid rgba(242, 182, 118, 0.35);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.45), 0 24px 44px -14px rgba(0,0,0,0.8);
+    background: #140d09 !important;
+    border: 1.5px solid rgba(201, 128, 58, 0.4) !important;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.65), 0 2px 6px rgba(201, 128, 58, 0.15) !important;
     display: flex;
     flex-direction: column;
 }
 .md-photo {
-    flex: 1;
-    width: 100%;
-    background-size: cover;
-    background-position: center;
-    position: relative;
+    flex: 1 !important;
+    width: 100% !important;
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    position: relative !important;
 }
 .md-caption {
-    padding: 10px 14px;
-    background: rgba(18, 25, 17, 0.95);
-    border-top: 1px solid rgba(242, 182, 118, 0.2);
-    text-align: left;
+    padding: 8px 10px !important;
+    background: linear-gradient(180deg, rgba(26, 18, 13, 0.95) 0%, rgba(14, 9, 6, 0.98) 100%) !important;
+    border-top: 1px solid rgba(201, 128, 58, 0.28) !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
 }
 .md-role {
-    display: block;
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: #F2B676;
+    display: block !important;
+    font-size: 0.62rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
+    color: #F2B676 !important;
+    line-height: 1.2 !important;
 }
 .md-name {
-    margin: 2px 0 0;
-    font-size: 0.96rem;
-    font-weight: 600;
-    color: #FFF3E3;
+    margin: 2px 0 0 !important;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
+    font-size: 0.88rem !important;
+    font-weight: 600 !important;
+    color: #FFF2DF !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
 }
 
 /* Warm film gradient placeholders */
-.placeholder-movie-1 { background: radial-gradient(circle at 50% 40%, #5a341e 0%, #201107 100%); }
-.placeholder-movie-2 { background: radial-gradient(circle at 50% 40%, #1e4a36 0%, #0a1f16 100%); }
-.placeholder-movie-3 { background: radial-gradient(circle at 50% 40%, #5d481b 0%, #281e09 100%); }
-.placeholder-movie-4 { background: radial-gradient(circle at 50% 40%, #3a4b35 0%, #162013 100%); }
-.placeholder-movie-5 { background: radial-gradient(circle at 50% 40%, #55303c 0%, #241117 100%); }
-.placeholder-movie-6 { background: radial-gradient(circle at 50% 40%, #29404f 0%, #0d1820 100%); }
+/* ==========================================================================
+   Cinema Works Movie Posters & Unified Coffee Theme
+   ========================================================================== */
+.placeholder-movie-1 { background-image: url('../images/story/movie/sarvam-thaala-mayam-1.webp') !important; }
+.placeholder-movie-2 { background-image: url('../images/story/movie/unakkum-enakkum-2.webp') !important; }
+.placeholder-movie-3 { background-image: url('../images/story/movie/pulivaal-3.webp') !important; }
+.placeholder-movie-4 { background-image: url('../images/story/movie/jayam-4.webp') !important; }
+.placeholder-movie-5 { background-image: url('../images/story/movie/vennila-kabadi-kuzhu-5.webp') !important; }
+.placeholder-movie-6 { background-image: url('../images/story/movie/jeeva-6.webp') !important; }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .md-field {
-        height: 380px;
+        height: 480px !important; /* Stage height for separated rows */
+        margin: 8px 0 20px 0 !important;
     }
     .md-caption {
-        padding: 6px 10px;
-    }
-    .md-role {
-        font-size: 0.6rem;
+        padding: 5px 4px !important;
     }
     .md-name {
-        font-size: 0.82rem;
+        font-size: 0.74rem !important;
+        line-height: 1.15 !important;
+        margin: 0 !important;
+        font-weight: 700 !important;
+        color: #FFF2DF !important;
+    }
+    .md-role {
+        font-size: 0.62rem !important;
+        letter-spacing: 0.05em !important;
+        margin-top: 2px !important;
+        color: #F2B676 !important;
+        font-weight: 500 !important;
     }
 }
 
@@ -6032,6 +6070,22 @@ img { max-width: 100%; }
 /* ---- STORY: text column ---- */
 #art-director .ad-story-copy { align-items: flex-start; }
 #art-director .ad-journey-list { margin: 0 0 8px; }
+/* .ad-story-list — compact 3-point highlights replacing the journey checklist */
+.ad-story-list {
+    list-style: disc !important;
+    padding-left: 1.2em !important;
+    margin: 0 0 18px !important;
+}
+.ad-story-list li {
+    font-size: clamp(0.95rem, 1.05vw, 1.02rem);
+    line-height: 1.6;
+    margin-bottom: 12px;
+    color: rgba(247, 244, 235, 0.9);
+}
+.ad-story-list li strong {
+    color: #F2B676;
+    font-weight: 700;
+}
 #art-director .ad-journey-list li {
     position: relative;
     font-size: clamp(.97rem, 1.05vw, 1.04rem) !important;
@@ -6056,45 +6110,546 @@ img { max-width: 100%; }
 }
 #art-director .ad-story-actions { margin-top: 0; }
 
-/* ---- STORY: portrait column (no more negative margin / scale hacks) ---- */
+/* ==========================================================================
+   Art Director Section: Sizing, Stats Pills, and Balanced Layout
+   ========================================================================== */
+
+/* Remove any leftover circle/glow backgrounds */
+.ad-story-portrait-wrap::before,
+.ad-story-portrait-wrap::after,
+.ad-story-media::before {
+  display: none !important;
+}
+
+/* Grid Layout: Desktop Side-by-Side */
+.ad-story-grid,
+#art-director .ad-story-grid {
+  display: grid !important;
+  grid-template-columns: 1.15fr 0.85fr !important;
+  align-items: center !important;
+  gap: clamp(20px, 4vw, 50px) !important;
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding: 0 20px !important;
+}
+
+.ad-tagline {
+  color: #F2B676 !important;
+  font-size: 0.95rem !important;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+  margin-bottom: 8px;
+  display: inline-block;
+}
+
+.ad-story-title {
+  font-family: 'CoffeeTown', cursive, sans-serif !important;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+  font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+  color: #FFF3E3 !important;
+  margin: 4px 0 20px;
+  text-transform: uppercase;
+}
+
+.ad-story-list {
+  padding-left: 1.2em !important;
+  margin: 0 0 16px !important;
+  list-style: disc !important;
+}
+
+.ad-story-list li {
+  font-size: clamp(0.95rem, 1.05vw, 1.02rem);
+  line-height: 1.6;
+  margin-bottom: 12px;
+  color: rgba(247, 244, 235, 0.9);
+}
+
+.ad-story-list li strong {
+  color: #F2B676;
+  font-weight: 700;
+}
+
+.ad-quote-block {
+  font-family: 'CoffeeTown', cursive, sans-serif !important;
+  font-size: clamp(1.02rem, 1.2vw, 1.22rem) !important;
+  line-height: 1.5;
+  color: #FFF3E3 !important;
+  border-left: 3px solid #C9803A !important;
+  background: linear-gradient(90deg, rgba(201, 128, 58, 0.18) 0%, transparent 100%);
+  padding: 12px 18px !important;
+  border-radius: 0 12px 12px 0;
+  margin: 20px 0 0 !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+.ad-quote-block p {
+  margin: 0 !important;
+}
+
+/* Desktop Portrait: Positioned comfortably below top line of heading */
+.ad-story-media,
 #art-director .ad-story-media {
-    margin: 0 !important;
-    width: 100%;
-    max-width: 500px;
-    justify-self: center;
-    align-self: center;
-    align-items: stretch;
+  margin-top: 38px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  width: 100% !important;
+  max-width: 500px;
+  justify-self: center;
 }
+
+.ad-story-portrait-wrap,
 #art-director .ad-story-portrait-wrap {
-    position: relative;
-    max-width: 100% !important;
-    margin: 0 !important;
+  position: relative !important;
+  width: 100% !important;
+  max-width: 440px !important;
+  margin: 0 auto !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: flex-end !important;
 }
-/* drawn chalk arch behind the cut-out; the hat pops out above it */
-#art-director .ad-story-portrait-wrap::before {
-    content: "";
-    position: absolute;
-    left: 6%; right: 6%; top: 16%; bottom: 0;
-    border-radius: 999px 999px 28px 28px;
-    background: linear-gradient(180deg, rgba(201, 128, 58, .26) 0%, rgba(201, 128, 58, .05) 100%);
-    border: 1.5px dashed rgba(242, 182, 118, .5);
-    -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
-    mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
-    z-index: 0;
-}
+
+.ad-story-portrait-img,
 #art-director .ad-story-portrait-img {
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    height: auto;
-    max-height: none !important;
-    transform: none !important;
+  position: relative;
+  z-index: 1;
+  width: 100% !important;
+  height: auto !important;
+  max-height: 510px !important;
+  object-fit: contain !important;
+  object-position: bottom center !important;
+  display: block !important;
+  margin: 0 auto !important;
+  mix-blend-mode: normal !important;
+  /* Seamless soft feather where waist meets the pills */
+  mask-image: linear-gradient(to bottom, black 82%, transparent 99%) !important;
+  -webkit-mask-image: linear-gradient(to bottom, black 82%, transparent 99%) !important;
+  filter: drop-shadow(0 16px 28px rgba(0, 0, 0, 0.75)) !important;
+  transform: none !important;
 }
-#art-director .ad-story-portrait-wrap:hover .ad-story-portrait-img { transform: none !important; }
-#art-director .ad-story-stats {
-    max-width: 100%;
-    margin: -34px 0 0 !important;
-    z-index: 5;
+
+#art-director .ad-story-portrait-wrap:hover .ad-story-portrait-img {
+  transform: none !important;
+}
+
+/* Enlarge the 3 Stat Pills for desktop */
+.ad-story-stats-row {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center !important;
+  gap: 14px !important;
+  margin-top: -24px !important;
+  position: relative !important;
+  z-index: 3 !important;
+}
+
+.ad-stat-pill {
+  background: #3B2416 !important;
+  border: 1.5px solid rgba(242, 182, 118, 0.45) !important;
+  border-radius: 12px !important;
+  padding: 10px 18px !important;
+  min-width: 95px !important;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.6) !important;
+  text-align: center !important;
+}
+
+.ad-stat-num {
+  font-size: 1.35rem !important;
+  font-weight: 800 !important;
+  color: #FFF2DF !important;
+  line-height: 1 !important;
+}
+
+.ad-stat-lbl {
+  font-size: 0.65rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em !important;
+  color: #F2B676 !important;
+  text-transform: uppercase !important;
+  white-space: nowrap !important;
+  margin-top: 4px !important;
+}
+
+#art-director .ad-story-actions {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 16px !important;
+  margin: 32px auto 0 !important;
+}
+
+/* ==========================================================================
+   Mobile Structural Order & Refined Mobile Layout (< 768px)
+   ========================================================================== */
+@media (max-width: 767px) {
+  /* Vertical single-column stack on mobile */
+  .ad-story-grid,
+  #art-director .ad-story-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 16px !important;
+    padding: 0 16px !important;
+  }
+
+  /* 1. Header sits first & left-aligned */
+  .ad-story-copy {
+    display: contents !important;
+  }
+
+  .ad-story-heading-wrap {
+    order: 1 !important;
+    text-align: left !important;
+    align-self: flex-start !important;
+    width: 100% !important;
+  }
+
+  .ad-tagline {
+    font-size: 0.65rem !important;
+    letter-spacing: 0.15em !important;
+    text-align: left !important;
+    display: block !important;
+  }
+
+  .ad-story-title {
+    font-size: 1.35rem !important;
+    line-height: 1.2 !important;
+    margin: 6px 0 12px !important;
+    text-align: left !important;
+  }
+
+  /* 2. Portrait & Stats sit second (centered, max-width: 270px) */
+  .ad-story-media,
+  #art-director .ad-story-media {
+    order: 2 !important;
+    margin-top: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  .ad-story-portrait-wrap,
+  #art-director .ad-story-portrait-wrap {
+    max-width: 270px !important;
+    margin: 0 auto !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+
+  .ad-story-portrait-img,
+  #art-director .ad-story-portrait-img {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 330px !important;
+    object-fit: contain !important;
+    mask-image: linear-gradient(to bottom, black 82%, transparent 99%) !important;
+    -webkit-mask-image: linear-gradient(to bottom, black 82%, transparent 99%) !important;
+  }
+
+  .ad-story-stats-row {
+    margin-top: -18px !important;
+    gap: 8px !important;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+  }
+
+  .ad-stat-pill {
+    padding: 6px 12px !important;
+    min-width: 72px !important;
+  }
+
+  .ad-stat-num {
+    font-size: 1.05rem !important;
+  }
+
+  .ad-stat-lbl {
+    font-size: 0.52rem !important;
+  }
+
+  /* 3. The 4 Highlights Reset: Left-aligned clean bullet list, no card borders/backgrounds */
+  .ad-story-list {
+    order: 3 !important;
+    display: block !important;
+    padding: 0 !important;
+    margin: 14px 0 0 !important;
+    list-style: none !important;
+    width: 100% !important;
+    text-align: left !important;
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  .ad-story-list li {
+    font-size: 0.76rem !important;
+    line-height: 1.45 !important;
+    margin: 0 0 12px 0 !important;
+    color: #E2D9CE !important;
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 0 0 0 18px !important;
+    position: relative !important;
+    text-align: left !important;
+  }
+
+  .ad-story-list li::before {
+    content: "•" !important;
+    color: #F2B676 !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: -1px !important;
+    font-size: 1.15rem !important;
+    line-height: 1 !important;
+    font-weight: bold !important;
+    display: inline-block !important;
+  }
+
+  .ad-story-list li strong {
+    color: #F2B676 !important;
+    display: inline !important;
+    font-size: 0.78rem !important;
+    font-weight: 700 !important;
+    margin-right: 4px !important;
+  }
+
+  /* 4. Compact 2-line Quote Block */
+  .ad-quote-block {
+    order: 4 !important;
+    margin-top: 10px !important;
+    display: block !important;
+    width: 100% !important;
+    font-size: 0.72rem !important;
+    text-align: left !important;
+    border-left: 2px solid #F2B676 !important;
+    background: transparent !important;
+    padding: 4px 0 4px 10px !important;
+    box-sizing: border-box !important;
+    border-radius: 0 !important;
+  }
+
+  .ad-quote-block p {
+    font-size: 0.72rem !important;
+    line-height: 1.35 !important;
+    text-align: left !important;
+    margin: 0 !important;
+    color: #FFF3E3 !important;
+  }
+
+  /* 5. Story Action Buttons side by side */
+  #art-director .ad-story-actions {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 8px !important;
+    justify-content: flex-start !important;
+    width: 100% !important;
+    margin: 16px 0 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  #art-director .ad-story-actions .btn,
+  #art-director .ad-story-actions button {
+    flex: 1 !important;
+    font-size: 0.72rem !important;
+    padding: 10px 8px !important;
+    white-space: nowrap !important;
+    text-align: center !important;
+    justify-content: center !important;
+    height: auto !important;
+    min-height: 40px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* ==========================================================================
+     Creative Workshop Card (< 768px): Header -> Image -> Desc -> Stay Tuned Button
+     ========================================================================== */
+  .ad-future,
+  #art-director .ad-future,
+  .ad-future-card {
+    display: flex !important;
+    flex-direction: column !important;
+    text-align: left !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
+
+  .ad-future-copy {
+    display: contents !important;
+  }
+
+  /* 1. Header on top */
+  .ad-future-title,
+  .ad-future .ad-card-header {
+    order: 1 !important;
+    text-align: left !important;
+    width: 100% !important;
+    margin-bottom: 2px !important;
+  }
+
+  .ad-future-title .ad-eyebrow {
+    text-align: left !important;
+    display: block !important;
+    margin-bottom: 4px !important;
+  }
+
+  .ad-future-title .ad-subtitle {
+    text-align: left !important;
+    margin: 4px 0 8px !important;
+    font-size: 1.35rem !important;
+    line-height: 1.2 !important;
+  }
+
+  /* 2. Image in the middle */
+  .ad-future-media,
+  .ad-future .ad-card-image-wrap {
+    order: 2 !important;
+    width: 100% !important;
+    margin: 0 0 4px !important;
+  }
+
+  /* 3. Description below image */
+  .ad-future-body,
+  .ad-future .ad-card-desc {
+    order: 3 !important;
+    text-align: left !important;
+    width: 100% !important;
+    font-size: 0.8rem !important;
+    line-height: 1.45 !important;
+    margin: 0 !important;
+    color: #E2D9CE !important;
+  }
+
+  /* 4. "Stay Tuned" button (restricted width <= 160px) */
+  .ad-future-actions,
+  .ad-future .ad-card-actions {
+    order: 4 !important;
+    width: auto !important;
+    max-width: 160px !important;
+    align-self: flex-start !important;
+    margin-top: 4px !important;
+    display: block !important;
+  }
+
+  .ad-future-actions .ad-btn,
+  .ad-future-actions .btn,
+  .ad-future .ad-card-actions .ad-btn,
+  .ad-future .ad-card-actions .btn {
+    width: auto !important;
+    max-width: 160px !important;
+    font-size: 0.75rem !important;
+    padding: 10px 18px !important;
+    white-space: nowrap !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    text-align: center !important;
+    justify-content: center !important;
+  }
+
+  /* ==========================================================================
+     Behind the Canvas Card (< 768px):
+     Title -> Image -> Subtitle -> Desc -> Actions Side-by-Side
+     ========================================================================== */
+  .ad-article-card,
+  #art-director .ad-article-card {
+    display: flex !important;
+    flex-direction: column !important;
+    text-align: left !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+  }
+
+  .ad-article-copy {
+    display: contents !important;
+  }
+
+  /* 1. Main category / title on top */
+  .ad-article-title,
+  .ad-article-card .ad-card-header {
+    order: 1 !important;
+    text-align: left !important;
+    width: 100% !important;
+    margin-bottom: 2px !important;
+  }
+
+  .ad-article-title .ad-eyebrow {
+    text-align: left !important;
+    display: block !important;
+    margin-bottom: 4px !important;
+  }
+
+  .ad-article-title .ad-subtitle {
+    text-align: left !important;
+    margin: 4px 0 8px !important;
+    font-size: 1.35rem !important;
+    line-height: 1.2 !important;
+  }
+
+  /* 2. Article image preview */
+  .ad-article-media,
+  .ad-article-card .ad-card-image-wrap {
+    order: 2 !important;
+    width: 100% !important;
+    margin: 0 0 4px !important;
+  }
+
+  /* 3. Subtitle directly BELOW the image */
+  .ad-article-subtitle {
+    order: 3 !important;
+    text-align: left !important;
+    font-size: 0.88rem !important;
+    font-weight: 700 !important;
+    color: #FFF2DF !important;
+    margin: 6px 0 2px !important;
+    width: 100% !important;
+    line-height: 1.3 !important;
+    text-transform: uppercase !important;
+  }
+
+  /* 4. Body description text */
+  .ad-article-body,
+  .ad-article-card .ad-card-desc {
+    order: 4 !important;
+    text-align: left !important;
+    font-size: 0.8rem !important;
+    line-height: 1.45 !important;
+    margin: 0 !important;
+    color: #E2D9CE !important;
+    width: 100% !important;
+  }
+
+  /* 5. Action buttons placed side by side */
+  .ad-article-actions,
+  .ad-article-card .ad-card-actions {
+    order: 5 !important;
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 8px !important;
+    width: 100% !important;
+    margin-top: 6px !important;
+  }
+
+  .ad-article-actions .btn,
+  .ad-article-actions .ad-btn,
+  .ad-article-card .ad-card-actions .btn {
+    flex: 1 !important;
+    padding: 10px 8px !important;
+    font-size: 0.72rem !important;
+    white-space: nowrap !important;
+    text-align: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+    height: auto !important;
+    min-height: 40px !important;
+  }
 }
 
 /* ---- media frames (workshops + articles): natural ratio, no dead letterbox ---- */
@@ -6129,23 +6684,23 @@ img { max-width: 100%; }
 #art-director .ad-article-copy h4 { margin: 0 0 8px; }
 #art-director .ad-article-actions { margin-top: 0; }
 
-/* ---- tablet + phone: single column, photo first, same order in every row ---- */
+/* ---- tablet: workshops & articles single column ---- */
 @media (max-width: 900px) {
-    #art-director .ad-story-grid,
     #art-director .ad-future,
     #art-director .ad-article-card {
         grid-template-columns: minmax(0, 1fr) !important;
         gap: 28px !important;
     }
-    #art-director .ad-story-media,
     #art-director .ad-article-media { order: -1; }
-    #art-director .ad-story-media { max-width: 400px; }
     #art-director .ad-future,
     #art-director .ad-articles { margin-top: 48px !important; padding-top: 40px !important; }
 }
-@media (max-width: 520px) {
-    #art-director .ad-story-media { max-width: 320px; }
-    #art-director .ad-story-stats { margin-top: -24px !important; }
+@media (min-width: 768px) and (max-width: 900px) {
+    #art-director .ad-story-grid {
+        grid-template-columns: minmax(0, 1fr) !important;
+        gap: 28px !important;
+    }
+    #art-director .ad-story-media { order: -1; max-width: 400px; }
 }
 
 
@@ -6157,101 +6712,403 @@ img { max-width: 100%; }
 @media (max-width: 767px) {
 
     /* ---------- 1) ROOMS GALLERY ---------- */
+    #rooms.rooms-showcase {
+        padding-top: 14px !important;
+        padding-bottom: 40px !important;
+    }
+
     #roomsSlatGallery.horizon-slat-container {
-        height: auto !important;
-        padding: 64px 0;
-        touch-action: pan-y pinch-zoom;   /* page can scroll normally over the gallery */
+        height: 260px !important; /* Balanced landscape rectangle, not an endless vertical pillar */
+        max-height: 270px !important;
+        padding: 0 6px !important;
+        margin: 10px auto 0 !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        overflow: hidden !important;
+        touch-action: pan-y pinch-zoom !important;
+        position: relative !important;
     }
+
     #roomsSlatGallery .horizon-slat__stage {
-        flex-direction: column;
-        gap: 10px;
-        height: auto;
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 6px !important;
+        height: 100% !important;
+        width: 100% !important;
     }
+
     #roomsSlatGallery .rooms-panel {
-        flex: none;
-        height: 68px;
-        border-radius: 18px;
-        transition: height .6s cubic-bezier(.65, 0, .2, 1), box-shadow .5s ease;
+        flex: 1 1 0 !important;
+        min-width: 0 !important;
+        height: 100% !important;
+        border-radius: 14px !important;
+        transition: flex-grow 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease !important;
+        overflow: hidden !important;
+        position: relative !important;
     }
-    #roomsSlatGallery .rooms-panel.is-active { height: 320px; }
 
-    /* closed strip: horizontal label, readable over the photo */
-    #roomsSlatGallery .rooms-panel__shade {
-        background: linear-gradient(90deg, rgba(18, 48, 58, .85) 0%, rgba(18, 48, 58, .25) 100%);
+    /* Active panel expands wide like desktop */
+    #roomsSlatGallery .rooms-panel.is-active {
+        flex-grow: 6.5 !important; /* Takes dominant width */
     }
-    #roomsSlatGallery .rooms-panel.is-active .rooms-panel__shade {
-        background: linear-gradient(to top, rgba(18, 48, 58, .85) 0%, rgba(18, 48, 58, 0) 60%);
+
+    #roomsSlatGallery .rooms-panel__img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        object-position: center center !important;
+        display: block !important;
     }
+
+    /* Inactive slim strips: vertical text label */
     #roomsSlatGallery .rooms-panel__side {
-        left: 20px; right: 20px; top: 50%; bottom: auto;
-        transform: translateY(-50%);
-        writing-mode: horizontal-tb;
-        rotate: none;
-        text-align: left;
-        font-size: .95rem;
-        letter-spacing: .04em;
+        position: absolute !important;
+        left: 50% !important;
+        bottom: 14px !important;
+        top: auto !important;
+        transform: translateX(-50%) !important;
+        writing-mode: vertical-rl !important;
+        rotate: 180deg !important;
+        white-space: nowrap !important;
+        font-size: 0.74rem !important;
+        letter-spacing: 0.04em !important;
+        color: #fff !important;
+        opacity: 1 !important;
+        transition: opacity 0.25s ease !important;
+        pointer-events: none !important;
     }
-    #roomsSlatGallery .rooms-panel__content { left: 20px; right: 20px; bottom: 20px; }
-    #roomsSlatGallery .rooms-panel__title { font-size: clamp(1.5rem, 7vw, 1.9rem); }
 
-    /* "Secret Attic" placeholder: hide dashed box while closed, brown text on cream */
-    #roomsSlatGallery .rooms-panel--placeholder .rooms-panel__placeholder-wrap {
-        transition: opacity .4s ease;
-        inset: 12px 12px 112px 12px !important;
+    #roomsSlatGallery .rooms-panel.is-active .rooms-panel__side {
+        opacity: 0 !important;
     }
-    #roomsSlatGallery .rooms-panel--placeholder:not(.is-active) .rooms-panel__placeholder-wrap { opacity: 0; }
+
+    #roomsSlatGallery .rooms-panel__content {
+        left: 12px !important;
+        right: 12px !important;
+        bottom: 12px !important;
+    }
+
+    #roomsSlatGallery .rooms-panel__tag {
+        font-size: 0.68rem !important;
+        margin-bottom: 2px !important;
+        opacity: 0;
+        transition: opacity 0.3s ease 0.15s;
+    }
+
+    #roomsSlatGallery .rooms-panel__title {
+        font-size: 1.15rem !important;
+        line-height: 1.1 !important;
+        opacity: 0;
+        transition: opacity 0.3s ease 0.2s;
+    }
+
+    #roomsSlatGallery .rooms-panel.is-active .rooms-panel__tag,
+    #roomsSlatGallery .rooms-panel.is-active .rooms-panel__title {
+        opacity: 1 !important;
+    }
+
+    /* "Secret Attic" placeholder */
     #roomsSlatGallery .rooms-panel--placeholder .rooms-panel__side,
-    #roomsSlatGallery .rooms-panel--placeholder .rooms-panel__content { color: #6d432b; }
-    #roomsSlatGallery .rooms-panel--placeholder .rooms-panel__tag { color: #8c6d58; }
-    #roomsSlatGallery .rooms-panel--placeholder .rooms-panel__title { font-size: 1.4rem; }
+    #roomsSlatGallery .rooms-panel--placeholder .rooms-panel__content { color: #6d432b !important; }
+    #roomsSlatGallery .rooms-panel--placeholder .rooms-panel__tag { color: #8c6d58 !important; }
+    #roomsSlatGallery .rooms-panel--placeholder .rooms-panel__title { font-size: 1.15rem !important; }
+    #roomsSlatGallery .rooms-panel--placeholder:not(.is-active) .rooms-panel__placeholder-wrap { opacity: 0 !important; }
+
+    /* Left & Right floating arrows */
+    #roomsSlatGallery .horizon-slat__arrow {
+        width: 32px !important;
+        height: 32px !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        z-index: 10 !important;
+    }
+    #roomsSlatGallery .horizon-slat__arrow svg {
+        transform: none !important;
+        width: 15px !important;
+        height: 15px !important;
+    }
+    #roomsSlatGallery .horizon-slat__arrow--left { left: 4px !important; right: auto !important; }
+    #roomsSlatGallery .horizon-slat__arrow--right { right: 4px !important; left: auto !important; }
+
+    /* Counter & progress bar below the stage */
+    .horizon-slat__counter {
+        margin-top: 14px !important;
+        margin-bottom: 8px !important;
+        font-size: 0.8rem !important;
+    }
+    .horizon-slat__counter-line {
+        width: 90px !important;
+    }
 
     /* ---------- 2) CINEMA WORKS ---------- */
-    #art-director .ad-cinema-drawer { scroll-margin-top: 84px; }
+    #art-director .ad-cinema-drawer {
+        scroll-margin-top: 84px;
+        overflow: visible !important;
+    }
     #art-director .ad-cinema-drawer.is-open { margin-top: 36px; }
     #art-director .ad-cinema-header { margin-bottom: 18px; }
 
     #art-director .md-field {
-        height: auto;
-        cursor: auto;
-        touch-action: auto;
-        padding: 4px 0 8px;
+        position: relative !important;
+        width: 100% !important;
+        height: 480px !important; /* Stage height for separated rows */
+        overflow: visible !important;
+        touch-action: pan-y !important;
+        user-select: none !important;
+        -webkit-user-select: none !important;
+        margin: 10px 0 !important;
+        display: block !important;
     }
     #art-director .md-hub {
-        position: static;
-        width: 100%;
-        height: auto;
-        display: flex;
-        flex-direction: column;
-        gap: 14px;
+        position: absolute !important;
+        top: 50% !important;
+        left: 50% !important;
+        width: 0 !important;
+        height: 0 !important;
+        display: block !important;
+        z-index: 5 !important;
     }
     #art-director .md-card {
-        position: relative;
-        top: auto; left: auto;
-        width: 100%;
-        height: 128px;
-        flex-direction: row;
-        transform: none !important;     /* ignore the desktop physics transform */
-        z-index: auto !important;
-        will-change: auto;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 106px !important;
+        height: 165px !important;
+        border-radius: 10px !important;
+        overflow: hidden !important;
+        display: flex !important;
+        flex-direction: column !important;
+        background: #181f16 !important;
+        border: 1px solid rgba(242, 182, 118, 0.4) !important;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.75) !important;
+        will-change: transform !important;
     }
-    #art-director .md-card:nth-child(even) { flex-direction: row-reverse; }   /* alternate left / right */
-    #art-director .md-photo { flex: 0 0 42%; width: auto; }
+    #art-director .md-card:nth-child(even) {
+        flex-direction: column !important;
+    }
+    #art-director .md-photo {
+        flex: 1 !important;
+        width: 100% !important;
+        height: 100% !important;
+        background-size: cover !important;
+        background-position: center !important;
+    }
     #art-director .md-caption {
-        flex: 1;
-        min-width: 0;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        padding: 12px 16px;
-        border-top: 0;
-        border-left: 1px solid rgba(242, 182, 118, .22);
+        padding: 5px 4px !important;
+        background: rgba(18, 25, 17, 0.95) !important;
+        border-top: 1px solid rgba(242, 182, 118, 0.2) !important;
+        text-align: center !important;
     }
-    #art-director .md-card:nth-child(even) .md-caption {
-        border-left: 0;
-        border-right: 1px solid rgba(242, 182, 118, .22);
+    #art-director .md-role {
+        font-size: 0.62rem !important;
+        letter-spacing: 0.05em !important;
+        margin-top: 2px !important;
+        font-weight: 500 !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        color: #F2B676 !important;
     }
-    #art-director .md-role { line-height: 1.35; }
-    #art-director .md-name { font-size: 1.02rem; margin-top: 4px; }
+    #art-director .md-name {
+        font-size: 0.74rem !important;
+        font-weight: 700 !important;
+        line-height: 1.15 !important;
+        margin: 0 !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        color: #FFF2DF !important;
+    }
+
+    /* ---------- 3) OUR TINY COT (STAY) ---------- */
+    html, body {
+        overflow-x: hidden !important;
+        max-width: 100vw !important;
+    }
+    #stay,
+    .stay-section,
+    .theme-stay {
+        max-width: 100vw !important;
+        overflow-x: hidden !important;
+        padding-left: clamp(14px, 4vw, 20px) !important;
+        padding-right: clamp(14px, 4vw, 20px) !important;
+        box-sizing: border-box !important;
+    }
+    .stay-hero-split,
+    .cot-copy {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        box-sizing: border-box !important;
+    }
+    /* Ensure the Hill Retreat Ribbon doesn't force a horizontal scrollbar */
+    .hill-retreat-divider {
+        max-width: 100% !important;
+        overflow: hidden !important;
+    }
+
+    #stay .headline,
+    #stay .cot-copy h2 {
+        font-size: clamp(1.75rem, 6.8vw, 2.1rem) !important;
+        line-height: 1.1 !important;
+        margin-bottom: 10px !important;
+    }
+    #stay .stay-desc {
+        font-size: 0.88rem !important;
+        line-height: 1.5 !important;
+        margin-bottom: 12px !important;
+    }
+    #stay .stay-quote {
+        padding-left: 10px !important;
+        margin-bottom: 14px !important;
+    }
+    #stay .stay-quote p {
+        font-size: 0.8rem !important;
+        line-height: 1.4 !important;
+    }
+
+    .cot-features-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important; /* Forces 50-50 fit inside screen */
+        gap: 8px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        margin: 12px 0 16px 0 !important;
+        padding: 0 !important;
+    }
+    .cot-feature-item {
+        min-width: 0 !important; /* Prevents text from expanding card outside viewport */
+        width: 100% !important;
+        box-sizing: border-box !important;
+        padding: 8px 6px !important;
+        gap: 6px !important;
+        border-radius: 10px !important;
+        display: flex !important;
+        align-items: center !important;
+        overflow: hidden !important;
+    }
+    .cot-feat-icon {
+        width: 22px !important;
+        height: 22px !important;
+        flex: 0 0 22px !important;
+    }
+    .cot-feat-icon svg {
+        width: 15px !important;
+        height: 15px !important;
+    }
+    .cot-feature-item div {
+        min-width: 0 !important;
+        flex: 1 !important;
+        overflow: hidden !important;
+    }
+    .cot-feature-item strong {
+        font-size: 0.74rem !important;
+        line-height: 1.15 !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        display: block !important;
+    }
+    .cot-feature-item span {
+        font-size: 0.65rem !important;
+        line-height: 1.2 !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        display: block !important;
+    }
+
+    /* Side-by-Side CTA Buttons */
+    .cot-cta-group {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important; /* Side by side */
+        gap: 10px !important;
+        width: 100% !important;
+        margin-top: 14px !important;
+        margin-bottom: 20px !important;
+        box-sizing: border-box !important;
+    }
+    .cot-cta-group .btn,
+    .cot-cta-group a {
+        width: 100% !important;
+        min-height: 44px !important;
+        padding: 10px 8px !important;
+        font-size: 0.78rem !important; /* Compact, legible text on all small phones */
+        font-weight: 700 !important;
+        text-align: center !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        white-space: nowrap !important;
+        letter-spacing: 0.01em !important;
+        box-sizing: border-box !important;
+        gap: 0 !important;
+    }
+    .cot-cta-group .btn .arrow {
+        display: inline-block !important;
+        margin-left: 4px !important;
+    }
+
+    /* Mobile Section Spacing & Flow for Cottage Visual */
+    .cot-media-wrap {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 10px 0 20px 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        box-sizing: border-box !important;
+    }
+    .cot-media {
+        width: 100% !important;
+        max-width: 320px !important;
+        margin: 0 auto !important;
+    }
+    .cot-media img {
+        width: 100% !important;
+        height: auto !important;
+        max-height: 260px !important;
+        object-fit: contain !important;
+    }
+    .cot-badges-row {
+        margin-top: 10px !important;
+        gap: 6px !important;
+    }
+    .cot-pill-badge {
+        font-size: 0.72rem !important;
+        padding: 5px 10px !important;
+    }
+    /* Clean transition into Unfiltered Mountain Living headline */
+    #rooms.rooms-showcase,
+    body #rooms.rooms-showcase {
+        padding-top: 18px !important;
+    }
+    #rooms .section-head {
+        margin: 10px auto 20px auto !important;
+        padding: 0 14px !important;
+    }
+    #rooms .headline {
+        font-size: clamp(1.6rem, 6.5vw, 2rem) !important;
+        line-height: 1.15 !important;
+    }
+    #rooms .lede {
+        font-size: 0.88rem !important;
+        line-height: 1.5 !important;
+        margin-top: 8px !important;
+    }
+}
+
+@media (max-width: 359px) {
+    .cot-cta-group {
+        gap: 6px !important;
+    }
+    .cot-cta-group .btn,
+    .cot-cta-group a {
+        padding: 10px 4px !important;
+        font-size: 0.68rem !important;
+    }
 }
 
 /* ==========================================================================

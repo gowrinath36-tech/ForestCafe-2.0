@@ -348,6 +348,45 @@
     let active = 0;
     let panels = [];
 
+    let autoDir = 1;
+    let autoTimer = null;
+    let resumeTimer = null;
+
+    function startAuto() {
+        stopAuto();
+        autoTimer = setInterval(() => {
+            // Pause if the section is not visible on screen
+            if (typeof window.fcInView === "function" && !window.fcInView(container)) return;
+            if (slides.length <= 1) return;
+
+            let nextIdx = active + autoDir;
+            if (nextIdx >= slides.length) {
+                autoDir = -1;
+                nextIdx = slides.length - 2;
+            } else if (nextIdx < 0) {
+                autoDir = 1;
+                nextIdx = 1;
+            }
+            setActive(nextIdx);
+        }, 2800); // Cycles every 2.8s smoothly
+    }
+
+    function stopAuto() {
+        if (autoTimer) {
+            clearInterval(autoTimer);
+            autoTimer = null;
+        }
+    }
+
+    function handleUserInteraction() {
+        stopAuto();
+        if (resumeTimer) clearTimeout(resumeTimer);
+        // Pause for 5 seconds when user interacts, then resume auto-cycle
+        resumeTimer = setTimeout(() => {
+            startAuto();
+        }, 5000);
+    }
+
     function render() {
         stage.innerHTML = slides.map((s, i) => {
             if (s.isPlaceholder) {
@@ -379,6 +418,7 @@
         panels = Array.from(stage.querySelectorAll(".rooms-panel"));
         panels.forEach((p, i) => {
             p.addEventListener("click", () => {
+                handleUserInteraction();
                 if (container.dataset.swipeHandled === "true") return;
                 const wasActive = p.classList.contains("is-active");
                 setActive(i);
@@ -392,10 +432,14 @@
                     imageSlides.map(slide => `Cottage: ${slide.label}`)
                 );
             });
-            if (canHover) p.addEventListener("mouseenter", () => setActive(i));
+            if (canHover) p.addEventListener("mouseenter", () => {
+                handleUserInteraction();
+                setActive(i);
+            });
         });
         if (totalEl) totalEl.textContent = String(slides.length).padStart(2, "0");
         setActive(0);
+        startAuto();
     }
 
     function setActive(i) {
@@ -419,16 +463,52 @@
             category = cat;
             slides = allSlides.filter(s => s.category === category);
             render();
+            startAuto();
         });
     });
 
-    if (prevBtn) prevBtn.addEventListener("click", () => setActive(active - 1));
-    if (nextBtn) nextBtn.addEventListener("click", () => setActive(active + 1));
-    container.addEventListener("keydown", e => {
-        const vertical = window.matchMedia("(max-width: 767px)").matches;
-        if (e.key === (vertical ? "ArrowUp" : "ArrowLeft")) { e.preventDefault(); setActive(active - 1); }
-        if (e.key === (vertical ? "ArrowDown" : "ArrowRight")) { e.preventDefault(); setActive(active + 1); }
+    if (prevBtn) prevBtn.addEventListener("click", () => {
+        handleUserInteraction();
+        setActive(active - 1);
     });
+    if (nextBtn) nextBtn.addEventListener("click", () => {
+        handleUserInteraction();
+        setActive(active + 1);
+    });
+    container.addEventListener("keydown", e => {
+        handleUserInteraction();
+        if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); setActive(active - 1); }
+        if (e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); setActive(active + 1); }
+    });
+
+    // Touch / Mouse interaction hooks on container
+    container.addEventListener("mouseenter", handleUserInteraction);
+
+    // Horizontal touch swipe for mobile coverflow & touch pause
+    let touchStartX = 0;
+    let touchStartY = 0;
+    container.addEventListener("touchstart", e => {
+        handleUserInteraction();
+        if (e.touches && e.touches.length > 0) {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+        }
+    }, { passive: true });
+    container.addEventListener("touchend", e => {
+        if (!e.changedTouches || e.changedTouches.length === 0) return;
+        const dx = e.changedTouches[0].clientX - touchStartX;
+        const dy = e.changedTouches[0].clientY - touchStartY;
+        if (Math.abs(dx) > 35 && Math.abs(dx) > Math.abs(dy) * 1.2) {
+            handleUserInteraction();
+            container.dataset.swipeHandled = "true";
+            window.setTimeout(() => { delete container.dataset.swipeHandled; }, 400);
+            if (dx < 0) {
+                if (nextBtn) nextBtn.click(); else setActive(active + 1);
+            } else {
+                if (prevBtn) prevBtn.click(); else setActive(active - 1);
+            }
+        }
+    }, { passive: true });
 
     allSlides.forEach(s => { if (s.image) { const img = new Image(); img.src = s.image; } });
     render();
@@ -585,8 +665,14 @@
 
     swipe($("#cardsStack"), click("nextCard"), click("prevCard"));          // cafe photo stack
     swipe($("#lightbox"), click("lbNext"), click("lbPrev"));                 // photo viewer
-    const notPhone = fn => () => { if (!window.matchMedia("(max-width: 767px)").matches) fn(); };
-    swipe($("#roomsSlatGallery"), notPhone(click("slatNextBtn")), notPhone(click("slatPrevBtn"))); // rooms gallery (tablet/desktop only)
+    // Ensure swipe works smoothly on touch
+    if (typeof swipe === 'function') {
+        swipe(
+            $("#roomsSlatGallery"),
+            () => { const b = document.getElementById("slatNextBtn"); if (b) b.click(); },
+            () => { const b = document.getElementById("slatPrevBtn"); if (b) b.click(); }
+        );
+    }
 
 })();
 
@@ -1012,22 +1098,49 @@
     const FRICTION = 0.86;
     const SPAN = 1080;
 
-    // Automatically distribute rest positions evenly regardless of 4, 6, or more cards
-    const spanWidth = Math.min(880, (count - 1) * 165);
-    const startX = -spanWidth / 2;
-    const stepX = count > 1 ? spanWidth / (count - 1) : 0;
+    function getMobilePose() {
+        // 3 cards top (0, 1, 2) and 3 cards bottom (3, 4, 5) with slight tilt & overlap
+        const isPhone = phoneMQ.matches;
+        if (!isPhone) {
+            const spanWidth = Math.min(880, (count - 1) * 165);
+            const startX = -spanWidth / 2;
+            const stepX = count > 1 ? spanWidth / (count - 1) : 0;
+            return {
+                x: cardsEl.map((_, i) => startX + i * stepX),
+                y: cardsEl.map((_, i) => (i % 2 === 0 ? 18 : -14)),
+                rot: cardsEl.map((_, i) => {
+                    const progress = count > 1 ? (i / (count - 1)) * 2 - 1 : 0;
+                    return progress * 9 + (i % 2 === 0 ? -2 : 3);
+                })
+            };
+        }
 
-    const POSE = {
-        x: cardsEl.map((_, i) => startX + i * stepX),
-        y: cardsEl.map((_, i) => (i % 2 === 0 ? 18 : -14)),
-        rot: cardsEl.map((_, i) => {
-            const progress = count > 1 ? (i / (count - 1)) * 2 - 1 : 0;
-            return progress * 9 + (i % 2 === 0 ? -2 : 3);
-        })
-    };
+        // Mobile: Two rows of 3 tilted cards with proper breathing space
+        const rowStepX = 108; // slightly wider to show more of each poster
+        return {
+            x: [
+                -rowStepX, 0, rowStepX,          // Row 1 (cards 0, 1, 2)
+                -rowStepX, 0, rowStepX           // Row 2 (cards 3, 4, 5)
+            ],
+            y: [
+                -112, -96, -108,                 // Row 1 vertical positions
+                 112,  128,  116                 // Row 2 vertical positions (ample vertical breathing gap)
+            ],
+            rot: [
+                -5, 2, -4,                       // Row 1 gentle tilt
+                 4, -3, 5                        // Row 2 gentle tilt
+            ]
+        };
+    }
+
+    let POSE = getMobilePose();
 
     let fit = 1;
     function measure() {
+        if (phoneMQ.matches) {
+            fit = 1;
+            return;
+        }
         const fieldWidth = field.offsetWidth || window.innerWidth;
         fit = Math.min(1, fieldWidth / SPAN, 480 / 460);
         fit = Math.max(0.42, fit);
@@ -1047,9 +1160,11 @@
     }));
 
     function syncRest() {
+        POSE = getMobilePose();
         deck.forEach((c, i) => {
-            c.restX = POSE.x[i] * fit;
-            c.restY = POSE.y[i] * fit;
+            c.restX = POSE.x[i] * (phoneMQ.matches ? 1 : fit);
+            c.restY = POSE.y[i] * (phoneMQ.matches ? 1 : fit);
+            c.restR = POSE.rot[i];
         });
     }
 
@@ -1058,6 +1173,7 @@
     deck.forEach(c => {
         c.x = c.restX;
         c.y = c.restY;
+        c.r = c.restR;
     });
 
     const cursor = {
@@ -1089,11 +1205,23 @@
     });
 
     // Touch support for phones
-    field.addEventListener("touchmove", e => {
-        if (e.touches.length > 0) {
+    function handleTouch(e) {
+        if (e.touches && e.touches.length > 0) {
             const t = e.touches[0];
             onPointerMove(t.clientX, t.clientY);
         }
+    }
+    field.addEventListener("touchstart", handleTouch, { passive: true });
+    field.addEventListener("touchmove", handleTouch, { passive: true });
+    field.addEventListener("touchend", () => {
+        cursor.vx = 0;
+        cursor.vy = 0;
+        cursor.primed = false;
+    }, { passive: true });
+    field.addEventListener("touchcancel", () => {
+        cursor.vx = 0;
+        cursor.vy = 0;
+        cursor.primed = false;
     }, { passive: true });
 
     function getPushForce(c) {
@@ -1138,10 +1266,6 @@
     function tick() {
         rafId = 0;
         if (!isDrawerActive) return;           // drawer closed → loop stops completely
-        if (phoneMQ.matches) {                 // phone: vertical list, no physics
-            deck.forEach(c => { if (c.el) { c.el.style.transform = ""; c.el.style.zIndex = ""; } });
-            return;
-        }
         if (!window.fcInView(field)) { rafId = requestAnimationFrame(tick); return; }
         {
             const dx = cursor.x - cursor.lastX;
@@ -1174,7 +1298,7 @@
                 c.r += c.vr;
 
                 if (c.el) {
-                    c.el.style.transform = `translate(-50%,-50%) translate(${c.x.toFixed(1)}px,${c.y.toFixed(1)}px) rotate(${c.r.toFixed(2)}deg) scale(${fit.toFixed(3)})`;
+                    c.el.style.transform = `translate(-50%,-50%) translate(${c.x.toFixed(1)}px,${c.y.toFixed(1)}px) rotate(${c.r.toFixed(2)}deg) scale(${phoneMQ.matches ? 1 : fit.toFixed(3)})`;
                     c.el.style.zIndex = i;
                 }
             }
@@ -1187,7 +1311,7 @@
         syncRest();
     });
     phoneMQ.addEventListener("change", () => {
-        if (!phoneMQ.matches && isDrawerActive) { measure(); syncRest(); startLoop(); }
+        if (isDrawerActive) { measure(); syncRest(); startLoop(); }
     });
 })();
 
