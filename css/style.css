@@ -3066,6 +3066,7 @@ body .products-grid.is-expanded .product-card:last-child:nth-child(odd) {
     min-height: 2.2em !important;
     display: -webkit-box !important;
     -webkit-line-clamp: 2 !important;
+    line-clamp: 2 !important;
     -webkit-box-orient: vertical !important;
     overflow: hidden !important;
     margin-bottom: 4px !important;
