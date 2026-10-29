@@ -515,15 +515,40 @@
 })();
 
 (() => {
-    const toggleBtn = document.getElementById("toggleProductsBtn");
+    const toggleBtn = document.getElementById("toggleProductsBtn") || document.getElementById("shopToggleBtn");
     const grid = document.getElementById("productsGrid");
 
     if (!toggleBtn || !grid) return;
 
+    // Identify products beyond the initial 8 items
+    const allCards = Array.from(grid.querySelectorAll(".product-card"));
+    const extraCards = allCards.slice(8);
+
+    // Initial state: guarantee collapsed products have zero layout footprint
+    extraCards.forEach(card => {
+        card.classList.add("shop-extra-item", "collapsed", "is-hidden");
+        card.setAttribute("data-collapsed", "true");
+        card.style.display = "none";
+    });
+
     toggleBtn.addEventListener("click", () => {
         const isExpanded = grid.classList.toggle("is-expanded");
         toggleBtn.classList.toggle("is-active", isExpanded);
-        toggleBtn.setAttribute("aria-expanded", isExpanded);
+        toggleBtn.setAttribute("aria-expanded", String(isExpanded));
+
+        extraCards.forEach(card => {
+            if (isExpanded) {
+                card.classList.remove("collapsed", "is-hidden");
+                card.classList.add("is-visible");
+                card.setAttribute("data-collapsed", "false");
+                card.style.display = ""; // clears inline style so CSS flex applies
+            } else {
+                card.classList.add("collapsed", "is-hidden");
+                card.classList.remove("is-visible");
+                card.setAttribute("data-collapsed", "true");
+                card.style.display = "none"; // immediately removed from DOM layout flow
+            }
+        });
 
         const btnText = toggleBtn.querySelector(".btn-text");
         if (btnText) {
