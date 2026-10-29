@@ -336,7 +336,7 @@
         { label: "Interior suite",   title: "Bedroom\nRetreat",   image: "images/rooms/1.webp", category: "interior" },
         { label: "Living space",     title: "Central\nHall",      image: "images/rooms/2.webp", category: "interior" },
         { label: "Lounge corner",    title: "Cozy Steps\nLounge", image: "images/rooms/6.webp", category: "interior" },
-        { label: "The Secret Attic", title: "The Secret\nAttic",  image: "", category: "interior", isPlaceholder: true },
+        { label: "The Secret Attic", title: "The Secret\nAttic",  image: "images/rooms/attic.webp", category: "interior" },
         { label: "Canopy retreat",   title: "Forest\nGlade",      image: "images/rooms/3.webp", category: "exterior" },
         { label: "Entrance deck",    title: "Front\nTerrace",     image: "images/rooms/4.webp", category: "exterior" },
         { label: "Outdoor ambience", title: "Garden\nDeck",       image: "images/rooms/5.webp", category: "exterior" }

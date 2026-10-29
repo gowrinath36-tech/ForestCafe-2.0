@@ -79,6 +79,7 @@
     { group: 'Tiny Cot photos', path: 'images/rooms/1.webp', label: 'Bedroom Retreat' },
     { group: 'Tiny Cot photos', path: 'images/rooms/2.webp', label: 'Central Hall' },
     { group: 'Tiny Cot photos', path: 'images/rooms/6.webp', label: 'Cozy Steps Lounge' },
+    { group: 'Tiny Cot photos', path: 'images/rooms/attic.webp', label: 'The Secret Attic' },
     { group: 'Tiny Cot photos', path: 'images/rooms/3.webp', label: 'Forest Glade' },
     { group: 'Tiny Cot photos', path: 'images/rooms/4.webp', label: 'Front Terrace' },
     { group: 'Tiny Cot photos', path: 'images/rooms/5.webp', label: 'Garden Deck' },
