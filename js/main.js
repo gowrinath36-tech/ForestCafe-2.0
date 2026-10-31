@@ -76,6 +76,7 @@
       pre.classList.add('no-video');
     }
 
+    // loader finishing time out area comment added by gowri
     // hard stop: nobody waits longer than 6 seconds for an intro
     setTimeout(finish, 6000);
     window.addEventListener('load', function () {
@@ -406,7 +407,7 @@
             }
             return `
             <button type="button" class="rooms-panel" data-index="${i}" aria-label="View ${s.label} photo" aria-pressed="false">
-                <img class="rooms-panel__img" src="${window.fcImg ? window.fcImg(s.image) : s.image}" data-fc-src="${s.image}" alt="${s.label}" draggable="false">
+                <img class="rooms-panel__img" src="${window.fcImg ? window.fcImg(s.image) : s.image}" data-fc-src="${s.image}" alt="${s.label}" draggable="false" width="462" height="260" loading="lazy" decoding="async">
                 <span class="rooms-panel__shade"></span>
                 <span class="rooms-panel__side">${s.label}</span>
                 <span class="rooms-panel__content">
