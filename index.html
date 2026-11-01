@@ -24,8 +24,9 @@
 <meta content="en_IN" property="og:locale"/>
 <meta content="summary_large_image" name="twitter:card"/>
 <link href="logo.webp" rel="icon" type="image/webp"/>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link rel="preconnect" href="https://firestore.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;500;600&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
 <link href="css/style.css" rel="stylesheet"/>
 <script type="application/ld+json">
@@ -96,8 +97,8 @@
     <!-- ============ NAVBAR ============ -->
     <header class="nav" id="nav">
         <div class="nav-inner">
-            <a aria-label="Forest Cafe home" class="brand" href="#top">
-                <img alt="Forest Cafe" class="brand-logo" src="logo.webp" width="48" height="48" />
+            <a aria-label="Forest Cafe - Home" class="brand" href="#top">
+                <img alt="Forest Cafe" class="brand-logo" src="logo.webp" width="48" height="48" decoding="async" />
                 <span class="brand-text">
                     <span class="brand-name">Forest Cafe</span>
                     <span class="brand-sub">Kalvarayan Hills</span>
@@ -127,7 +128,7 @@
         <span id="top"></span>
         <!-- ============ HERO ============ -->
         <section aria-label="Forest Cafe introduction" class="hero is-loading">
-            <video aria-hidden="true" id="heroVideo" loop="" muted="" playsinline="" preload="auto" data-poster-desktop="images/cafe/cafe-01.webp" data-poster-mobile="images/cafe/hero-mob-poster.webp"></video>
+            <video aria-hidden="true" id="heroVideo" loop="" muted="" playsinline="" preload="metadata" data-poster-desktop="images/cafe/cafe-01.webp" data-poster-mobile="images/cafe/hero-mob-poster.webp"></video>
             <script>
                 /* The video has NO <source> in the markup on purpose: this script picks the file
                    (9:16 Hero-Mob.webm on phones, 16:9 Hero.webm elsewhere) before the browser
@@ -137,6 +138,13 @@
                     if (!v) return;
                     var phone = window.matchMedia('(max-width: 767px)').matches;
                     v.setAttribute('data-active', phone ? 'mobile' : 'desktop');
+                    var posterUrl = phone
+                        ? (v.getAttribute('data-poster-mobile') || 'images/cafe/hero-mob-poster.webp')
+                        : (v.getAttribute('data-poster-desktop') || 'images/cafe/cafe-01.webp');
+                    v.setAttribute('poster', posterUrl);
+                    if (phone) {
+                        v.setAttribute('preload', 'metadata');
+                    }
                     var s = document.createElement('source');
                     s.src = phone ? 'Hero-Mob.webm' : 'Hero.webm';
                     s.type = 'video/webm';
@@ -217,7 +225,7 @@
             <div class="shell split split--reverse reveal">
                 <div class="about-media">
                     <div class="item-wrap has-ground-shadow">
-                        <img alt="Illustration of the Forest Cafe building surrounded by trees" class="floating-img" height="700" src="images/farm/item1.webp" width="900" />
+                        <img alt="Illustration of the Forest Cafe building surrounded by trees" class="floating-img" src="images/farm/item1.webp" width="326" height="181" loading="lazy" decoding="async" />
                     </div>
                 </div>
                 <div class="about-copy">
@@ -286,11 +294,11 @@
                 <path d="M102 92 C 190 92, 285 230, 380 230 S 520 92, 612 92 S 755 270, 844 270 S 980 340, 1058 340" />
             </svg>
             <div class="sts-stages">
-                <article class="sts-stage sts-stage--1"><div class="sts-stage-media"><img src="images/sts/1.webp" alt="Planting a coffee seedling" loading="lazy"></div><span class="sts-number">01</span><h3>Planting</h3><p>It begins with a seed and good soil.</p></article>
-                <article class="sts-stage sts-stage--2"><div class="sts-stage-media"><img src="images/sts/2.webp" alt="Growing coffee plant" loading="lazy"></div><span class="sts-number">02</span><h3>Growing</h3><p>Time, rain and care help each plant thrive.</p></article>
-                <article class="sts-stage sts-stage--3"><div class="sts-stage-media"><img src="images/sts/3.webp" alt="Harvesting ripe coffee cherries" loading="lazy"></div><span class="sts-number">03</span><h3>Harvesting</h3><p>Ripe coffee cherries are picked with care.</p></article>
-                <article class="sts-stage sts-stage--4"><div class="sts-stage-media"><img src="images/sts/4.webp" alt="Roasting coffee beans" loading="lazy"></div><span class="sts-number">04</span><h3>Roasting</h3><p>Roasting brings out the beans’ rich aroma.</p></article>
-                <article class="sts-stage sts-stage--5"><div class="sts-stage-media"><img src="images/sts/5.webp" alt="Freshly brewed coffee" loading="lazy"></div><span class="sts-number">05</span><h3>Brewing</h3><p>Freshly brewed, ready to be savoured.</p></article>
+                <article class="sts-stage sts-stage--1"><div class="sts-stage-media"><img src="images/sts/1.webp" alt="Planting a coffee seedling" loading="lazy" decoding="async"></div><span class="sts-number">01</span><h3>Planting</h3><p>It begins with a seed and good soil.</p></article>
+                <article class="sts-stage sts-stage--2"><div class="sts-stage-media"><img src="images/sts/2.webp" alt="Growing coffee plant" loading="lazy" decoding="async"></div><span class="sts-number">02</span><h3>Growing</h3><p>Time, rain and care help each plant thrive.</p></article>
+                <article class="sts-stage sts-stage--3"><div class="sts-stage-media"><img src="images/sts/3.webp" alt="Harvesting ripe coffee cherries" loading="lazy" decoding="async"></div><span class="sts-number">03</span><h3>Harvesting</h3><p>Ripe coffee cherries are picked with care.</p></article>
+                <article class="sts-stage sts-stage--4"><div class="sts-stage-media"><img src="images/sts/4.webp" alt="Roasting coffee beans" loading="lazy" decoding="async"></div><span class="sts-number">04</span><h3>Roasting</h3><p>Roasting brings out the beans’ rich aroma.</p></article>
+                <article class="sts-stage sts-stage--5"><div class="sts-stage-media"><img src="images/sts/5.webp" alt="Freshly brewed coffee" loading="lazy" decoding="async"></div><span class="sts-number">05</span><h3>Brewing</h3><p>Freshly brewed, ready to be savoured.</p></article>
             </div>
 
             <!-- Small top wave -->
@@ -322,11 +330,11 @@
                     <div class="cards-wrapper">
                         <button aria-label="Previous photo" class="nav-arrow" id="prevCard" type="button">‹</button>
                         <div class="cards-stack" id="cardsStack">
-                            <button class="photo-card pos-0" data-index="0" type="button"><img alt="Seating area at Forest Cafe, Kalvarayan Hills" loading="lazy" src="images/cafe/1.webp" /></button>
-                            <button class="photo-card pos-1" data-index="1" type="button"><img alt="Coffee being poured at Forest Cafe" loading="lazy" src="images/cafe/2.webp" /></button>
-                            <button class="photo-card pos-2" data-index="2" type="button"><img alt="View from the Forest Cafe deck" loading="lazy" src="images/cafe/9.webp" /></button>
-                            <button class="photo-card pos-3" data-index="3" type="button"><img alt="Interior corner of Forest Cafe" loading="lazy" src="images/cafe/8.webp" /></button>
-                            <button class="photo-card pos-4" data-index="4" type="button"><img alt="Forest Cafe surroundings in the Kalvarayan Hills" loading="lazy" src="images/cafe/5.webp" /></button>
+                            <button class="photo-card pos-0" data-index="0" type="button"><img alt="Seating area at Forest Cafe, Kalvarayan Hills" loading="lazy" decoding="async" src="images/cafe/1.webp" /></button>
+                            <button class="photo-card pos-1" data-index="1" type="button"><img alt="Coffee being poured at Forest Cafe" loading="lazy" decoding="async" src="images/cafe/2.webp" /></button>
+                            <button class="photo-card pos-2" data-index="2" type="button"><img alt="View from the Forest Cafe deck" loading="lazy" decoding="async" src="images/cafe/9.webp" /></button>
+                            <button class="photo-card pos-3" data-index="3" type="button"><img alt="Interior corner of Forest Cafe" loading="lazy" decoding="async" src="images/cafe/8.webp" /></button>
+                            <button class="photo-card pos-4" data-index="4" type="button"><img alt="Forest Cafe surroundings in the Kalvarayan Hills" loading="lazy" decoding="async" src="images/cafe/5.webp" /></button>
                         </div>
                         <button aria-label="Next photo" class="nav-arrow" id="nextCard" type="button">›</button>
                     </div>
@@ -345,15 +353,15 @@
                         <button class="btn btn--ghost btn--sm" id="closeGalleryBtn" type="button">← Back</button>
                     </div>
                     <div class="gallery-grid" id="galleryGrid">
-                        <button class="grid-card" data-index="0" type="button"><img alt="Seating area at Forest Cafe, Kalvarayan Hills" loading="lazy" src="images/cafe/1.webp" /></button>
-                        <button class="grid-card" data-index="1" type="button"><img alt="Coffee being poured at Forest Cafe" loading="lazy" src="images/cafe/2.webp" /></button>
-                        <button class="grid-card" data-index="2" type="button"><img alt="View from the deck at Forest Cafe, Kalvarayan Hills" loading="lazy" src="images/cafe/9.webp" /></button>
-                        <button class="grid-card" data-index="3" type="button"><img alt="Interior corner of Forest Cafe" loading="lazy" src="images/cafe/8.webp" /></button>
-                        <button class="grid-card" data-index="4" type="button"><img alt="Forest Cafe surroundings in the Kalvarayan Hills" loading="lazy" src="images/cafe/5.webp" /></button>
-                        <button class="grid-card" data-index="5" type="button"><img alt="Tables by the window at Forest Cafe" loading="lazy" src="images/cafe/15.webp" /></button>
-                        <button class="grid-card" data-index="6" type="button"><img alt="Garden path to Forest Cafe" loading="lazy" src="images/cafe/16.webp" /></button>
-                        <button class="grid-card" data-index="7" type="button"><img alt="Evening at Forest Cafe" loading="lazy" src="images/cafe/6.webp" /></button>
-                        <button class="grid-card" data-index="8" type="button"><img alt="Hillside behind Forest Cafe, Kalvarayan Hills" loading="lazy" src="images/cafe/12.webp" /></button>
+                        <button class="grid-card" data-index="0" type="button"><img alt="Seating area at Forest Cafe, Kalvarayan Hills" loading="lazy" decoding="async" src="images/cafe/1.webp" /></button>
+                        <button class="grid-card" data-index="1" type="button"><img alt="Coffee being poured at Forest Cafe" loading="lazy" decoding="async" src="images/cafe/2.webp" /></button>
+                        <button class="grid-card" data-index="2" type="button"><img alt="View from the deck at Forest Cafe, Kalvarayan Hills" loading="lazy" decoding="async" src="images/cafe/9.webp" /></button>
+                        <button class="grid-card" data-index="3" type="button"><img alt="Interior corner of Forest Cafe" loading="lazy" decoding="async" src="images/cafe/8.webp" /></button>
+                        <button class="grid-card" data-index="4" type="button"><img alt="Forest Cafe surroundings in the Kalvarayan Hills" loading="lazy" decoding="async" src="images/cafe/5.webp" /></button>
+                        <button class="grid-card" data-index="5" type="button"><img alt="Tables by the window at Forest Cafe" loading="lazy" decoding="async" src="images/cafe/15.webp" /></button>
+                        <button class="grid-card" data-index="6" type="button"><img alt="Garden path to Forest Cafe" loading="lazy" decoding="async" src="images/cafe/16.webp" /></button>
+                        <button class="grid-card" data-index="7" type="button"><img alt="Evening at Forest Cafe" loading="lazy" decoding="async" src="images/cafe/6.webp" /></button>
+                        <button class="grid-card" data-index="8" type="button"><img alt="Hillside behind Forest Cafe, Kalvarayan Hills" loading="lazy" decoding="async" src="images/cafe/12.webp" /></button>
                     </div>
                 </div>
             </div>
@@ -399,34 +407,34 @@
 
                                 <div class="menu-orbit" id="menuOrbit">
                                     <button class="menu-orbit-item" data-index="0" aria-label="Grilled Sandwich" type="button">
-                                        <span class="menu-orbit-card"><img src="images/menu-orbit/sandwich.webp" alt="Grilled sandwich" /></span>
+                                        <span class="menu-orbit-card"><img src="images/menu-orbit/sandwich.webp" alt="Grilled sandwich" width="85" height="85" loading="lazy" decoding="async" /></span>
                                     </button>
                                     <button class="menu-orbit-item" data-index="1" aria-label="Fruit Nut Cake" type="button">
-                                        <span class="menu-orbit-card"><img src="images/menu-orbit/cake.webp" alt="Fruit nut cake" /></span>
+                                        <span class="menu-orbit-card"><img src="images/menu-orbit/cake.webp" alt="Fruit nut cake" width="85" height="85" loading="lazy" decoding="async" /></span>
                                     </button>
                                     <button class="menu-orbit-item" data-index="2" aria-label="Pizza" type="button">
-                                        <span class="menu-orbit-card"><img src="images/menu-orbit/pizza.webp" alt="Pizza" /></span>
+                                        <span class="menu-orbit-card"><img src="images/menu-orbit/pizza.webp" alt="Pizza" width="85" height="85" loading="lazy" decoding="async" /></span>
                                     </button>
                                     <button class="menu-orbit-item" data-index="3" aria-label="Brownie" type="button">
-                                        <span class="menu-orbit-card"><img src="images/menu-orbit/brownie.webp" alt="Brownie" /></span>
+                                        <span class="menu-orbit-card"><img src="images/menu-orbit/brownie.webp" alt="Brownie" width="85" height="85" loading="lazy" decoding="async" /></span>
                                     </button>
                                     <button class="menu-orbit-item" data-index="4" aria-label="Bread Omelette" type="button">
-                                        <span class="menu-orbit-card"><img src="images/menu-orbit/bread-omelette.webp" alt="Bread omelette" /></span>
+                                        <span class="menu-orbit-card"><img src="images/menu-orbit/bread-omelette.webp" alt="Bread omelette" width="85" height="85" loading="lazy" decoding="async" /></span>
                                     </button>
                                     <button class="menu-orbit-item" data-index="5" aria-label="Cappuccino" type="button">
-                                        <span class="menu-orbit-card"><img src="images/menu-orbit/cappuccino.webp" alt="Cappuccino" /></span>
+                                        <span class="menu-orbit-card"><img src="images/menu-orbit/cappuccino.webp" alt="Cappuccino" width="85" height="85" loading="lazy" decoding="async" /></span>
                                     </button>
                                     <button class="menu-orbit-item" data-index="6" aria-label="Paneer Roll" type="button">
-                                        <span class="menu-orbit-card"><img src="images/menu-orbit/paneer-roll.webp" alt="Paneer roll" /></span>
+                                        <span class="menu-orbit-card"><img src="images/menu-orbit/paneer-roll.webp" alt="Paneer roll" width="85" height="85" loading="lazy" decoding="async" /></span>
                                     </button>
                                     <button class="menu-orbit-item" data-index="7" aria-label="Chocolate Cake" type="button">
-                                        <span class="menu-orbit-card"><img src="images/menu-orbit/chocolate-cake.webp" alt="Chocolate cake" /></span>
+                                        <span class="menu-orbit-card"><img src="images/menu-orbit/chocolate-cake.webp" alt="Chocolate cake" width="85" height="85" loading="lazy" decoding="async" /></span>
                                     </button>
                                 </div>
 
                                 <div class="menu-orbit-brand" aria-hidden="true">
                                     <div class="menu-orbit-brand-disc">
-                                        <img src="logo.webp" alt="" />
+                                        <img src="logo.webp" alt="" width="85" height="85" loading="lazy" decoding="async" />
                                     </div>
                                 </div>
 
@@ -523,7 +531,7 @@
         <!-- ============ RIBBON ============ -->
         <div aria-hidden="true" class="ribbon ribbon-separator menu-divider">
             <div class="ribbon-inner">
-                <img alt="" loading="lazy" src="images/farm/item13.webp" />
+                <img alt="" loading="lazy" decoding="async" src="images/farm/item13.webp" />
             </div>
         </div>
         <!-- ============ LITTLE FARMER ============ -->
@@ -532,7 +540,7 @@
                 <!-- IMAGE — LEFT: Little Farmer illustration -->
                 <div class="farm-media" style="display: flex; justify-content: center; align-items: center;">
                     <div class="farmer-wrap has-ground-shadow">
-                        <img src="images/farm/little-farmer.webp" alt="Little Farmer Organic Farming" class="farm-emblem-logo" style="width: 100%; max-width: 380px; height: auto; object-fit: contain;" />
+                        <img src="images/farm/little-farmer.webp" alt="Little Farmer Organic Farming" class="farm-emblem-logo" style="width: 100%; max-width: 380px; height: auto; object-fit: contain;" width="321" height="241" loading="lazy" decoding="async" />
                     </div>
                 </div>
                 <!-- TEXT — RIGHT -->
@@ -543,7 +551,7 @@
                         </svg>
                         WELCOME TO
                     </span>
-                    <h2 class="farm-heading" style="font-family: 'CoffeeTown', cursive, serif; margin: 4px 0 16px 0; color: #6d432b;"><img class="farm-title-icon" src="images/farm/little-farmer-logo.webp" alt="" />LITTLE FARMER</h2>
+                    <h2 class="farm-heading" style="font-family: 'CoffeeTown', cursive, serif; margin: 4px 0 16px 0; color: #6d432b;"><img class="farm-title-icon" src="images/farm/little-farmer-logo.webp" alt="" loading="lazy" decoding="async" />LITTLE FARMER</h2>
 
                     <p class="farm-desc" style="line-height: 1.6; color: #5c4a3e; margin-bottom: 18px;">
                         Beyond our cafe tables lies living earth. Here on our hillside estate, coffee cherries, black pepper, wild turmeric, and mountain honey ripen slowly without chemical fertilizers or forced yields. What nature produces with care, we harvest, hand-clean, and pack in small batches—giving you wholesome products rooted straight in pure hill soil.
@@ -594,7 +602,7 @@
                     </div>
 
                     <!-- Seasonal harvest note placed right above the button -->
-                    <p class="farm-seasonal-note" style="font-size: 0.82rem; color: #8c6d58; font-style: italic; margin: 16px 0 14px 0;">
+                    <p class="farm-seasonal-note" style="font-size: 0.82rem; color: #7a5d49; font-style: italic; margin: 16px 0 14px 0;">
                         * Note: Our farm harvests follow natural hill seasons. Explore our current product list below for live availability.
                     </p>
 
@@ -619,12 +627,12 @@
                 </div>
                 <div class="products-grid reveal" id="productsGrid">
                     <article class="product-card" tabindex="0" role="button" aria-haspopup="dialog" data-id="prod-1" data-img="images/products/1-pure-coffee.webp" data-name="Pure Coffee">
-                        <div class="product-img-wrap"><img alt="Forest Cafe Pure Coffee" loading="lazy" src="images/products/1-pure-coffee.webp" /></div>
+                        <div class="product-img-wrap"><img alt="Forest Cafe Pure Coffee" loading="lazy" decoding="async" src="images/products/1-pure-coffee.webp" /></div>
                         <h3 class="product-title">Pure Coffee</h3>
                         <p class="product-weight">Freshly roasted</p>
                         <p class="product-price" data-price-for="prod-1" hidden></p>
                         <p class="product-desc">Freshly roasted coffee made from carefully selected beans grown with the rich character of the Kalvarayan Hills.</p>
-                        <button class="cta-pill-btn" type="button" aria-label="Select and order item">
+                        <button class="cta-pill-btn" type="button" aria-label="Select &amp; order Pure Coffee">
                             <span class="cta-shine" aria-hidden="true"></span>
                             <span class="cta-label">Select &amp; order</span>
                             <span class="cta-icon-wrap" aria-hidden="true">
@@ -638,12 +646,12 @@
                         </button>
                     </article>
                     <article class="product-card" tabindex="0" role="button" aria-haspopup="dialog" data-id="prod-2" data-img="images/products/2-70-30.webp" data-name="70/30 Coffee Blend">
-                        <div class="product-img-wrap"><img alt="Forest Cafe 70/30 Coffee Blend" loading="lazy" src="images/products/2-70-30.webp" /></div>
+                        <div class="product-img-wrap"><img alt="Forest Cafe 70/30 Coffee Blend" loading="lazy" decoding="async" src="images/products/2-70-30.webp" /></div>
                         <h3 class="product-title">70/30 Coffee Blend</h3>
                         <p class="product-weight">Balanced and aromatic</p>
                         <p class="product-price" data-price-for="prod-2" hidden></p>
                         <p class="product-desc">A balanced blend crafted for a smooth, aromatic cup with the rich body and character of freshly roasted coffee.</p>
-                        <button class="cta-pill-btn" type="button" aria-label="Select and order item">
+                        <button class="cta-pill-btn" type="button" aria-label="Select &amp; order 70/30 Coffee Blend">
                             <span class="cta-shine" aria-hidden="true"></span>
                             <span class="cta-label">Select &amp; order</span>
                             <span class="cta-icon-wrap" aria-hidden="true">
@@ -657,12 +665,12 @@
                         </button>
                     </article>
                     <article class="product-card" tabindex="0" role="button" aria-haspopup="dialog" data-id="prod-4" data-img="images/products/4-tea-powder.webp" data-name="Tea Dust">
-                        <div class="product-img-wrap"><img alt="Forest Cafe Tea Dust" loading="lazy" src="images/products/4-tea-powder.webp" /></div>
+                        <div class="product-img-wrap"><img alt="Forest Cafe Tea Dust" loading="lazy" decoding="async" src="images/products/4-tea-powder.webp" /></div>
                         <h3 class="product-title">Tea Dust</h3>
                         <p class="product-weight">Refreshing everyday tea</p>
                         <p class="product-price" data-price-for="prod-4" hidden></p>
                         <p class="product-desc">Fine tea dust selected for a rich colour, refreshing aroma and a comforting cup of everyday tea.</p>
-                        <button class="cta-pill-btn" type="button" aria-label="Select and order item">
+                        <button class="cta-pill-btn" type="button" aria-label="Select &amp; order Tea Dust">
                             <span class="cta-shine" aria-hidden="true"></span>
                             <span class="cta-label">Select &amp; order</span>
                             <span class="cta-icon-wrap" aria-hidden="true">
@@ -676,12 +684,12 @@
                         </button>
                     </article>
                     <article class="product-card" tabindex="0" role="button" aria-haspopup="dialog" data-id="prod-5" data-img="images/products/5-honey.webp" data-name="Honey" data-variants="400 g|700 g">
-                        <div class="product-img-wrap"><img alt="Forest Cafe Honey" loading="lazy" src="images/products/5-honey.webp" /></div>
+                        <div class="product-img-wrap"><img alt="Forest Cafe Honey" loading="lazy" decoding="async" src="images/products/5-honey.webp" /></div>
                         <h3 class="product-title">Honey</h3>
                         <p class="product-weight">400 g &amp; 700 g</p>
                         <p class="product-price" data-price-for="prod-5" hidden></p>
                         <p class="product-desc">Pure natural honey with a rich golden sweetness, sourced with care and bottled to preserve its natural character.</p>
-                        <button class="cta-pill-btn" type="button" aria-label="Select and order item">
+                        <button class="cta-pill-btn" type="button" aria-label="Select &amp; order Honey">
                             <span class="cta-shine" aria-hidden="true"></span>
                             <span class="cta-label">Select &amp; order</span>
                             <span class="cta-icon-wrap" aria-hidden="true">
@@ -695,12 +703,12 @@
                         </button>
                     </article>
                     <article class="product-card" tabindex="0" role="button" aria-haspopup="dialog" data-id="prod-6" data-img="images/products/6-curryleaf-powder.webp" data-name="Curry Leaf Powder">
-                        <div class="product-img-wrap"><img alt="Forest Cafe Curry Leaf Powder" loading="lazy" src="images/products/6-curryleaf-powder.webp" /></div>
+                        <div class="product-img-wrap"><img alt="Forest Cafe Curry Leaf Powder" loading="lazy" decoding="async" src="images/products/6-curryleaf-powder.webp" /></div>
                         <h3 class="product-title">Curry Leaf Powder</h3>
                         <p class="product-weight">Aromatic and earthy</p>
                         <p class="product-price" data-price-for="prod-6" hidden></p>
                         <p class="product-desc">Aromatic curry leaf powder made from carefully dried curry leaves, adding a distinctive earthy flavour to everyday dishes.</p>
-                        <button class="cta-pill-btn" type="button" aria-label="Select and order item">
+                        <button class="cta-pill-btn" type="button" aria-label="Select &amp; order Curry Leaf Powder">
                             <span class="cta-shine" aria-hidden="true"></span>
                             <span class="cta-label">Select &amp; order</span>
                             <span class="cta-icon-wrap" aria-hidden="true">
@@ -714,12 +722,12 @@
                         </button>
                     </article>
                     <article class="product-card" tabindex="0" role="button" aria-haspopup="dialog" data-id="prod-7" data-img="images/products/7-idly-podi.webp" data-name="Idli Podi">
-                        <div class="product-img-wrap"><img alt="Forest Cafe Idli Podi" loading="lazy" src="images/products/7-idly-podi.webp" /></div>
+                        <div class="product-img-wrap"><img alt="Forest Cafe Idli Podi" loading="lazy" decoding="async" src="images/products/7-idly-podi.webp" /></div>
                         <h3 class="product-title">Idli Podi</h3>
                         <p class="product-weight">Traditional breakfast spice</p>
                         <p class="product-price" data-price-for="prod-7" hidden></p>
                         <p class="product-desc">A traditional South Indian spice blend made to pair beautifully with idli, dosa and other favourite breakfast dishes.</p>
-                        <button class="cta-pill-btn" type="button" aria-label="Select and order item">
+                        <button class="cta-pill-btn" type="button" aria-label="Select &amp; order Idli Podi">
                             <span class="cta-shine" aria-hidden="true"></span>
                             <span class="cta-label">Select &amp; order</span>
                             <span class="cta-icon-wrap" aria-hidden="true">
@@ -733,12 +741,12 @@
                         </button>
                     </article>
                     <article class="product-card" tabindex="0" role="button" aria-haspopup="dialog" data-id="prod-8" data-img="images/products/8-maa-inji-thokku.webp" data-name="Maa Inji Thokku">
-                        <div class="product-img-wrap"><img alt="Forest Cafe Maa Inji Thokku" loading="lazy" src="images/products/8-maa-inji-thokku.webp" /></div>
+                        <div class="product-img-wrap"><img alt="Forest Cafe Maa Inji Thokku" loading="lazy" decoding="async" src="images/products/8-maa-inji-thokku.webp" /></div>
                         <h3 class="product-title">Maa Inji Thokku</h3>
                         <p class="product-weight">Traditional and tangy</p>
                         <p class="product-price" data-price-for="prod-8" hidden></p>
                         <p class="product-desc">A traditional ginger-based thokku made with carefully selected ingredients, bringing together warmth, spice and a tangy homemade flavour.</p>
-                        <button class="cta-pill-btn" type="button" aria-label="Select and order item">
+                        <button class="cta-pill-btn" type="button" aria-label="Select &amp; order Maa Inji Thokku">
                             <span class="cta-shine" aria-hidden="true"></span>
                             <span class="cta-label">Select &amp; order</span>
                             <span class="cta-icon-wrap" aria-hidden="true">
@@ -752,12 +760,12 @@
                         </button>
                     </article>
                     <article class="product-card" tabindex="0" role="button" aria-haspopup="dialog" data-id="prod-9" data-img="images/products/9-parupu-podi.webp" data-name="Dal Powder">
-                        <div class="product-img-wrap"><img alt="Forest Cafe Dal Powder" loading="lazy" src="images/products/9-parupu-podi.webp" /></div>
+                        <div class="product-img-wrap"><img alt="Forest Cafe Dal Powder" loading="lazy" decoding="async" src="images/products/9-parupu-podi.webp" /></div>
                         <h3 class="product-title">Dal Powder</h3>
                         <p class="product-weight">Comforting and wholesome</p>
                         <p class="product-price" data-price-for="prod-9" hidden></p>
                         <p class="product-desc">A wholesome lentil-based powder prepared for easy everyday cooking, bringing a comforting roasted flavour to traditional meals.</p>
-                        <button class="cta-pill-btn" type="button" aria-label="Select and order item">
+                        <button class="cta-pill-btn" type="button" aria-label="Select &amp; order Dal Powder">
                             <span class="cta-shine" aria-hidden="true"></span>
                             <span class="cta-label">Select &amp; order</span>
                             <span class="cta-icon-wrap" aria-hidden="true">
@@ -771,12 +779,12 @@
                         </button>
                     </article>
                     <article class="product-card" tabindex="0" role="button" aria-haspopup="dialog" data-id="prod-10" data-img="images/products/10-pirandai-thokku.webp" data-name="Perandai Thokku">
-                        <div class="product-img-wrap"><img alt="Forest Cafe Perandai Thokku" loading="lazy" src="images/products/10-pirandai-thokku.webp" /></div>
+                        <div class="product-img-wrap"><img alt="Forest Cafe Perandai Thokku" loading="lazy" decoding="async" src="images/products/10-pirandai-thokku.webp" /></div>
                         <h3 class="product-title">Perandai Thokku</h3>
                         <p class="product-weight">Bold and aromatic</p>
                         <p class="product-price" data-price-for="prod-10" hidden></p>
                         <p class="product-desc">A bold homemade-style thokku combining pepper, garlic and traditional spices for a rich, spicy and aromatic flavour.</p>
-                        <button class="cta-pill-btn" type="button" aria-label="Select and order item">
+                        <button class="cta-pill-btn" type="button" aria-label="Select &amp; order Perandai Thokku">
                             <span class="cta-shine" aria-hidden="true"></span>
                             <span class="cta-label">Select &amp; order</span>
                             <span class="cta-icon-wrap" aria-hidden="true">
@@ -790,12 +798,12 @@
                         </button>
                     </article>
                     <article class="product-card" tabindex="0" role="button" aria-haspopup="dialog" data-id="prod-11" data-img="images/products/11-turmeric-powder.webp" data-name="Turmeric Powder">
-                        <div class="product-img-wrap"><img alt="Forest Cafe Turmeric Powder" loading="lazy" src="images/products/11-turmeric-powder.webp" /></div>
+                        <div class="product-img-wrap"><img alt="Forest Cafe Turmeric Powder" loading="lazy" decoding="async" src="images/products/11-turmeric-powder.webp" /></div>
                         <h3 class="product-title">Turmeric Powder</h3>
                         <p class="product-weight">Earthy and vibrant</p>
                         <p class="product-price" data-price-for="prod-11" hidden></p>
                         <p class="product-desc">Finely ground turmeric powder with a vibrant natural colour and earthy aroma, ideal for everyday cooking.</p>
-                        <button class="cta-pill-btn" type="button" aria-label="Select and order item">
+                        <button class="cta-pill-btn" type="button" aria-label="Select &amp; order Turmeric Powder">
                             <span class="cta-shine" aria-hidden="true"></span>
                             <span class="cta-label">Select &amp; order</span>
                             <span class="cta-icon-wrap" aria-hidden="true">
@@ -809,12 +817,12 @@
                         </button>
                     </article>
                     <article class="product-card" tabindex="0" role="button" aria-haspopup="dialog" data-id="prod-12" data-img="images/products/12-avacado.webp" data-name="Farm Fresh Avocado">
-                        <div class="product-img-wrap"><img alt="Forest Cafe Farm Fresh Avocado" loading="lazy" src="images/products/12-avacado.webp" /></div>
+                        <div class="product-img-wrap"><img alt="Forest Cafe Farm Fresh Avocado" loading="lazy" decoding="async" src="images/products/12-avacado.webp" /></div>
                         <h3 class="product-title">Farm Fresh Avocado</h3>
                         <p class="product-weight">Fresh from the hill farm</p>
                         <p class="product-price" data-price-for="prod-12" hidden></p>
                         <p class="product-desc">Fresh avocado sourced from the farm, offering a creamy texture and naturally rich flavour straight from the hills.</p>
-                        <button class="cta-pill-btn" type="button" aria-label="Select and order item">
+                        <button class="cta-pill-btn" type="button" aria-label="Select &amp; order Farm Fresh Avocado">
                             <span class="cta-shine" aria-hidden="true"></span>
                             <span class="cta-label">Select &amp; order</span>
                             <span class="cta-icon-wrap" aria-hidden="true">
@@ -843,7 +851,7 @@
         </section>
         <!-- Hill Retreat Ribbon Transition -->
         <div class="hill-retreat-divider" aria-hidden="true">
-            <img src="images/rooms/Hill Retreat Ribbon.webp" alt="" class="hill-retreat-ribbon-img" loading="lazy">
+            <img src="images/rooms/Hill Retreat Ribbon.webp" alt="" class="hill-retreat-ribbon-img" loading="lazy" decoding="async">
         </div>
 
         <!-- ============ STAY ============ -->
@@ -935,7 +943,7 @@
                     <div class="cot-media-wrap">
                         <div class="cot-media">
                             <div class="item-wrap has-ground-shadow">
-                                <img alt="Illustration of the Tiny Cot rooms at Forest Cafe" loading="lazy"
+                                <img alt="Illustration of the Tiny Cot rooms at Forest Cafe" loading="lazy" decoding="async"
                                     src="images/rooms/item15.webp" />
                             </div>
                         </div>
@@ -990,7 +998,7 @@
                         <!-- The Secret Attic Room Card -->
                         <div class="room-card">
                             <div class="room-img-wrap">
-                                <img src="images/rooms/attic.webp" alt="Cozy Hill Attic - Forest Cafe" class="room-img" loading="lazy" />
+                                <img src="images/rooms/attic.webp" alt="Cozy Hill Attic - Forest Cafe" class="room-img" width="462" height="260" loading="lazy" decoding="async" />
                             </div>
                             <div class="room-info" style="margin-top: 10px;">
                                 <h4 style="font-size: 1rem; color: #2e4d25; margin: 0 0 4px 0;">The Secret Attic</h4>
@@ -1039,7 +1047,7 @@
         <section class="section ad-section" id="art-director" aria-labelledby="ad-title">
 
             <!-- Background -->
-            <img class="ad-background" src="Black.webp" alt="" aria-hidden="true">
+            <img class="ad-background" src="Black.webp" alt="" aria-hidden="true" loading="lazy" decoding="async">
 
             <!-- =========================================================
                  HANDCRAFTED HANGING MINION ON BLACKBOARD RIGHT RIM
@@ -1048,7 +1056,7 @@
                 <!-- Right Suspended Rope & Trailing Ivy Minion -->
                 <div class="perched-minion perched-minion--right">
                     <img class="minion-hanging-img" src="images/minion/hanging-minion.webp"
-                        alt="Handcrafted hanging minion planter with trailing vines" loading="lazy"
+                        alt="Handcrafted hanging minion planter with trailing vines" loading="lazy" decoding="async"
                         onerror="this.src='images/minion/hanging-minion.webp';">
                 </div>
             </div>
@@ -1059,7 +1067,7 @@
                  INTRO — MEET OUR ART DIRECTOR
             ====================================================== -->
                 <div class="ad-block ad-intro reveal">
-                    <img src="images/story/board1.webp" alt="Meet Our Art Director" class="ad-board-image">
+                    <img src="images/story/board1.webp" alt="Meet Our Art Director" class="ad-board-image" width="330" height="191" loading="lazy" decoding="async">
                 </div>
 
 
@@ -1090,7 +1098,7 @@
 
                         <div class="ad-story-media">
                             <div class="ad-story-portrait-wrap">
-                                <img src="images/story/art-director.webp" alt="G.C. Anandhan - Art Director" class="ad-story-portrait-img" loading="lazy" />
+                                <img src="images/story/art-director.webp" alt="G.C. Anandhan - Art Director" class="ad-story-portrait-img" loading="lazy" decoding="async" />
                             </div>
 
                             <!-- 3 Compact Horizontal Stat Pills -->
@@ -1216,7 +1224,7 @@
                     ====================================================== -->
                 <div class="ad-block ad-future ad-future-card reveal">
                     <div class="ad-placeholder ad-future-media ad-card-image-wrap">
-                        <img src="images/story/Creative Studio & Workshops.webp" alt="Art classes at Forest Cafe"
+                        <img src="images/story/Creative Studio & Workshops.webp" alt="Art classes at Forest Cafe" loading="lazy" decoding="async"
                             onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                         <span class="ad-placeholder-label" style="display:none;">Creative Studio & Workshops</span>
                     </div>
@@ -1271,7 +1279,7 @@
                         </div>
 
                         <div class="ad-placeholder ad-article-media ad-card-image-wrap">
-                            <img src="images/story/Article Cover Preview.webp" alt="Articles and Reflections"
+                            <img src="images/story/Article Cover Preview.webp" alt="Articles and Reflections" loading="lazy" decoding="async"
                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                             <span class="ad-placeholder-label" style="display:none;">Article Cover Preview</span>
                         </div>
@@ -1287,14 +1295,14 @@
 
         <div class="rv-head">
             <h2 style="position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0">What guests say about Forest Cafe</h2>
-            <img class="rv-board" src="images/reviews/review-board1.webp" alt="Forest Cafe review board" />
+            <img class="rv-board" src="images/reviews/review-board1.webp" alt="Forest Cafe review board" width="371" height="158" loading="lazy" decoding="async" />
         </div>
 
         <!-- Spotlight + bubbles: the chosen review is shown large, all 10 sit around it as bubbles -->
         <div class="rvb" id="rvHang" aria-label="Forest Cafe guest reviews">
             <div class="rvb-stage">
                 <div class="rvb-spot">
-                    <div class="rvb-card"><img id="rvbBig" src="images/reviews/review%20(1).webp" alt="Forest Cafe guest review 1" /></div>
+                    <div class="rvb-card"><img id="rvbBig" src="images/reviews/review%20(1).webp" alt="Forest Cafe guest review 1" loading="lazy" decoding="async" /></div>
                     <div class="rvb-ctrl">
                         <button type="button" class="rvb-btn" id="rvbPrev" aria-label="Previous review">‹</button>
                         <span class="rvb-count" aria-live="polite"><b id="rvbCur">01</b> / 10</span>
@@ -1303,34 +1311,34 @@
                 </div>
                 <ul class="rvb-ring" id="rvbRing">
                     <li style="--i:0;--x:62.98%;--y:11.96%;--rot:-5deg;--fd:4.2s">
-                        <button class="rvb-dot" type="button" aria-label="Show review 1"><img src="images/reviews/review%20(1).webp" alt="Forest Cafe guest review 1" loading="lazy" /></button>
+                        <button class="rvb-dot" type="button" aria-label="Show review 1"><img src="images/reviews/review%20(1).webp" alt="Forest Cafe guest review 1" loading="lazy" decoding="async" /></button>
                     </li>
                     <li style="--i:1;--x:83.98%;--y:26.49%;--rot:4deg;--fd:4.9s">
-                        <button class="rvb-dot" type="button" aria-label="Show review 2"><img src="images/reviews/review%20(2).webp" alt="Forest Cafe guest review 2" loading="lazy" /></button>
+                        <button class="rvb-dot" type="button" aria-label="Show review 2"><img src="images/reviews/review%20(2).webp" alt="Forest Cafe guest review 2" loading="lazy" decoding="async" /></button>
                     </li>
                     <li style="--i:2;--x:92.00%;--y:50.00%;--rot:-3deg;--fd:5.6s">
-                        <button class="rvb-dot" type="button" aria-label="Show review 3"><img src="images/reviews/review%20(3).webp" alt="Forest Cafe guest review 3" loading="lazy" /></button>
+                        <button class="rvb-dot" type="button" aria-label="Show review 3"><img src="images/reviews/review%20(3).webp" alt="Forest Cafe guest review 3" loading="lazy" decoding="async" /></button>
                     </li>
                     <li style="--i:3;--x:83.98%;--y:73.51%;--rot:6deg;--fd:6.3s">
-                        <button class="rvb-dot" type="button" aria-label="Show review 4"><img src="images/reviews/review%20(4).webp" alt="Forest Cafe guest review 4" loading="lazy" /></button>
+                        <button class="rvb-dot" type="button" aria-label="Show review 4"><img src="images/reviews/review%20(4).webp" alt="Forest Cafe guest review 4" loading="lazy" decoding="async" /></button>
                     </li>
                     <li style="--i:4;--x:62.98%;--y:88.04%;--rot:-4deg;--fd:4.2s">
-                        <button class="rvb-dot" type="button" aria-label="Show review 5"><img src="images/reviews/review%20(5).webp" alt="Forest Cafe guest review 5" loading="lazy" /></button>
+                        <button class="rvb-dot" type="button" aria-label="Show review 5"><img src="images/reviews/review%20(5).webp" alt="Forest Cafe guest review 5" loading="lazy" decoding="async" /></button>
                     </li>
                     <li style="--i:5;--x:37.02%;--y:88.04%;--rot:5deg;--fd:4.9s">
-                        <button class="rvb-dot" type="button" aria-label="Show review 6"><img src="images/reviews/review%20(6).webp" alt="Forest Cafe guest review 6" loading="lazy" /></button>
+                        <button class="rvb-dot" type="button" aria-label="Show review 6"><img src="images/reviews/review%20(6).webp" alt="Forest Cafe guest review 6" loading="lazy" decoding="async" /></button>
                     </li>
                     <li style="--i:6;--x:16.02%;--y:73.51%;--rot:-6deg;--fd:5.6s">
-                        <button class="rvb-dot" type="button" aria-label="Show review 7"><img src="images/reviews/review%20(7).webp" alt="Forest Cafe guest review 7" loading="lazy" /></button>
+                        <button class="rvb-dot" type="button" aria-label="Show review 7"><img src="images/reviews/review%20(7).webp" alt="Forest Cafe guest review 7" loading="lazy" decoding="async" /></button>
                     </li>
                     <li style="--i:7;--x:8.00%;--y:50.00%;--rot:3deg;--fd:6.3s">
-                        <button class="rvb-dot" type="button" aria-label="Show review 8"><img src="images/reviews/review%20(8).webp" alt="Forest Cafe guest review 8" loading="lazy" /></button>
+                        <button class="rvb-dot" type="button" aria-label="Show review 8"><img src="images/reviews/review%20(8).webp" alt="Forest Cafe guest review 8" loading="lazy" decoding="async" /></button>
                     </li>
                     <li style="--i:8;--x:16.02%;--y:26.49%;--rot:-5deg;--fd:4.2s">
-                        <button class="rvb-dot" type="button" aria-label="Show review 9"><img src="images/reviews/review%20(9).webp" alt="Forest Cafe guest review 9" loading="lazy" /></button>
+                        <button class="rvb-dot" type="button" aria-label="Show review 9"><img src="images/reviews/review%20(9).webp" alt="Forest Cafe guest review 9" loading="lazy" decoding="async" /></button>
                     </li>
                     <li style="--i:9;--x:37.02%;--y:11.96%;--rot:4deg;--fd:4.9s">
-                        <button class="rvb-dot" type="button" aria-label="Show review 10"><img src="images/reviews/review%20(10).webp" alt="Forest Cafe guest review 10" loading="lazy" /></button>
+                        <button class="rvb-dot" type="button" aria-label="Show review 10"><img src="images/reviews/review%20(10).webp" alt="Forest Cafe guest review 10" loading="lazy" decoding="async" /></button>
                     </li>
                 </ul>
             </div>
@@ -1439,8 +1447,8 @@
         <div class="footer-grid">
             <!-- Brand & Warm Invitation Column -->
             <div class="footer-col footer-col--brand">
-                <a class="footer-brand" href="#top" aria-label="Back to top">
-                    <img alt="Forest Cafe" class="footer-brand-logo" src="logo.webp" width="64" height="64" />
+                <a class="footer-brand" href="#top" aria-label="Forest Cafe - Back to top">
+                    <img alt="Forest Cafe" class="footer-brand-logo" src="logo.webp" width="64" height="64" loading="lazy" decoding="async" />
                     <div class="footer-brand-text">
                         <span class="footer-brand-name">Forest Cafe</span>
                         <span class="footer-brand-sub">Kalvarayan Hills</span>
@@ -1548,13 +1556,13 @@
     <div aria-label="Full menu board" aria-modal="true" class="modal" id="menuModal" role="dialog">
         <div class="modal-panel">
             <button aria-label="Close menu" class="modal-close" id="closeMenuModal" type="button">×</button>
-            <img alt="Forest Cafe full menu board" src="images/farm/menu.webp" />
+            <img alt="Forest Cafe full menu board" src="images/farm/menu.webp" loading="lazy" decoding="async" />
         </div>
     </div>
     <div aria-label="Photo viewer" aria-modal="true" class="lightbox" id="lightbox" role="dialog">
         <button aria-label="Close" class="lightbox-close" id="lbClose" type="button">×</button>
         <button aria-label="Previous photo" class="lightbox-prev" id="lbPrev" type="button">‹</button>
-        <img alt="" id="lbImage" src="" />
+        <img alt="" id="lbImage" src="" decoding="async" />
         <button aria-label="Next photo" class="lightbox-next" id="lbNext" type="button">›</button>
         <span class="lightbox-counter" id="lbCounter">1 / 9</span>
     </div>
@@ -1711,7 +1719,7 @@
     <div class="pm" id="productModal" role="dialog" aria-modal="true" aria-labelledby="pmTitle" aria-hidden="true">
         <div class="pm-panel">
             <button class="pm-close" id="pmClose" type="button" aria-label="Close">×</button>
-            <div class="pm-img"><img id="pmImg" src="" alt="" /></div>
+            <div class="pm-img"><img id="pmImg" src="" alt="" decoding="async" /></div>
             <div class="pm-body">
                 <span class="pm-eyebrow">Farm shop</span>
                 <h3 class="pm-title" id="pmTitle"></h3>
@@ -1753,8 +1761,8 @@
     </nav>
 
     <button aria-label="Back to top" class="to-top" id="toTop" type="button">↑</button>
-    <script src="js/firebase-config.js"></script>
-    <script src="js/cms.js"></script>
-    <script src="js/main.js"></script>
+    <script src="js/firebase-config.js" defer></script>
+    <script src="js/cms.js" defer></script>
+    <script src="js/main.js" defer></script>
 </body>
 </html>
