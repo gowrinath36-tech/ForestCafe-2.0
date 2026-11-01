@@ -93,8 +93,8 @@
     }
 
     // loader finishing time out area comment added by gowri
-    // hard stop: nobody waits longer than 6 seconds for an intro
-    setTimeout(finish, 6000);
+    // hard stop: nobody waits longer than 4 seconds for an intro (the intro clip itself is about 2.5 s)
+    setTimeout(finish, 4000);
     window.addEventListener('load', function () {
       setTimeout(function () { if (!finished && loadVid && !loadVid.duration) finish(); }, 1500);
     });
@@ -644,10 +644,16 @@
         };
         let fbTimer = null;
         const ready = () => {
-            if (!heroSec.classList.contains("is-loading")) return;
             clearTimeout(fbTimer);
             heroSec.classList.remove("is-loading");
             heroSec.classList.add("is-ready");
+        };
+        // Show the hero text over the still photo as soon as the photo is in; the video fades in on top later.
+        const stillUrl = () => (mq.matches ? "images/cafe/hero-mob-poster.webp" : "images/cafe/cafe-01.webp");
+        const showStill = () => {
+            const im = new Image();
+            im.onload = im.onerror = () => heroSec.classList.remove("is-loading");
+            im.src = stillUrl();
         };
         // video could not load at all → show the still photo instead of an endless skeleton
         const fallback = () => {
@@ -662,7 +668,7 @@
         };
         ["loadedmetadata", "loadeddata", "canplay", "playing", "timeupdate"].forEach(ev => hero.addEventListener(ev, check));
         hero.addEventListener("error", fallback, true);
-        armTimer(); check();
+        armTimer(); check(); showStill();
 
         const pre = document.getElementById("preloader");
         if (!pre || pre.classList.contains("is-done")) {
@@ -684,6 +690,7 @@
             hero.setAttribute("poster", nextPoster);
             hero.load();
             armTimer();
+            showStill();
             const p = (wasPlaying || !document.getElementById("preloader")) ? hero.play() : null;
             if (p && p.catch) p.catch(() => { ready(); });
         };
@@ -1667,4 +1674,18 @@
         }, { threshold: 0.2, rootMargin: "0px 0px -8% 0px" });
         stages.forEach(s => io.observe(s));
     }());
+})();
+
+
+/* --- Maps: ONE place to set the exact Forest Cafe pin ---------------------
+   Google Maps -> search your cafe -> Share -> "Copy link" -> paste below.
+   Every Directions button (mobile bar + Visit section) will use it.        */
+(() => {
+    const FOREST_CAFE_MAPS_URL = ""; // e.g. "https://maps.app.goo.gl/xxxxxxxx"
+    if (!FOREST_CAFE_MAPS_URL) return;
+    document.querySelectorAll("a[data-map-link]").forEach(a => {
+        a.href = FOREST_CAFE_MAPS_URL;
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+    });
 })();

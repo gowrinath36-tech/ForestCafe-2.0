@@ -447,7 +447,18 @@
     return fetchT(docUrl() + '?' + KEY_QS, { cache: 'no-store' })
       .then(function (res) {
         if (res.status === 404) return null;          // nothing published yet
-        if (!res.ok) throw new Error('db ' + res.status);
+        if (!res.ok) {
+          // Say WHY in the console (e.g. API key restriction / rules), then fall back to the built-in content
+          return res.json().catch(function () { return {}; }).then(function (j) {
+            var e = (j && j.error) || {};
+            var why = (e.details && e.details[0] && e.details[0].reason) || e.status || '';
+            if (window.console && console.warn) {
+              console.warn('[Forest Cafe] Could not read the database (HTTP ' + res.status + (why ? ', ' + why : '') + '): ' +
+                (e.message || '') + ' \u2014 showing the built-in content. See README-SETUP.md > "403 error".');
+            }
+            throw new Error('db ' + res.status);
+          });
+        }
         return res.json();
       })
       .then(function (doc) {
