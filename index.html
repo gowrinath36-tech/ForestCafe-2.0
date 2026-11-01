@@ -97,7 +97,7 @@
     <!-- ============ NAVBAR ============ -->
     <header class="nav" id="nav">
         <div class="nav-inner">
-            <a aria-label="Forest Cafe home" class="brand" href="#top">
+            <a aria-label="Forest Cafe - Home" class="brand" href="#top">
                 <img alt="Forest Cafe" class="brand-logo" src="logo.webp" width="48" height="48" decoding="async" />
                 <span class="brand-text">
                     <span class="brand-name">Forest Cafe</span>
@@ -128,7 +128,7 @@
         <span id="top"></span>
         <!-- ============ HERO ============ -->
         <section aria-label="Forest Cafe introduction" class="hero is-loading">
-            <video aria-hidden="true" id="heroVideo" loop="" muted="" playsinline="" preload="metadata" poster="images/hero-poster.webp" data-poster-desktop="images/cafe/cafe-01.webp" data-poster-mobile="images/cafe/hero-mob-poster.webp"></video>
+            <video aria-hidden="true" id="heroVideo" loop="" muted="" playsinline="" preload="metadata" data-poster-desktop="images/cafe/cafe-01.webp" data-poster-mobile="images/cafe/hero-mob-poster.webp"></video>
             <script>
                 /* The video has NO <source> in the markup on purpose: this script picks the file
                    (9:16 Hero-Mob.webm on phones, 16:9 Hero.webm elsewhere) before the browser
@@ -138,11 +138,12 @@
                     if (!v) return;
                     var phone = window.matchMedia('(max-width: 767px)').matches;
                     v.setAttribute('data-active', phone ? 'mobile' : 'desktop');
+                    var posterUrl = phone
+                        ? (v.getAttribute('data-poster-mobile') || 'images/cafe/hero-mob-poster.webp')
+                        : (v.getAttribute('data-poster-desktop') || 'images/cafe/cafe-01.webp');
+                    v.setAttribute('poster', posterUrl);
                     if (phone) {
                         v.setAttribute('preload', 'metadata');
-                        v.setAttribute('poster', v.getAttribute('data-poster-mobile') || 'images/cafe/hero-mob-poster.webp');
-                    } else {
-                        v.setAttribute('poster', v.getAttribute('data-poster-desktop') || 'images/hero-poster.webp');
                     }
                     var s = document.createElement('source');
                     s.src = phone ? 'Hero-Mob.webm' : 'Hero.webm';
@@ -601,7 +602,7 @@
                     </div>
 
                     <!-- Seasonal harvest note placed right above the button -->
-                    <p class="farm-seasonal-note" style="font-size: 0.82rem; color: #8c6d58; font-style: italic; margin: 16px 0 14px 0;">
+                    <p class="farm-seasonal-note" style="font-size: 0.82rem; color: #7a5d49; font-style: italic; margin: 16px 0 14px 0;">
                         * Note: Our farm harvests follow natural hill seasons. Explore our current product list below for live availability.
                     </p>
 
@@ -631,7 +632,7 @@
                         <p class="product-weight">Freshly roasted</p>
                         <p class="product-price" data-price-for="prod-1" hidden></p>
                         <p class="product-desc">Freshly roasted coffee made from carefully selected beans grown with the rich character of the Kalvarayan Hills.</p>
-                        <button class="cta-pill-btn" type="button" aria-label="Select and order item">
+                        <button class="cta-pill-btn" type="button" aria-label="Select &amp; order Pure Coffee">
                             <span class="cta-shine" aria-hidden="true"></span>
                             <span class="cta-label">Select &amp; order</span>
                             <span class="cta-icon-wrap" aria-hidden="true">
@@ -650,7 +651,7 @@
                         <p class="product-weight">Balanced and aromatic</p>
                         <p class="product-price" data-price-for="prod-2" hidden></p>
                         <p class="product-desc">A balanced blend crafted for a smooth, aromatic cup with the rich body and character of freshly roasted coffee.</p>
-                        <button class="cta-pill-btn" type="button" aria-label="Select and order item">
+                        <button class="cta-pill-btn" type="button" aria-label="Select &amp; order 70/30 Coffee Blend">
                             <span class="cta-shine" aria-hidden="true"></span>
                             <span class="cta-label">Select &amp; order</span>
                             <span class="cta-icon-wrap" aria-hidden="true">
@@ -669,7 +670,7 @@
                         <p class="product-weight">Refreshing everyday tea</p>
                         <p class="product-price" data-price-for="prod-4" hidden></p>
                         <p class="product-desc">Fine tea dust selected for a rich colour, refreshing aroma and a comforting cup of everyday tea.</p>
-                        <button class="cta-pill-btn" type="button" aria-label="Select and order item">
+                        <button class="cta-pill-btn" type="button" aria-label="Select &amp; order Tea Dust">
                             <span class="cta-shine" aria-hidden="true"></span>
                             <span class="cta-label">Select &amp; order</span>
                             <span class="cta-icon-wrap" aria-hidden="true">
@@ -688,7 +689,7 @@
                         <p class="product-weight">400 g &amp; 700 g</p>
                         <p class="product-price" data-price-for="prod-5" hidden></p>
                         <p class="product-desc">Pure natural honey with a rich golden sweetness, sourced with care and bottled to preserve its natural character.</p>
-                        <button class="cta-pill-btn" type="button" aria-label="Select and order item">
+                        <button class="cta-pill-btn" type="button" aria-label="Select &amp; order Honey">
                             <span class="cta-shine" aria-hidden="true"></span>
                             <span class="cta-label">Select &amp; order</span>
                             <span class="cta-icon-wrap" aria-hidden="true">
@@ -707,7 +708,7 @@
                         <p class="product-weight">Aromatic and earthy</p>
                         <p class="product-price" data-price-for="prod-6" hidden></p>
                         <p class="product-desc">Aromatic curry leaf powder made from carefully dried curry leaves, adding a distinctive earthy flavour to everyday dishes.</p>
-                        <button class="cta-pill-btn" type="button" aria-label="Select and order item">
+                        <button class="cta-pill-btn" type="button" aria-label="Select &amp; order Curry Leaf Powder">
                             <span class="cta-shine" aria-hidden="true"></span>
                             <span class="cta-label">Select &amp; order</span>
                             <span class="cta-icon-wrap" aria-hidden="true">
@@ -726,7 +727,7 @@
                         <p class="product-weight">Traditional breakfast spice</p>
                         <p class="product-price" data-price-for="prod-7" hidden></p>
                         <p class="product-desc">A traditional South Indian spice blend made to pair beautifully with idli, dosa and other favourite breakfast dishes.</p>
-                        <button class="cta-pill-btn" type="button" aria-label="Select and order item">
+                        <button class="cta-pill-btn" type="button" aria-label="Select &amp; order Idli Podi">
                             <span class="cta-shine" aria-hidden="true"></span>
                             <span class="cta-label">Select &amp; order</span>
                             <span class="cta-icon-wrap" aria-hidden="true">
@@ -745,7 +746,7 @@
                         <p class="product-weight">Traditional and tangy</p>
                         <p class="product-price" data-price-for="prod-8" hidden></p>
                         <p class="product-desc">A traditional ginger-based thokku made with carefully selected ingredients, bringing together warmth, spice and a tangy homemade flavour.</p>
-                        <button class="cta-pill-btn" type="button" aria-label="Select and order item">
+                        <button class="cta-pill-btn" type="button" aria-label="Select &amp; order Maa Inji Thokku">
                             <span class="cta-shine" aria-hidden="true"></span>
                             <span class="cta-label">Select &amp; order</span>
                             <span class="cta-icon-wrap" aria-hidden="true">
@@ -764,7 +765,7 @@
                         <p class="product-weight">Comforting and wholesome</p>
                         <p class="product-price" data-price-for="prod-9" hidden></p>
                         <p class="product-desc">A wholesome lentil-based powder prepared for easy everyday cooking, bringing a comforting roasted flavour to traditional meals.</p>
-                        <button class="cta-pill-btn" type="button" aria-label="Select and order item">
+                        <button class="cta-pill-btn" type="button" aria-label="Select &amp; order Dal Powder">
                             <span class="cta-shine" aria-hidden="true"></span>
                             <span class="cta-label">Select &amp; order</span>
                             <span class="cta-icon-wrap" aria-hidden="true">
@@ -783,7 +784,7 @@
                         <p class="product-weight">Bold and aromatic</p>
                         <p class="product-price" data-price-for="prod-10" hidden></p>
                         <p class="product-desc">A bold homemade-style thokku combining pepper, garlic and traditional spices for a rich, spicy and aromatic flavour.</p>
-                        <button class="cta-pill-btn" type="button" aria-label="Select and order item">
+                        <button class="cta-pill-btn" type="button" aria-label="Select &amp; order Perandai Thokku">
                             <span class="cta-shine" aria-hidden="true"></span>
                             <span class="cta-label">Select &amp; order</span>
                             <span class="cta-icon-wrap" aria-hidden="true">
@@ -802,7 +803,7 @@
                         <p class="product-weight">Earthy and vibrant</p>
                         <p class="product-price" data-price-for="prod-11" hidden></p>
                         <p class="product-desc">Finely ground turmeric powder with a vibrant natural colour and earthy aroma, ideal for everyday cooking.</p>
-                        <button class="cta-pill-btn" type="button" aria-label="Select and order item">
+                        <button class="cta-pill-btn" type="button" aria-label="Select &amp; order Turmeric Powder">
                             <span class="cta-shine" aria-hidden="true"></span>
                             <span class="cta-label">Select &amp; order</span>
                             <span class="cta-icon-wrap" aria-hidden="true">
@@ -821,7 +822,7 @@
                         <p class="product-weight">Fresh from the hill farm</p>
                         <p class="product-price" data-price-for="prod-12" hidden></p>
                         <p class="product-desc">Fresh avocado sourced from the farm, offering a creamy texture and naturally rich flavour straight from the hills.</p>
-                        <button class="cta-pill-btn" type="button" aria-label="Select and order item">
+                        <button class="cta-pill-btn" type="button" aria-label="Select &amp; order Farm Fresh Avocado">
                             <span class="cta-shine" aria-hidden="true"></span>
                             <span class="cta-label">Select &amp; order</span>
                             <span class="cta-icon-wrap" aria-hidden="true">
@@ -1446,7 +1447,7 @@
         <div class="footer-grid">
             <!-- Brand & Warm Invitation Column -->
             <div class="footer-col footer-col--brand">
-                <a class="footer-brand" href="#top" aria-label="Back to top">
+                <a class="footer-brand" href="#top" aria-label="Forest Cafe - Back to top">
                     <img alt="Forest Cafe" class="footer-brand-logo" src="logo.webp" width="64" height="64" loading="lazy" decoding="async" />
                     <div class="footer-brand-text">
                         <span class="footer-brand-name">Forest Cafe</span>

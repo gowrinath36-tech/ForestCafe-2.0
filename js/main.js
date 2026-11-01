@@ -56,9 +56,25 @@
       finished = true;
       pre.classList.add('is-done');
       unlockScroll();
+      if (typeof window.fcHeroReady === 'function') {
+        window.fcHeroReady();
+      } else {
+        var hs = $('.hero');
+        if (hs) { hs.classList.remove('is-loading'); hs.classList.add('is-ready'); }
+      }
       if (heroVid) {
         var p = heroVid.play();
-        if (p && p.catch) p.catch(function () { /* autoplay blocked — poster frame stays */ });
+        if (p && p.catch) {
+          p.catch(function () {
+            /* autoplay blocked — poster frame stays and hero is revealed */
+            if (typeof window.fcHeroReady === 'function') {
+              window.fcHeroReady();
+            } else {
+              var hs = $('.hero');
+              if (hs) { hs.classList.remove('is-loading'); hs.classList.add('is-ready'); }
+            }
+          });
+        }
       }
       setTimeout(function () { if (pre.parentNode) pre.parentNode.removeChild(pre); }, 900);
     }
@@ -392,7 +408,7 @@
         stage.innerHTML = slides.map((s, i) => {
             if (s.isPlaceholder) {
                 return `
-            <button type="button" class="rooms-panel rooms-panel--placeholder" data-index="${i}" aria-label="Show ${s.label}" aria-pressed="false" style="background: #e8e2d8;">
+            <button type="button" class="rooms-panel rooms-panel--placeholder" data-index="${i}" aria-label="${s.label} – Attic Photo Coming Soon" aria-pressed="false" style="background: #e8e2d8;">
                 <div class="rooms-panel__placeholder-wrap" style="position: absolute; inset: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px dashed #b8ab99; border-radius: 14px; color: #6d432b; text-align: center; padding: 16px; z-index: 1;">
                     <span style="font-size: 2rem; margin-bottom: 6px;">✨🪟</span>
                     <strong style="font-size: 0.95rem; letter-spacing: 0.02em;">Attic Photo Coming Soon</strong>
@@ -406,7 +422,7 @@
             </button>`;
             }
             return `
-            <button type="button" class="rooms-panel" data-index="${i}" aria-label="View ${s.label} photo" aria-pressed="false">
+            <button type="button" class="rooms-panel" data-index="${i}" aria-label="${s.label} – ${s.title.replace(/\n/g, ' ')}" aria-pressed="false">
                 <img class="rooms-panel__img" src="${window.fcImg ? window.fcImg(s.image) : s.image}" data-fc-src="${s.image}" alt="${s.label}" draggable="false" width="462" height="260" loading="lazy" decoding="async">
                 <span class="rooms-panel__shade"></span>
                 <span class="rooms-panel__side">${s.label}</span>
@@ -639,11 +655,19 @@
             heroSec.classList.remove("is-loading", "is-ready");
             heroSec.classList.add("is-fallback");
         };
-        const armTimer = () => { clearTimeout(fbTimer); fbTimer = setTimeout(fallback, 12000); };
-        const check = () => { if (hero.readyState >= 2) ready(); };
-        ["loadeddata", "canplay", "playing"].forEach(ev => hero.addEventListener(ev, check));
+        window.fcHeroReady = ready;
+        const armTimer = () => { clearTimeout(fbTimer); fbTimer = setTimeout(ready, 3000); };
+        const check = () => {
+            if (hero.readyState >= 1 || hero.currentTime > 0 || !hero.paused) ready();
+        };
+        ["loadedmetadata", "loadeddata", "canplay", "playing", "timeupdate"].forEach(ev => hero.addEventListener(ev, check));
         hero.addEventListener("error", fallback, true);
         armTimer(); check();
+
+        const pre = document.getElementById("preloader");
+        if (!pre || pre.classList.contains("is-done")) {
+            ready();
+        }
 
         const apply = () => {
             const want = mq.matches ? "mobile" : "desktop";
@@ -654,10 +678,14 @@
             heroSec.classList.add("is-loading");
             hero.innerHTML = SRC[want];
             hero.setAttribute("data-active", want);
+            const nextPoster = want === "mobile"
+                ? (hero.getAttribute("data-poster-mobile") || "images/cafe/hero-mob-poster.webp")
+                : (hero.getAttribute("data-poster-desktop") || "images/cafe/cafe-01.webp");
+            hero.setAttribute("poster", nextPoster);
             hero.load();
             armTimer();
             const p = (wasPlaying || !document.getElementById("preloader")) ? hero.play() : null;
-            if (p && p.catch) p.catch(() => {});
+            if (p && p.catch) p.catch(() => { ready(); });
         };
         if (mq.addEventListener) mq.addEventListener("change", apply); else mq.addListener(apply);
 

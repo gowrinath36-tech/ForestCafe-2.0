@@ -885,7 +885,7 @@ img[src*="item-15.webp"],
 .about-stats .stat-item span {
     display: block;
     font-size: 0.8rem;
-    color: #8c6d58 !important; /* soft coffee brown subtitle */
+    color: #7a5d49 !important; /* soft coffee brown subtitle - WCAG AA compliant */
     font-weight: 600;
     margin-top: 4px;
     line-height: 1.2;
@@ -2140,9 +2140,9 @@ body .cards-wrapper { flex: 1 1 0; }
 
 .theme-cafe a { color: var(--brn-700); }
 
-.theme-cafe .pill { color: var(--brn-700); background: var(--brn-100); border-color: var(--brn-200); }
+.theme-cafe .pill { color: var(--brn-800, #4E3020); background: var(--brn-100, #F1E4D5); border-color: var(--brn-200, #E2CBB0); }
 
-.theme-cafe .pill svg { fill: var(--brn-500); }
+.theme-cafe .pill svg { fill: var(--brn-700, #6B4630); }
 
 .theme-cafe .contact-icon { background: var(--brn-100); }
 
@@ -6660,7 +6660,7 @@ img { max-width: 100%; }
         background: rgba(37, 60, 32, .07);
     }
     .m-bar-btn svg { width: 18px; height: 18px; fill: currentColor; flex: none; }
-    .m-bar-btn--wa { background: #1f8f4e; color: #fff; }
+    .m-bar-btn--wa { background: #1a7a42; color: #fff; }
     .m-bar-btn:active { transform: scale(.97); }
     body.has-mbar { padding-bottom: calc(76px + env(safe-area-inset-bottom)); }
     .to-top { bottom: calc(84px + env(safe-area-inset-bottom)); }
