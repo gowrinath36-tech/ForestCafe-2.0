@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin/
 Disallow: /admin.html
 
-Sitemap: https://forestcafe.in/sitemap.xml
+Sitemap: https://forestcafekhills.in/sitemap.xml

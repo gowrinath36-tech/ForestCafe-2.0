@@ -828,7 +828,7 @@
         if (/^https?:$/.test(location.protocol)) base = location.href;
         else {
             const c = document.querySelector('link[rel="canonical"]');
-            base = c ? c.href : "https://forestcafe.in/";
+            base = c ? c.href : "https://forestcafekhills.in/";
         }
         try { return new URL(src, base).href; } catch (_) { return src; }
     }
@@ -1408,7 +1408,7 @@
         'Brownie',
         'Bread Omelette',
         'Cappuccino',
-        'Paneer Roll',
+        'Panner Roll',
         'Chocolate Cake'
     ];
 

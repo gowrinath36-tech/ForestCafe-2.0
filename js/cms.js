@@ -8,6 +8,7 @@
  *  - Dashboard   : owner signs in (Firebase Auth, email + password), edits, saves a DRAFT in this browser,
  *                  previews it on the real site (index.html?preview=1) and clicks "Publish live".
  *  - Config      : all Firebase keys live in js/firebase-config.js (dummy values until you paste your own).
+ *  - Menu        : owner can rename, add, remove menu items and change their prices (saved as content.menu).
  *  - Photos      : owner uploads a photo in the dashboard, the browser resizes it and converts it to WebP,
  *                  and it is stored in Firestore (collection site_images, no paid plan / card needed).
  *                  The public site swaps the original picture for the uploaded one.
@@ -86,7 +87,9 @@
     { group: 'Tiny Cot photos', path: 'images/rooms/item15.webp', label: 'Tiny Cot main picture' }
   ];
 
-  // Menu items (ids match data-item on each <li> in index.html)
+  // Menu defaults = exactly what index.html shows today (ids match data-item on each <li>).
+  // The owner can rename / add / remove items and change prices in the dashboard; that is saved as content.menu.
+  // Categories (the tabs) stay fixed.
   var MENU = [
     {
       "id": "hot",
@@ -95,12 +98,12 @@
         {
           "id": "hot-tea",
           "name": "Tea",
-          "price": "₹20"
+          "price": "₹25"
         },
         {
           "id": "hot-filter-coffee",
           "name": "Filter coffee",
-          "price": "₹30"
+          "price": "₹25"
         },
         {
           "id": "hot-cappuccino",
@@ -110,7 +113,7 @@
         {
           "id": "hot-dalgona-coffee",
           "name": "Dalgona coffee",
-          "price": "₹90"
+          "price": "₹80"
         },
         {
           "id": "hot-milk",
@@ -120,17 +123,17 @@
         {
           "id": "hot-sukku-coffee",
           "name": "Sukku coffee",
-          "price": "₹35"
+          "price": "₹25"
         },
         {
           "id": "hot-boost",
           "name": "Boost",
-          "price": "₹35"
+          "price": "₹30"
         },
         {
           "id": "hot-horlicks",
           "name": "Horlicks",
-          "price": "₹35"
+          "price": "₹30"
         },
         {
           "id": "hot-lemon-tea",
@@ -140,7 +143,7 @@
         {
           "id": "hot-green-tea",
           "name": "Green tea",
-          "price": "₹30"
+          "price": "₹25"
         },
         {
           "id": "hot-black-tea",
@@ -156,7 +159,7 @@
         {
           "id": "cool-cold-coffee",
           "name": "Cold coffee",
-          "price": "₹90"
+          "price": "₹70"
         },
         {
           "id": "cool-rose-milk",
@@ -166,12 +169,12 @@
         {
           "id": "cool-badam-milk",
           "name": "Badam milk",
-          "price": "₹70"
+          "price": "₹60"
         },
         {
           "id": "cool-lime-juice",
           "name": "Lime juice",
-          "price": "₹40"
+          "price": "₹45"
         },
         {
           "id": "cool-lime-soda",
@@ -182,6 +185,11 @@
           "id": "cool-fresh-juice",
           "name": "Fresh juice",
           "price": "₹70"
+        },
+        {
+          "id": "cool-mojito",
+          "name": "Mojito",
+          "price": "₹80"
         }
       ]
     },
@@ -196,23 +204,33 @@
         },
         {
           "id": "brunch-paneer-roll",
-          "name": "Paneer roll",
+          "name": "Panner roll",
           "price": "₹110"
         },
         {
           "id": "brunch-bread-omelette",
           "name": "Bread omelette",
-          "price": "₹70"
+          "price": "₹45"
         },
         {
           "id": "brunch-veg-balls",
-          "name": "Veg balls",
-          "price": "₹80"
+          "name": "Pizza",
+          "price": "₹230"
         },
         {
           "id": "brunch-sandwich",
           "name": "Sandwich",
-          "price": "₹90"
+          "price": "₹80"
+        },
+        {
+          "id": "brunch-burger",
+          "name": "Burger",
+          "price": "₹65"
+        },
+        {
+          "id": "brunch-french-fries",
+          "name": "French Fries",
+          "price": "₹60"
         }
       ]
     },
@@ -223,27 +241,27 @@
         {
           "id": "cakes-cup-cake",
           "name": "Cup cake",
-          "price": "₹40"
+          "price": "₹25"
         },
         {
           "id": "cakes-chocolate-cake",
           "name": "Chocolate cake",
-          "price": "₹60"
+          "price": "₹45"
         },
         {
           "id": "cakes-fruit-cake",
           "name": "Fruit cake",
-          "price": "₹55"
+          "price": "₹40"
         },
         {
           "id": "cakes-banana-cake",
           "name": "Banana cake",
-          "price": "₹50"
+          "price": "₹45"
         },
         {
           "id": "cakes-brownie",
           "name": "Brownie",
-          "price": "₹70"
+          "price": "₹80"
         }
       ]
     },
@@ -252,34 +270,14 @@
       "label": "Sweets & snacks",
       "items": [
         {
-          "id": "snacks-rasmalai",
-          "name": "Rasmalai",
-          "price": "₹60"
-        },
-        {
-          "id": "snacks-banana-chips",
-          "name": "Banana chips",
-          "price": "₹40"
-        },
-        {
           "id": "snacks-butter-muruku",
-          "name": "Butter muruku",
-          "price": "₹40"
+          "name": "Butter murukku",
+          "price": "₹45"
         },
         {
           "id": "snacks-thattai",
           "name": "Thattai",
-          "price": "₹35"
-        },
-        {
-          "id": "snacks-idli-powder",
-          "name": "Idli powder",
-          "price": "₹120"
-        },
-        {
-          "id": "snacks-dhal-powder",
-          "name": "Dhal powder",
-          "price": "₹120"
+          "price": "₹50"
         }
       ]
     },
@@ -294,7 +292,7 @@
         },
         {
           "id": "fresh-ghee-250-ml",
-          "name": "Ghee (250 ml)",
+          "name": "Pure Coffee",
           "price": "₹380"
         },
         {
@@ -331,10 +329,51 @@
   window.fcMoney = money;
 
   var DEFAULT_PRICE = {};
+  var DEFAULT_ITEM = {};
   var MENU_IDS = {};
   MENU.forEach(function (cat) {
-    cat.items.forEach(function (it) { DEFAULT_PRICE[it.id] = it.price; MENU_IDS[it.id] = true; });
+    cat.items.forEach(function (it) {
+      DEFAULT_PRICE[it.id] = it.price; MENU_IDS[it.id] = true;
+      DEFAULT_ITEM[it.id] = { name: it.name, price: it.price, cat: cat.id };
+    });
   });
+  function copy(o) { return JSON.parse(JSON.stringify(o)); }
+  function cleanName(v) { return String(v == null ? '' : v).replace(/[\u0000-\u001f]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 60); }
+
+  // Validates a full menu (categories fixed, items free). Returns null when it is not a usable menu.
+  function cleanMenu(raw) {
+    if (!Array.isArray(raw)) return null;
+    var out = [], used = {};
+    MENU.forEach(function (cat) {
+      var src = null;
+      raw.forEach(function (c) { if (c && c.id === cat.id) src = c; });
+      var items = [];
+      if (!src) {
+        cat.items.forEach(function (it) { if (!used[it.id]) { used[it.id] = true; items.push(copy(it)); } });
+      } else if (Array.isArray(src.items)) {
+        src.items.slice(0, 60).forEach(function (it) {
+          if (!it || typeof it !== 'object') return;
+          var id = String(it.id || ''), name = cleanName(it.name);
+          if (!name || !/^[a-z0-9-]{1,60}$/.test(id) || used[id]) return;
+          used[id] = true;
+          items.push({ id: id, name: name, price: formatPrice(it.price) });
+        });
+      }
+      out.push({ id: cat.id, label: cat.label, items: items });
+    });
+    return out;
+  }
+  function sameAsDefaultMenu(m) { return JSON.stringify(m) === JSON.stringify(MENU); }
+
+  // The menu the dashboard edits: saved menu, or the built-in one (with any older price-only changes applied)
+  function menuFromContent(content) {
+    if (content.menu) return copy(content.menu);
+    var m = copy(MENU);
+    m.forEach(function (cat) {
+      cat.items.forEach(function (it) { if (content.prices && content.prices[it.id]) it.price = content.prices[it.id]; });
+    });
+    return m;
+  }
 
   // Farm-shop price keys: "prod-1" for one-size products, "prod-5|400 g" for sized ones
   function priceKey(pid, size) { return size ? pid + '|' + size : pid; }
@@ -376,6 +415,8 @@
       var v = formatPrice(pr[id]);
       if (v) out.prices[id] = v;
     });
+    var mn = cleanMenu(raw.menu);
+    if (mn && !sameAsDefaultMenu(mn)) out.menu = mn;
     var pp = raw.productPrices || {};
     Object.keys(pp).forEach(function (k) {
       if (!PRODUCT_PRICE_KEYS[k]) return;
@@ -828,6 +869,39 @@
     return vals[0];
   }
 
+  // Menu: rebuild each category list from content.menu; without it, put back the original HTML list
+  // (and apply older price-only changes).
+  function applyMenu(content) {
+    MENU.forEach(function (cat) {
+      var panel = document.getElementById('panel-' + cat.id);
+      var ul = panel && panel.querySelector('.menu-list');
+      if (!ul) return;
+      orig(ul);
+      var src = null;
+      if (content.menu) content.menu.forEach(function (c) { if (c.id === cat.id) src = c; });
+      if (src) {
+        ul.textContent = '';
+        src.items.forEach(function (it) {
+          var li = document.createElement('li');
+          li.setAttribute('data-item', it.id);
+          var nm = el('span', 'menu-item-name', it.name);
+          li.appendChild(nm);
+          if (it.price) {
+            li.appendChild(el('span', 'menu-dots'));
+            li.appendChild(el('span', 'menu-price', it.price));
+          }
+          ul.appendChild(li);
+        });
+        return;
+      }
+      if (ORIG) ul.innerHTML = ORIG.get(ul).html;
+      cat.items.forEach(function (it) {
+        var n = ul.querySelector('li[data-item="' + it.id + '"] .menu-price');
+        if (n && content.prices[it.id]) n.textContent = formatPrice(content.prices[it.id]);
+      });
+    });
+  }
+
   function applyToSite(content) {
     ['heroTitle', 'heroText', 'aboutTitle', 'aboutText'].forEach(function (k) {
       var sel = '[data-cms="' + k + '"]';
@@ -871,16 +945,7 @@
       n.setAttribute('href', waNum ? base.replace(/wa\.me\/\d+/, 'wa.me/' + waNum) : base);
     });
 
-    // Menu prices
-    MENU.forEach(function (cat) {
-      cat.items.forEach(function (it) {
-        var n = document.querySelector('#menu li[data-item="' + it.id + '"] .menu-price');
-        if (!n) return;
-        orig(n);
-        if (content.prices[it.id]) n.textContent = formatPrice(content.prices[it.id]);
-        else n.innerHTML = ORIG ? ORIG.get(n).html : n.innerHTML;
-      });
-    });
+    applyMenu(content);
 
     // Product availability
     document.querySelectorAll('.product-card[data-id]').forEach(function (card) {
@@ -946,40 +1011,15 @@
     return n;
   }
 
-  function buildMenuEditor() {
-    var host = $('menuPriceEditor');
-    if (!host) return;
-    host.textContent = '';
-    MENU.forEach(function (cat, idx) {
-      var d = el('details', 'menu-cat');
-      if (idx === 0) d.open = true;
-      d.appendChild(el('summary', null, cat.label + ' (' + cat.items.length + ')'));
-      cat.items.forEach(function (it) {
-        var row = el('div', 'price-row');
-        row.setAttribute('data-row', it.id);
-        var lab = el('label', null, it.name);
-        lab.setAttribute('for', 'price-' + it.id);
-        var cur = el('span', 'price-default', 'now ' + it.price);
-        var inp = document.createElement('input');
-        inp.type = 'text';
-        inp.id = 'price-' + it.id;
-        inp.name = 'price:' + it.id;
-        inp.maxLength = 20;
-        inp.placeholder = it.price;
-        inp.autocomplete = 'off';
-        inp.setAttribute('inputmode', 'decimal');
-        inp.addEventListener('input', function () { row.classList.toggle('is-changed', isPriceChanged(it.id, inp.value)); });
-        row.appendChild(lab); row.appendChild(cur); row.appendChild(inp);
-        d.appendChild(row);
-      });
-      host.appendChild(d);
-    });
-  }
-
   function isPriceChanged(id, value) {
     var v = formatPrice(value);
     return !!v && v !== DEFAULT_PRICE[id];
   }
+  function showPrice(p) {                      // "\u20b925" -> "25" so it is quick to retype
+    var m = /^\u20b9\s*(\d+(?:\.\d{1,2})?)$/.exec(String(p || '').trim());
+    return m ? m[1] : String(p || '');
+  }
+  function newItemId() { return 'n' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
 
   // One card per product: unavailable tick + price box (one per size for sized products)
   function buildProductEditor() {
@@ -1024,15 +1064,6 @@
       var f = form.querySelector('[name="' + k + '"]');
       if (f) f.value = eff(content, k);
     });
-    MENU.forEach(function (cat) {
-      cat.items.forEach(function (it) {
-        var inp = form.querySelector('[name="price:' + it.id + '"]');
-        if (!inp) return;
-        inp.value = content.prices[it.id] || '';
-        var row = inp.closest('.price-row');
-        if (row) row.classList.toggle('is-changed', isPriceChanged(it.id, inp.value));
-      });
-    });
     PRODUCTS.forEach(function (p) {
       var cb = form.querySelector('[name="' + p.id + '"]');
       if (cb) {
@@ -1062,12 +1093,6 @@
         return;
       }
       c.text[k] = v.slice(0, 2000);
-    });
-    MENU.forEach(function (cat) {
-      cat.items.forEach(function (it) {
-        var inp = form.querySelector('[name="price:' + it.id + '"]');
-        if (inp && isPriceChanged(it.id, inp.value)) c.prices[it.id] = formatPrice(inp.value);
-      });
     });
     PRODUCTS.forEach(function (p) {
       var cb = form.querySelector('[name="' + p.id + '"]');
@@ -1195,8 +1220,121 @@
       });
     }
 
+    // ----- menu: rename / add / remove items, change prices -----
+    var menuEdit = menuFromContent(emptyContent());
+    var openCats = { hot: true };
+
+    function rowState(row, it) {
+      var def = DEFAULT_ITEM[it.id];
+      row.classList.toggle('is-new', !def);
+      row.classList.toggle('is-changed', !!def && (cleanName(it.name) !== def.name || formatPrice(it.price) !== def.price));
+    }
+
+    function renderMenuEditor() {
+      var host = $('menuPriceEditor');
+      if (!host) return;
+      host.textContent = '';
+      menuEdit.forEach(function (cat, ci) {
+        var d = el('details', 'menu-cat');
+        d.open = !!openCats[cat.id];
+        d.addEventListener('toggle', function () { openCats[cat.id] = d.open; });
+        d.appendChild(el('summary', null, cat.label + ' (' + cat.items.length + ')'));
+
+        cat.items.forEach(function (it, ii) {
+          var row = el('div', 'mi-row');
+          var nm = document.createElement('input');
+          nm.type = 'text'; nm.maxLength = 60; nm.value = it.name; nm.autocomplete = 'off';
+          nm.setAttribute('aria-label', 'Item name'); nm.placeholder = 'Item name';
+          var pr = document.createElement('input');
+          pr.type = 'text'; pr.maxLength = 20; pr.value = showPrice(it.price); pr.autocomplete = 'off';
+          pr.setAttribute('inputmode', 'decimal'); pr.setAttribute('aria-label', 'Price for ' + it.name); pr.placeholder = 'Price';
+          var del = el('button', 'mi-del', '\u00d7');
+          del.type = 'button'; del.title = 'Remove this item'; del.setAttribute('aria-label', 'Remove ' + it.name);
+          nm.addEventListener('input', function () { it.name = nm.value; rowState(row, it); });
+          pr.addEventListener('input', function () { it.price = pr.value; rowState(row, it); });
+          del.addEventListener('click', function () {
+            if (!window.confirm('Remove "' + (cleanName(it.name) || 'this item') + '" from the menu?')) return;
+            cat.items.splice(ii, 1);
+            openCats[cat.id] = true;
+            renderMenuEditor();
+            say('Item removed. Click "Save draft" to keep this change.');
+          });
+          row.appendChild(nm); row.appendChild(pr); row.appendChild(del);
+          rowState(row, it);
+          d.appendChild(row);
+        });
+
+        // add a new item
+        var add = el('div', 'mi-row mi-add');
+        var an = document.createElement('input');
+        an.type = 'text'; an.maxLength = 60; an.placeholder = 'New item name'; an.autocomplete = 'off';
+        an.setAttribute('aria-label', 'New item name for ' + cat.label);
+        var ap = document.createElement('input');
+        ap.type = 'text'; ap.maxLength = 20; ap.placeholder = 'Price'; ap.autocomplete = 'off';
+        ap.setAttribute('inputmode', 'decimal'); ap.setAttribute('aria-label', 'New item price');
+        var ab = el('button', 'secondary mi-add-btn', '+ Add');
+        ab.type = 'button';
+        function doAdd() {
+          var name = cleanName(an.value);
+          if (!name) { say('Type a name for the new item first.', true); an.focus(); return; }
+          if (cat.items.length >= 60) { say('This category already has 60 items.', true); return; }
+          cat.items.push({ id: newItemId(), name: name, price: formatPrice(ap.value) });
+          openCats[cat.id] = true;
+          renderMenuEditor();
+          say('"' + name + '" added to ' + cat.label + '. Click "Save draft" to keep this change.');
+        }
+        ab.addEventListener('click', doAdd);
+        [an, ap].forEach(function (i) {
+          i.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); doAdd(); } });
+        });
+        add.appendChild(an); add.appendChild(ap); add.appendChild(ab);
+        d.appendChild(add);
+
+        // original items that were removed can be brought back
+        var have = {};
+        menuEdit.forEach(function (c) { c.items.forEach(function (x) { have[x.id] = true; }); });
+        var gone = MENU[ci].items.filter(function (x) { return !have[x.id]; });
+        if (gone.length) {
+          var box = el('div', 'mi-removed');
+          box.appendChild(el('span', null, 'Removed:'));
+          gone.forEach(function (x) {
+            var b = el('button', 'mi-restore', '+ ' + x.name);
+            b.type = 'button'; b.title = 'Put back "' + x.name + '"';
+            b.addEventListener('click', function () {
+              cat.items.push(copy(x));
+              openCats[cat.id] = true;
+              renderMenuEditor();
+              say('"' + x.name + '" restored. Click "Save draft" to keep this change.');
+            });
+            box.appendChild(b);
+          });
+          d.appendChild(box);
+        }
+        host.appendChild(d);
+      });
+    }
+
+    // returns { menu: (null when it equals the built-in menu), errors }
+    function readMenu() {
+      var errors = [], out = [], used = {};
+      menuEdit.forEach(function (cat) {
+        var items = [];
+        cat.items.forEach(function (it) {
+          var name = cleanName(it.name);
+          if (!name) { errors.push('A menu item in "' + cat.label + '" has no name \u2014 type a name or remove it'); return; }
+          if (used[it.id]) return;
+          used[it.id] = true;
+          items.push({ id: it.id, name: name, price: formatPrice(it.price) });
+        });
+        out.push({ id: cat.id, label: cat.label, items: items });
+      });
+      return { menu: sameAsDefaultMenu(out) ? null : out, errors: errors };
+    }
+
     function fillAll(content) {
       fillForm(form, content);
+      menuEdit = menuFromContent(content);
+      renderMenuEditor();
       setPhotos(content.images);
     }
 
@@ -1227,7 +1365,10 @@
     }
     function commit() {
       var r = readForm(form);
-      if (r.errors.length) { say(r.errors.join('. ') + '.', true); return null; }
+      var mr = readMenu();
+      var errs = r.errors.concat(mr.errors);
+      if (errs.length) { say(errs.join('. ') + '.', true); return null; }
+      if (mr.menu) r.content.menu = mr.menu;
       r.content.images = JSON.parse(JSON.stringify(photoMap));
       r.content.updatedAt = new Date().toISOString();
       if (!saveDraft(r.content)) { say('Could not save the draft in this browser (storage blocked).', true); return null; }
@@ -1235,7 +1376,7 @@
       return r.content;
     }
 
-    buildMenuEditor();
+    renderMenuEditor();
     buildProductEditor();
     buildPhotoEditor();
 
