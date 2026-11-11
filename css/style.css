@@ -2078,6 +2078,60 @@ body .btn { font-weight: 600; padding: 13px 28px; }
 
 body .stat-num { font-family: var(--font-display); font-weight: 500; }
 
+/* ==========================================================================
+   SHARED SECTION HEADER RHYTHM
+   ========================================================================== */
+
+/* Consistent eyebrow spacing */
+.eyebrow,
+.section-head .eyebrow,
+.farm-content .eyebrow,
+.cot-copy .eyebrow,
+.menu-copy .eyebrow {
+    margin-bottom: 8px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+}
+
+/* Consistent headline spacing */
+.headline,
+.farm-heading,
+.cot-copy .headline,
+.menu-copy .headline {
+    margin-top: 0 !important;
+    margin-bottom: 14px !important;
+    line-height: 1.15 !important;
+}
+
+/* Consistent body description spacing */
+.about-desc,
+.menu-desc,
+.farm-desc,
+.stay-desc,
+.visit-desc,
+.lede {
+    margin-top: 0 !important;
+    margin-bottom: 20px !important;
+    line-height: 1.65 !important;
+}
+
+/* Consistent spacing above and below pills / chips / quotes */
+.pill-row,
+.menu-pills,
+.farm-features-grid,
+.cot-features-grid,
+.stay-quote {
+    margin-top: 0 !important;
+    margin-bottom: 24px !important;
+}
+
+/* Clean CTA button clearance */
+.about-copy > div[style*="margin-top"],
+.cot-cta-group,
+.hours-actions {
+    margin-top: 0 !important;
+}
+
 /* ---------- Header: logo only, no circle ---------- */
 
 .brand-logo { display: block; height: 50px; width: auto; object-fit: contain; }

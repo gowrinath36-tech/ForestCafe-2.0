@@ -1681,7 +1681,7 @@
    Google Maps -> search your cafe -> Share -> "Copy link" -> paste below.
    Every Directions button (mobile bar + Visit section) will use it.        */
 (() => {
-    const FOREST_CAFE_MAPS_URL = ""; // e.g. "https://maps.app.goo.gl/xxxxxxxx"
+    const FOREST_CAFE_MAPS_URL = "https://www.google.com/maps/search/?api=1&query=Forest+Cafe+Servaipattu+Vellimalai+Road+Kalvarayan+Hills";
     if (!FOREST_CAFE_MAPS_URL) return;
     document.querySelectorAll("a[data-map-link]").forEach(a => {
         a.href = FOREST_CAFE_MAPS_URL;
