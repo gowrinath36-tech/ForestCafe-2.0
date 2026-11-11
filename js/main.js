@@ -588,7 +588,7 @@
     const full = document.getElementById("storyFull");
     const block = document.getElementById("ourStory");
     if (!btn || !full) return;
-    const label = btn.querySelector(".ad-story-toggle-text");
+    const label = btn.querySelector(".director-story-toggle-text");
     const closedText = label ? label.textContent.trim() : "Read full story";
 
     btn.addEventListener("click", () => {
@@ -1078,7 +1078,7 @@
    (instead of an empty hole / sudden pop). Transparent artwork is skipped.
    ========================================================================== */
 (() => {
-    const SKIP = ".rvb, .ad-minion-perch-layer, .brand, .rv-head, .little-farmer-logo, .ad-board-image, .sts-media";
+    const SKIP = ".rvb, .director-minion-perch-layer, .brand, .rv-head, .little-farmer-logo, .director-board-image, .sts-media";
     const imgs = Array.from(document.querySelectorAll("img")).filter(im =>
         !im.complete && im.getAttribute("src") && !im.closest(SKIP));
     imgs.forEach(im => {
@@ -1101,7 +1101,7 @@
    (from the friend's files)
    ========================================================================== */
 (function storyScrollReveals() {
-    var revealElements = document.querySelectorAll('.ad-block.reveal, .stay-hero-split.reveal');
+    var revealElements = document.querySelectorAll('.director-block.reveal, .stay-hero-split.reveal');
     if (!revealElements.length || !('IntersectionObserver' in window)) return;
 
     var observer = new IntersectionObserver(function (entries, obs) {
@@ -1652,7 +1652,7 @@
     /* ---------- 3. Staggered entrance for grids & lists ---------- */
     (function stagger() {
         const sel = [".products-grid", ".menu-list", ".pill-row", ".gallery-grid", ".about-stats",
-            ".cot-features-grid", ".farm-features-grid", ".ad-journey-list", ".ad-story-stats", ".contact-list"];
+            ".cot-features-grid", ".farm-features-grid", ".director-journey-list", ".director-story-stats", ".contact-list"];
         $$(sel.join(",")).forEach(box => {
             box.classList.add("stg");
             Array.from(box.children).forEach((c, i) => c.style.setProperty("--k", String(Math.min(i, 8))));

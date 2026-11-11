@@ -3815,7 +3815,7 @@ body .products-grid.is-expanded .product-card:last-child:nth-child(odd) { width:
 
 h1, h2, h3, h4,
 body .headline, body .hero-title, body .stat-num,
-.product-title, .pm-title, .ad-subtitle, .rooms-panel__title, .footer h4 {
+.product-title, .pm-title, .director-subtitle, .rooms-panel__title, .footer h4 {
     font-family: var(--font-display);
     font-weight: 400;
     letter-spacing: .01em;
@@ -4567,19 +4567,19 @@ img.img-in { animation: fcImgIn .6s ease both; }
 }
 
 #art-director,
-.ad-section {
-    --ad-curve-h: clamp(42px, 6vw, 90px);
+.director-section {
+    --director-curve-h: clamp(42px, 6vw, 90px);
     position: relative;
     /* Lock only horizontal spillage; NEVER clip vertically so heads poke over freely */
     overflow-x: clip !important;
     overflow-y: visible !important;
-    padding-top: calc(var(--ad-curve-h) + 24px) !important;
+    padding-top: calc(var(--director-curve-h) + 24px) !important;
     padding-bottom: 140px !important;
     background: #0d130b;
     max-width: 100vw;
 }
 
-.ad-background {
+.director-background {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -4591,21 +4591,21 @@ img.img-in { animation: fcImgIn .6s ease both; }
     pointer-events: none;
 }
 
-.ad-section::before {
+.director-section::before {
     content: "" !important;
     display: block !important;
     position: absolute !important;
     top: -2px !important;
     left: -2% !important;
     width: 104% !important;
-    height: var(--ad-curve-h) !important;
+    height: var(--director-curve-h) !important;
     background: var(--cream) !important;
     border-radius: 0 0 50% 50% / 0 0 100% 100% !important;
     z-index: 6 !important; /* Above bg (1) and content (2-5), below minion perch (30) */
     pointer-events: none !important;
 }
 
-.ad-section::after {
+.director-section::after {
     content: "" !important;
     display: block !important;
     position: absolute;
@@ -4620,13 +4620,13 @@ img.img-in { animation: fcImgIn .6s ease both; }
 }
 
 #art-director,
-.ad-section {
+.director-section {
     position: relative;
     overflow-x: clip !important;
     overflow-y: visible !important;
 }
 
-.ad-minion-perch-layer {
+.director-minion-perch-layer {
     position: absolute !important;
     top: 0 !important;
     left: 0 !important;
@@ -4654,8 +4654,8 @@ img.img-in { animation: fcImgIn .6s ease both; }
     position: relative !important;
     display: flex !important;
     justify-content: center !important;
-    /* Dynamically anchored to the chalkboard curve rim via --ad-curve-h */
-    margin-top: calc(var(--ad-curve-h) * 0.42 + 14px) !important;
+    /* Dynamically anchored to the chalkboard curve rim via --director-curve-h */
+    margin-top: calc(var(--director-curve-h) * 0.42 + 14px) !important;
     margin-right: clamp(14px, 4vw, 42px) !important;
     transform: none !important;
 }
@@ -4675,21 +4675,21 @@ img.img-in { animation: fcImgIn .6s ease both; }
     100% { transform: rotate(3.2deg); }
 }
 
-.ad-shell {
+.director-shell {
     position: relative;
     z-index: 2;
 }
 
-.ad-block {
+.director-block {
     max-width: 980px;
     margin: 10px auto 80px;
 }
 
-.ad-block:last-child {
+.director-block:last-child {
     margin-bottom: 0;
 }
 
-.ad-eyebrow {
+.director-eyebrow {
     display: inline-block;
     color: #E2CBB0 !important;
     font-size: 0.82rem;
@@ -4699,9 +4699,9 @@ img.img-in { animation: fcImgIn .6s ease both; }
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85);
 }
 
-.ad-eyebrow svg { fill: var(--honey-soft); }
+.director-eyebrow svg { fill: var(--honey-soft); }
 
-.ad-intro {
+.director-intro {
     max-width: 1040px;
     margin: 0 auto 36px;
     display: flex;
@@ -4709,7 +4709,7 @@ img.img-in { animation: fcImgIn .6s ease both; }
     align-items: center;
 }
 
-.ad-board-image {
+.director-board-image {
     display: block;
     width: min(340px, 80vw);
     height: auto;
@@ -4718,7 +4718,7 @@ img.img-in { animation: fcImgIn .6s ease both; }
     filter: drop-shadow(0 16px 24px rgba(0, 0, 0, 0.45));
 }
 
-.ad-title {
+.director-title {
     color: #F7F4EB;
     margin-top: 28px;
     margin-bottom: 22px;
@@ -4729,7 +4729,7 @@ img.img-in { animation: fcImgIn .6s ease both; }
     text-shadow: 0 3px 10px rgba(0, 0, 0, 0.9), 0 1px 3px rgba(0, 0, 0, 1);
 }
 
-.ad-placeholder {
+.director-placeholder {
     position: relative;
     display: flex;
     align-items: center;
@@ -4747,13 +4747,13 @@ img.img-in { animation: fcImgIn .6s ease both; }
     overflow: hidden;
 }
 
-.ad-placeholder > img {
+.director-placeholder > img {
     width: 100%;
     height: 100%;
     object-fit: contain;
 }
 
-.ad-placeholder-label {
+.director-placeholder-label {
     padding: 10px 14px;
     font-size: 0.78rem;
     font-weight: 600;
@@ -4801,10 +4801,10 @@ img.img-in { animation: fcImgIn .6s ease both; }
   }
 }
 
-.ad-subtitle,
-.ad-story .ad-subtitle,
-.ad-future .ad-subtitle,
-.ad-articles .ad-subtitle {
+.director-subtitle,
+.director-story .director-subtitle,
+.director-future .director-subtitle,
+.director-articles .director-subtitle {
     font-family: 'CoffeeTown', cursive, sans-serif !important;
     font-weight: 600;
     line-height: 1.15;
@@ -4820,12 +4820,12 @@ img.img-in { animation: fcImgIn .6s ease both; }
     filter: drop-shadow(0 3px 10px rgba(0, 0, 0, 0.85));
 }
 
-.ad-journey-list {
+.director-journey-list {
     list-style: none;
     margin-bottom: 24px;
 }
 
-.ad-journey-list li {
+.director-journey-list li {
     display: flex;
     align-items: flex-start;
     gap: 14px;
@@ -4835,20 +4835,20 @@ img.img-in { animation: fcImgIn .6s ease both; }
     margin-bottom: 16px;
 }
 
-.ad-journey-list li strong {
+.director-journey-list li strong {
     color: #F2B676 !important; /* Luminous warm coffee roast */
     font-weight: 700;
     letter-spacing: 0.02em;
     text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
 }
 
-.ad-journey-list li em {
+.director-journey-list li em {
     color: #FFF3E3;
     font-style: italic;
     letter-spacing: 0.01em;
 }
 
-.ad-check {
+.director-check {
     flex: 0 0 auto;
     width: 24px;
     height: 24px;
@@ -4864,7 +4864,7 @@ img.img-in { animation: fcImgIn .6s ease both; }
     box-shadow: 0 4px 12px rgba(201, 128, 58, 0.4);
 }
 
-.ad-journey-note {
+.director-journey-note {
     font-family: 'CoffeeTown', cursive, sans-serif !important;
     font-size: 1.18rem !important;
     line-height: 1.5;
@@ -4877,14 +4877,14 @@ img.img-in { animation: fcImgIn .6s ease both; }
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
 }
 
-.ad-stat-number {
+.director-stat-number {
     font-family: var(--font-display);
     font-size: 2rem;
     font-weight: 700;
     color: #fff;
 }
 
-.ad-stat-label {
+.director-stat-label {
     font-size: 0.80rem;
     font-weight: 500;
     letter-spacing: 0.02em;
@@ -4892,26 +4892,26 @@ img.img-in { animation: fcImgIn .6s ease both; }
     color: rgba(255, 255, 255, 0.9);
 }
 
-.ad-future {
+.director-future {
     display: grid;
     grid-template-columns: minmax(280px, 0.85fr) minmax(0, 1.15fr);
     gap: 52px;
     align-items: center;
 }
 
-.ad-future-media {
+.director-future-media {
     aspect-ratio: 16 / 9;
     width: 100%;
 }
 
-.ad-future-copy p {
+.director-future-copy p {
     font-size: clamp(1rem, 1.2vw, 1.08rem);
     line-height: 1.8;
     color: rgba(247, 244, 235, 0.86);
     margin-bottom: 28px;
 }
 
-.ad-article-card {
+.director-article-card {
     display: grid;
     grid-template-columns: minmax(240px, 0.9fr) minmax(0, 1.1fr);
     gap: 40px;
@@ -4922,12 +4922,12 @@ img.img-in { animation: fcImgIn .6s ease both; }
     border: 1px solid rgba(247, 244, 235, 0.14);
 }
 
-.ad-article-media {
+.director-article-media {
     aspect-ratio: 16 / 9;
     width: 100%;
 }
 
-.ad-article-copy p {
+.director-article-copy p {
     font-size: clamp(1rem, 1.2vw, 1.08rem);
     line-height: 1.8;
     color: rgba(247, 244, 235, 0.86);
@@ -5060,10 +5060,10 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
 .rooms-panel, .rooms-panel__img, .rooms-panel__tag, .rooms-panel__title { transition: none; }
 }
 
-.ad-subtitle,
-.ad-story .ad-subtitle,
-.ad-future .ad-subtitle,
-.ad-articles .ad-subtitle {
+.director-subtitle,
+.director-story .director-subtitle,
+.director-future .director-subtitle,
+.director-articles .director-subtitle {
     font-family: 'CoffeeTown', cursive, sans-serif !important;
     font-weight: 600;
     line-height: 1.15;
@@ -5080,7 +5080,7 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
     filter: drop-shadow(0 3px 10px rgba(0, 0, 0, 0.85));
 }
 
-.ad-story {
+.director-story {
     max-width: 1440px !important;
     width: 100%;
     margin: 0 auto !important;
@@ -5090,21 +5090,21 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
     box-sizing: border-box;
 }
 
-.ad-story-grid {
+.director-story-grid {
     display: grid;
     grid-template-columns: minmax(0, 1.15fr) minmax(460px, 1fr) !important;
     gap: clamp(32px, 5vw, 72px) !important;
     align-items: flex-start !important;
 }
 
-.ad-story-copy {
+.director-story-copy {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     text-align: left;
 }
 
-.ad-eyebrow {
+.director-eyebrow {
     color: #F2B676 !important;
     font-size: 0.95rem !important;
     font-weight: 700;
@@ -5115,14 +5115,14 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
     display: inline-block;
 }
 
-.ad-journey-list {
+.director-journey-list {
     list-style: none;
     margin: 0 0 28px 0;
     padding: 0;
     width: 100%;
 }
 
-.ad-journey-list li {
+.director-journey-list li {
     display: flex;
     align-items: flex-start;
     gap: 16px;
@@ -5133,13 +5133,13 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
     margin-bottom: 20px !important;
 }
 
-.ad-journey-list li strong {
+.director-journey-list li strong {
     color: #F2B676 !important;
     font-weight: 700;
     letter-spacing: 0.01em;
 }
 
-.ad-check {
+.director-check {
     flex: 0 0 auto;
     width: 28px !important;
     height: 28px !important;
@@ -5155,7 +5155,7 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
     box-shadow: 0 4px 14px rgba(201, 128, 58, 0.45);
 }
 
-.ad-journey-note {
+.director-journey-note {
     font-family: 'CoffeeTown', cursive, sans-serif !important;
     font-size: clamp(1.15rem, 1.35vw, 1.35rem) !important;
     line-height: 1.55;
@@ -5168,13 +5168,13 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
 }
 
-.ad-story-toggle { margin-top: 26px; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; }
+.director-story-toggle { margin-top: 26px; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; }
 
-.ad-story-toggle .arrow { transition: transform .35s ease; display: inline-block; }
+.director-story-toggle .arrow { transition: transform .35s ease; display: inline-block; }
 
-.ad-story-toggle[aria-expanded="true"] .arrow { transform: rotate(-90deg); }
+.director-story-toggle[aria-expanded="true"] .arrow { transform: rotate(-90deg); }
 
-.ad-story-media {
+.director-story-media {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -5186,7 +5186,7 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
     z-index: 10;
 }
 
-.ad-story-portrait-wrap {
+.director-story-portrait-wrap {
     position: relative;
     width: 100%;
     max-width: 660px !important; /* Wide box footprint */
@@ -5200,7 +5200,7 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
     margin-bottom: 4px !important;
 }
 
-.ad-story-portrait-img {
+.director-story-portrait-img {
     width: 100%;
     height: auto;
     max-height: 740px !important;
@@ -5218,11 +5218,11 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
     transition: transform 0.3s ease;
 }
 
-.ad-story-portrait-wrap:hover .ad-story-portrait-img {
+.director-story-portrait-wrap:hover .director-story-portrait-img {
     transform: scale(1.30) !important;
 }
 
-.ad-story-stats {
+.director-story-stats {
     width: 100%;
     max-width: 480px;
     margin-top: 14px !important;
@@ -5233,7 +5233,7 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
     gap: 12px;
 }
 
-.ad-story-stats > div {
+.director-story-stats > div {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -5247,7 +5247,7 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
     backdrop-filter: blur(10px);
 }
 
-.ad-story-stats .ad-stat-number {
+.director-story-stats .director-stat-number {
     font-family: 'CoffeeTown', cursive, sans-serif !important;
     font-size: 1.85rem !important;
     font-weight: 700;
@@ -5255,7 +5255,7 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
     line-height: 1;
 }
 
-.ad-story-stats .ad-stat-label {
+.director-story-stats .director-stat-label {
     font-size: 0.72rem;
     font-weight: 600;
     letter-spacing: 0.08em;
@@ -5263,7 +5263,7 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
     color: #F2B676 !important;
 }
 
-.ad-future,
+.director-future,
 [class*="creative-workshops"] {
     margin-top: 36px !important;
     padding-top: 10px !important;
@@ -5273,76 +5273,76 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
 }
 
 @media (max-width: 960px) {
-.ad-story {
+.director-story {
         padding: 0 20px 80px !important;
     }
 
-.ad-story-grid {
+.director-story-grid {
         grid-template-columns: 1fr !important;
         gap: 36px !important;
     }
 
-.ad-story-media {
+.director-story-media {
         margin-top: 20px !important;
     }
 
-.ad-story-portrait-wrap {
+.director-story-portrait-wrap {
         max-width: 420px !important;
         margin: 0 auto;
     }
 
-.ad-story-portrait-img {
+.director-story-portrait-img {
         transform: scale(1) !important;
         max-height: 520px !important;
     }
 
-.ad-future {
+.director-future {
         margin-top: 40px !important;
     }
 }
 
 @media (max-width: 520px) {
-.ad-story-portrait-wrap {
+.director-story-portrait-wrap {
         max-width: 300px !important;
     }
 
-.ad-story-portrait-img {
+.director-story-portrait-img {
         max-height: 380px !important;
     }
 }
 
-.ad-story-full {
+.director-story-full {
     display: grid; grid-template-rows: 0fr; visibility: hidden; opacity: 0;
     transition: grid-template-rows .65s cubic-bezier(.65, 0, .2, 1), opacity .5s ease, visibility 0s linear .65s, margin-top .65s ease;
 }
 
-.ad-story-full.is-open {
+.director-story-full.is-open {
     grid-template-rows: 1fr; visibility: visible; opacity: 1; margin-top: 44px;
     transition: grid-template-rows .65s cubic-bezier(.65, 0, .2, 1), opacity .6s ease .1s, visibility 0s, margin-top .65s ease;
 }
 
-.ad-story-full-inner { overflow: hidden; min-height: 0; }
+.director-story-full-inner { overflow: hidden; min-height: 0; }
 
-.ad-story-text {
+.director-story-text {
     padding: clamp(24px, 4vw, 44px); border-radius: var(--radius-lg);
     background: rgba(13, 19, 11, .62); border: 1px solid rgba(247, 244, 235, .16);
     backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
 }
 
-.ad-story-text p { font-size: clamp(1rem, 1.2vw, 1.08rem); line-height: 1.9; color: rgba(247, 244, 235, .9); margin-bottom: 1.15em; }
+.director-story-text p { font-size: clamp(1rem, 1.2vw, 1.08rem); line-height: 1.9; color: rgba(247, 244, 235, .9); margin-bottom: 1.15em; }
 
-.ad-story-text p:first-child::first-letter {
+.director-story-text p:first-child::first-letter {
     float: left; font-family: var(--font-display); font-size: 3.6rem; line-height: .85;
     padding: 6px 10px 0 0; color: #F2B676;
 }
 
-.ad-story-text .ad-story-sign {
+.director-story-text .director-story-sign {
     margin: 1.6em 0 0; padding-left: 18px; border-left: 3px solid var(--honey);
     font-family: var(--font-display); font-style: italic; color: var(--honey-soft);
 }
 
 @media (prefers-reduced-motion: reduce) {
-.ad-story-full, .ad-story-full.is-open { transition: none; }
+.director-story-full, .director-story-full.is-open { transition: none; }
 }
 
 .cot-media-wrap {
@@ -5437,7 +5437,7 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
 .cot-cta-group { flex-direction: column; align-items: flex-start; }
 }
 
-.ad-title-break {
+.director-title-break {
     line-height: 1.15 !important;
     white-space: normal;
     max-width: 620px;
@@ -5446,11 +5446,11 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
 }
 
 #art-director,
-.ad-section {
+.director-section {
     padding-bottom: 160px !important; /* Generous breathing room above Google Reviews */
 }
 
-.ad-article-actions {
+.director-article-actions {
     display: flex;
     align-items: center;
     gap: 14px;
@@ -5458,43 +5458,43 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
     margin-top: 20px;
 }
 
-.ad-article-copy h4 {
+.director-article-copy h4 {
     color: #ffffff;
     font-size: 1.35rem;
     margin-bottom: 8px;
 }
 
-.reveal .ad-subtitle,
-.reveal .ad-journey-note,
-.reveal .ad-article-card {
+.reveal .director-subtitle,
+.reveal .director-journey-note,
+.reveal .director-article-card {
     opacity: 0;
     transform: translateY(24px);
     transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
     will-change: opacity, transform;
 }
 
-.reveal.is-in .ad-subtitle {
+.reveal.is-in .director-subtitle {
     opacity: 1;
     transform: translateY(0);
     transition-delay: 0.1s;
 }
 
-.reveal.is-in .ad-journey-note {
+.reveal.is-in .director-journey-note {
     opacity: 1;
     transform: translateY(0);
     transition-delay: 0.25s;
 }
 
-.reveal.is-in .ad-article-card {
+.reveal.is-in .director-article-card {
     opacity: 1;
     transform: translateY(0);
     transition-delay: 0.2s;
 }
 
 @media (prefers-reduced-motion: reduce) {
-.reveal .ad-subtitle,
-.reveal .ad-journey-note,
-.reveal .ad-article-card {
+.reveal .director-subtitle,
+.reveal .director-journey-note,
+.reveal .director-article-card {
         opacity: 1 !important;
         transform: none !important;
         transition: none !important;
@@ -5512,11 +5512,11 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
     }
 }
 
-/* @media (max-width: 520px) minion overrides removed — now handled by the 767px block with --ad-curve-h */
+/* @media (max-width: 520px) minion overrides removed — now handled by the 767px block with --director-curve-h */
 
 @media (max-width: 767px) {
-    .ad-section {
-        --ad-curve-h: 46px !important;
+    .director-section {
+        --director-curve-h: 46px !important;
         padding-top: 64px !important;
     }
     .perched-minion--right {
@@ -5556,7 +5556,7 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
 }
 
 /* our own safety: decorative minions / leaves in the story section must never cause sideways scroll */
-#art-director, .ad-section { overflow-x: clip !important; }
+#art-director, .director-section { overflow-x: clip !important; }
 
 /* ==========================================================================
    ██  ROUND 8  ██
@@ -5586,7 +5586,7 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
 
 /* ---------- reviews: the section itself forms the dome, so the blobs flow into it (no hard cut) ---------- */
 .followup-image-section { --dome: 110px; }
-.ad-section::after { display: none !important; }
+.director-section::after { display: none !important; }
 .followup-image-section {
     margin-top: calc(var(--dome) * -1);
     padding-top: calc(var(--dome) + 24px);
@@ -5873,30 +5873,30 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
    ========================================================================== */
 
 /* Cinema Drawer Outer Structure */
-.ad-story-actions {
+.director-story-actions {
     display: flex;
     align-items: center;
     gap: 14px;
     flex-wrap: wrap;
     margin-top: 26px;
 }
-.ad-cinema-toggle {
+.director-cinema-toggle {
     border-color: #F2B676 !important;
     color: #F2B676 !important;
 }
-.ad-cinema-toggle:hover {
+.director-cinema-toggle:hover {
     background: rgba(242, 182, 118, 0.15) !important;
     color: #FFF3E3 !important;
 }
-.ad-cinema-toggle .arrow {
+.director-cinema-toggle .arrow {
     transition: transform 0.35s ease;
     display: inline-block;
 }
-.ad-cinema-toggle[aria-expanded="true"] .arrow {
+.director-cinema-toggle[aria-expanded="true"] .arrow {
     transform: rotate(180deg);
 }
 
-.ad-cinema-drawer {
+.director-cinema-drawer {
     display: grid;
     grid-template-rows: 0fr;
     visibility: hidden;
@@ -5906,14 +5906,14 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
     width: 100%;
     overflow: visible !important;
 }
-.ad-cinema-drawer.is-open {
+.director-cinema-drawer.is-open {
     grid-template-rows: 1fr;
     visibility: visible;
     opacity: 1;
     margin-top: 48px;
     transition: grid-template-rows .65s cubic-bezier(.65, 0, .2, 1), opacity .6s ease .1s, visibility 0s, margin-top .65s ease;
 }
-.ad-cinema-drawer-inner {
+.director-cinema-drawer-inner {
     overflow: visible !important;
     min-height: 0;
     display: flex;
@@ -5930,11 +5930,11 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
 }
-.ad-cinema-header {
+.director-cinema-header {
     text-align: center;
     margin-bottom: 24px;
 }
-.ad-cinema-title {
+.director-cinema-title {
     font-family: 'CoffeeTown', cursive, sans-serif !important;
     font-size: clamp(1.8rem, 3.2vw, 2.5rem);
     color: #FFF3E3;
@@ -6103,7 +6103,7 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
 /* ==========================================================================
    Story Section Buttons — Perfect Vertical Alignment & Shared Baseline
    ========================================================================== */
-.ad-story-actions,
+.director-story-actions,
 .story-actions {
     display: flex !important;
     align-items: center !important;
@@ -6111,9 +6111,9 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
     flex-wrap: wrap;
 }
 
-.ad-story-actions .btn,
-.ad-story-actions button,
-.ad-story-actions a,
+.director-story-actions .btn,
+.director-story-actions button,
+.director-story-actions a,
 .story-actions .btn,
 .story-actions a {
     display: inline-flex !important;
@@ -6126,8 +6126,8 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
     margin: 0 !important;
 }
 
-.ad-story-actions .btn--ghost,
-.ad-story-actions .ad-cinema-toggle,
+.director-story-actions .btn--ghost,
+.director-story-actions .director-cinema-toggle,
 .story-actions a:last-child {
     margin-top: 0 !important;
     transform: none !important;
@@ -6616,11 +6616,11 @@ img { max-width: 100%; }
 
 /* ======================= TABLET + PHONE : story blocks ======================= */
 @media (max-width: 900px) {
-    .ad-future, .ad-article-card { grid-template-columns: minmax(0, 1fr); gap: 24px; }
-    .ad-article-card { padding: 20px; }
-    .ad-future-media { aspect-ratio: 16 / 9; }
-    .ad-article-media { aspect-ratio: 16 / 9; }
-    .ad-article-actions .btn, .ad-future-copy .btn { flex: 1 1 160px; justify-content: center; }
+    .director-future, .director-article-card { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+    .director-article-card { padding: 20px; }
+    .director-future-media { aspect-ratio: 16 / 9; }
+    .director-article-media { aspect-ratio: 16 / 9; }
+    .director-article-actions .btn, .director-future-copy .btn { flex: 1 1 160px; justify-content: center; }
 }
 
 /* ======================= PHONES ≤767 ======================= */
@@ -6688,7 +6688,7 @@ img { max-width: 100%; }
 
     /* readable small text (nothing under 12px) */
     .brand-sub, .footer-brand-sub, .hero-eyebrow, .eyebrow, .i-short, .sts-eyebrow, .open-badge,
-    .menu-orbit-kicker, .product-weight, .cot-pill-badge, .ad-stat-label, .md-role,
+    .menu-orbit-kicker, .product-weight, .cot-pill-badge, .director-stat-label, .md-role,
     body .split .eyebrow, #shop .product-weight { font-size: 12px !important; }
     .info-item span { font-size: .75rem; }
 
@@ -6746,65 +6746,65 @@ img { max-width: 100%; }
    Story = text LEFT / photo RIGHT · Workshops = photo LEFT / text RIGHT
    Articles = text LEFT / photo RIGHT
    ========================================================================== */
-#art-director .ad-block {
+#art-director .director-block {
     width: 100%;
     max-width: 1180px !important;
     margin: 0 auto !important;
     padding: 0 clamp(20px, 4vw, 48px) !important;
     box-sizing: border-box;
 }
-#art-director .ad-intro { margin-bottom: clamp(24px, 3.5vw, 40px) !important; }
+#art-director .director-intro { margin-bottom: clamp(24px, 3.5vw, 40px) !important; }
 
 /* ---- shared two-column row: equal columns so every edge lines up ---- */
-#art-director .ad-story-grid,
-#art-director .ad-future,
-#art-director .ad-article-card {
+#art-director .director-story-grid,
+#art-director .director-future,
+#art-director .director-article-card {
     display: grid !important;
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
     gap: clamp(32px, 5vw, 80px) !important;
     align-items: center !important;
 }
-#art-director .ad-future,
-#art-director .ad-articles {
+#art-director .director-future,
+#art-director .director-articles {
     margin-top: clamp(56px, 7vw, 96px) !important;
     padding-top: clamp(48px, 6vw, 80px) !important;
     border-top: 1.5px dashed rgba(242, 182, 118, .22);
 }
-#art-director .ad-article-card {
+#art-director .director-article-card {
     padding: 0 !important;
     background: none !important;
     border: 0 !important;
 }
 
 /* ---- headings: tidy spacing now that they live inside the text column ---- */
-#art-director .ad-story .ad-subtitle,
-#art-director .ad-future .ad-subtitle,
-#art-director .ad-articles .ad-subtitle {
+#art-director .director-story .director-subtitle,
+#art-director .director-future .director-subtitle,
+#art-director .director-articles .director-subtitle {
     margin: 4px 0 26px !important;
     max-width: 100%;
 }
-#art-director .ad-eyebrow { margin-bottom: 6px; }
+#art-director .director-eyebrow { margin-bottom: 6px; }
 
 /* ---- STORY: text column ---- */
-#art-director .ad-story-copy { align-items: flex-start; }
-#art-director .ad-journey-list { margin: 0 0 8px; }
-/* .ad-story-list — compact 3-point highlights replacing the journey checklist */
-.ad-story-list {
+#art-director .director-story-copy { align-items: flex-start; }
+#art-director .director-journey-list { margin: 0 0 8px; }
+/* .director-story-list — compact 3-point highlights replacing the journey checklist */
+.director-story-list {
     list-style: disc !important;
     padding-left: 1.2em !important;
     margin: 0 0 18px !important;
 }
-.ad-story-list li {
+.director-story-list li {
     font-size: clamp(0.95rem, 1.05vw, 1.02rem);
     line-height: 1.6;
     margin-bottom: 12px;
     color: rgba(247, 244, 235, 0.9);
 }
-.ad-story-list li strong {
+.director-story-list li strong {
     color: #F2B676;
     font-weight: 700;
 }
-#art-director .ad-journey-list li {
+#art-director .director-journey-list li {
     position: relative;
     font-size: clamp(.97rem, 1.05vw, 1.04rem) !important;
     line-height: 1.65 !important;
@@ -6813,7 +6813,7 @@ img { max-width: 100%; }
     padding-bottom: 20px;
 }
 /* chalk-dashed timeline joining the ticks */
-#art-director .ad-journey-list li:not(:last-child)::before {
+#art-director .director-journey-list li:not(:last-child)::before {
     content: "";
     position: absolute;
     left: 13px;
@@ -6821,27 +6821,27 @@ img { max-width: 100%; }
     bottom: 4px;
     border-left: 1.5px dashed rgba(242, 182, 118, .42);
 }
-#art-director .ad-journey-note {
+#art-director .director-journey-note {
     margin: 12px 0 26px !important;
     padding: 14px 20px !important;
     font-size: clamp(1.05rem, 1.2vw, 1.22rem) !important;
 }
-#art-director .ad-story-actions { margin-top: 0; }
+#art-director .director-story-actions { margin-top: 0; }
 
 /* ==========================================================================
    Art Director Section: Sizing, Stats Pills, and Balanced Layout
    ========================================================================== */
 
 /* Remove any leftover circle/glow backgrounds */
-.ad-story-portrait-wrap::before,
-.ad-story-portrait-wrap::after,
-.ad-story-media::before {
+.director-story-portrait-wrap::before,
+.director-story-portrait-wrap::after,
+.director-story-media::before {
   display: none !important;
 }
 
 /* Grid Layout: Desktop Side-by-Side */
-.ad-story-grid,
-#art-director .ad-story-grid {
+.director-story-grid,
+#art-director .director-story-grid {
   display: grid !important;
   grid-template-columns: 1.15fr 0.85fr !important;
   align-items: center !important;
@@ -6851,7 +6851,7 @@ img { max-width: 100%; }
   padding: 0 20px !important;
 }
 
-.ad-tagline {
+.director-tagline {
   color: #F2B676 !important;
   font-size: 0.95rem !important;
   font-weight: 700;
@@ -6862,7 +6862,7 @@ img { max-width: 100%; }
   display: inline-block;
 }
 
-.ad-story-title {
+.director-story-title {
   font-family: 'CoffeeTown', cursive, sans-serif !important;
   font-weight: 600;
   line-height: 1.15;
@@ -6873,25 +6873,25 @@ img { max-width: 100%; }
   text-transform: uppercase;
 }
 
-.ad-story-list {
+.director-story-list {
   padding-left: 1.2em !important;
   margin: 0 0 16px !important;
   list-style: disc !important;
 }
 
-.ad-story-list li {
+.director-story-list li {
   font-size: clamp(0.95rem, 1.05vw, 1.02rem);
   line-height: 1.6;
   margin-bottom: 12px;
   color: rgba(247, 244, 235, 0.9);
 }
 
-.ad-story-list li strong {
+.director-story-list li strong {
   color: #F2B676;
   font-weight: 700;
 }
 
-.ad-quote-block {
+.director-quote-block {
   font-family: 'CoffeeTown', cursive, sans-serif !important;
   font-size: clamp(1.02rem, 1.2vw, 1.22rem) !important;
   line-height: 1.5;
@@ -6904,13 +6904,13 @@ img { max-width: 100%; }
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
 }
 
-.ad-quote-block p {
+.director-quote-block p {
   margin: 0 !important;
 }
 
 /* Desktop Portrait: Positioned comfortably below top line of heading */
-.ad-story-media,
-#art-director .ad-story-media {
+.director-story-media,
+#art-director .director-story-media {
   margin-top: 38px !important;
   display: flex !important;
   flex-direction: column !important;
@@ -6920,8 +6920,8 @@ img { max-width: 100%; }
   justify-self: center;
 }
 
-.ad-story-portrait-wrap,
-#art-director .ad-story-portrait-wrap {
+.director-story-portrait-wrap,
+#art-director .director-story-portrait-wrap {
   position: relative !important;
   width: 100% !important;
   max-width: 440px !important;
@@ -6931,8 +6931,8 @@ img { max-width: 100%; }
   align-items: flex-end !important;
 }
 
-.ad-story-portrait-img,
-#art-director .ad-story-portrait-img {
+.director-story-portrait-img,
+#art-director .director-story-portrait-img {
   position: relative;
   z-index: 1;
   width: 100% !important;
@@ -6950,12 +6950,12 @@ img { max-width: 100%; }
   transform: none !important;
 }
 
-#art-director .ad-story-portrait-wrap:hover .ad-story-portrait-img {
+#art-director .director-story-portrait-wrap:hover .director-story-portrait-img {
   transform: none !important;
 }
 
 /* Enlarge the 3 Stat Pills for desktop */
-.ad-story-stats-row {
+.director-story-stats-row {
   display: flex !important;
   flex-direction: row !important;
   justify-content: center !important;
@@ -6965,7 +6965,7 @@ img { max-width: 100%; }
   z-index: 3 !important;
 }
 
-.ad-stat-pill {
+.director-stat-pill {
   background: #3B2416 !important;
   border: 1.5px solid rgba(242, 182, 118, 0.45) !important;
   border-radius: 12px !important;
@@ -6975,14 +6975,14 @@ img { max-width: 100%; }
   text-align: center !important;
 }
 
-.ad-stat-num {
+.director-stat-num {
   font-size: 1.35rem !important;
   font-weight: 800 !important;
   color: #FFF2DF !important;
   line-height: 1 !important;
 }
 
-.ad-stat-lbl {
+.director-stat-lbl {
   font-size: 0.65rem !important;
   font-weight: 700 !important;
   letter-spacing: 0.01em !important;
@@ -6992,7 +6992,7 @@ img { max-width: 100%; }
   margin-top: 4px !important;
 }
 
-#art-director .ad-story-actions {
+#art-director .director-story-actions {
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
@@ -7005,8 +7005,8 @@ img { max-width: 100%; }
    ========================================================================== */
 @media (max-width: 767px) {
   /* Vertical single-column stack on mobile */
-  .ad-story-grid,
-  #art-director .ad-story-grid {
+  .director-story-grid,
+  #art-director .director-story-grid {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
@@ -7015,25 +7015,25 @@ img { max-width: 100%; }
   }
 
   /* 1. Header sits first & left-aligned */
-  .ad-story-copy {
+  .director-story-copy {
     display: contents !important;
   }
 
-  .ad-story-heading-wrap {
+  .director-story-heading-wrap {
     order: 1 !important;
     text-align: left !important;
     align-self: flex-start !important;
     width: 100% !important;
   }
 
-  .ad-tagline {
+  .director-tagline {
     font-size: 0.65rem !important;
     letter-spacing: 0.15em !important;
     text-align: left !important;
     display: block !important;
   }
 
-  .ad-story-title {
+  .director-story-title {
     font-size: 1.35rem !important;
     line-height: 1.2 !important;
     margin: 6px 0 12px !important;
@@ -7041,8 +7041,8 @@ img { max-width: 100%; }
   }
 
   /* 2. Portrait & Stats sit second (centered, max-width: 270px) */
-  .ad-story-media,
-  #art-director .ad-story-media {
+  .director-story-media,
+  #art-director .director-story-media {
     order: 2 !important;
     margin-top: 0 !important;
     width: 100% !important;
@@ -7052,16 +7052,16 @@ img { max-width: 100%; }
     align-items: center !important;
   }
 
-  .ad-story-portrait-wrap,
-  #art-director .ad-story-portrait-wrap {
+  .director-story-portrait-wrap,
+  #art-director .director-story-portrait-wrap {
     max-width: 270px !important;
     margin: 0 auto !important;
     display: flex !important;
     justify-content: center !important;
   }
 
-  .ad-story-portrait-img,
-  #art-director .ad-story-portrait-img {
+  .director-story-portrait-img,
+  #art-director .director-story-portrait-img {
     width: 100% !important;
     height: auto !important;
     max-height: 330px !important;
@@ -7070,7 +7070,7 @@ img { max-width: 100%; }
     -webkit-mask-image: linear-gradient(to bottom, black 82%, transparent 99%) !important;
   }
 
-  .ad-story-stats-row {
+  .director-story-stats-row {
     margin-top: -18px !important;
     gap: 8px !important;
     display: flex !important;
@@ -7078,21 +7078,21 @@ img { max-width: 100%; }
     justify-content: center !important;
   }
 
-  .ad-stat-pill {
+  .director-stat-pill {
     padding: 6px 12px !important;
     min-width: 72px !important;
   }
 
-  .ad-stat-num {
+  .director-stat-num {
     font-size: 1.05rem !important;
   }
 
-  .ad-stat-lbl {
+  .director-stat-lbl {
     font-size: 0.52rem !important;
   }
 
   /* 3. The 4 Highlights Reset: Left-aligned clean bullet list, no card borders/backgrounds */
-  .ad-story-list {
+  .director-story-list {
     order: 3 !important;
     display: block !important;
     padding: 0 !important;
@@ -7105,7 +7105,7 @@ img { max-width: 100%; }
     box-shadow: none !important;
   }
 
-  .ad-story-list li {
+  .director-story-list li {
     font-size: 0.76rem !important;
     line-height: 1.45 !important;
     margin: 0 0 12px 0 !important;
@@ -7119,7 +7119,7 @@ img { max-width: 100%; }
     text-align: left !important;
   }
 
-  .ad-story-list li::before {
+  .director-story-list li::before {
     content: "•" !important;
     color: #F2B676 !important;
     position: absolute !important;
@@ -7131,7 +7131,7 @@ img { max-width: 100%; }
     display: inline-block !important;
   }
 
-  .ad-story-list li strong {
+  .director-story-list li strong {
     color: #F2B676 !important;
     display: inline !important;
     font-size: 0.78rem !important;
@@ -7140,7 +7140,7 @@ img { max-width: 100%; }
   }
 
   /* 4. Compact 2-line Quote Block */
-  .ad-quote-block {
+  .director-quote-block {
     order: 4 !important;
     margin-top: 10px !important;
     display: block !important;
@@ -7154,7 +7154,7 @@ img { max-width: 100%; }
     border-radius: 0 !important;
   }
 
-  .ad-quote-block p {
+  .director-quote-block p {
     font-size: 0.72rem !important;
     line-height: 1.35 !important;
     text-align: left !important;
@@ -7163,7 +7163,7 @@ img { max-width: 100%; }
   }
 
   /* 5. Story Action Buttons side by side */
-  #art-director .ad-story-actions {
+  #art-director .director-story-actions {
     display: flex !important;
     flex-direction: row !important;
     gap: 8px !important;
@@ -7173,8 +7173,8 @@ img { max-width: 100%; }
     box-sizing: border-box !important;
   }
 
-  #art-director .ad-story-actions .btn,
-  #art-director .ad-story-actions button {
+  #art-director .director-story-actions .btn,
+  #art-director .director-story-actions button {
     flex: 1 !important;
     font-size: 0.72rem !important;
     padding: 10px 8px !important;
@@ -7189,9 +7189,9 @@ img { max-width: 100%; }
   /* ==========================================================================
      Creative Workshop Card (< 768px): Header -> Image -> Desc -> Stay Tuned Button
      ========================================================================== */
-  .ad-future,
-  #art-director .ad-future,
-  .ad-future-card {
+  .director-future,
+  #art-director .director-future,
+  .director-future-card {
     display: flex !important;
     flex-direction: column !important;
     text-align: left !important;
@@ -7199,26 +7199,26 @@ img { max-width: 100%; }
     gap: 12px !important;
   }
 
-  .ad-future-copy {
+  .director-future-copy {
     display: contents !important;
   }
 
   /* 1. Header on top */
-  .ad-future-title,
-  .ad-future .ad-card-header {
+  .director-future-title,
+  .director-future .director-card-header {
     order: 1 !important;
     text-align: left !important;
     width: 100% !important;
     margin-bottom: 2px !important;
   }
 
-  .ad-future-title .ad-eyebrow {
+  .director-future-title .director-eyebrow {
     text-align: left !important;
     display: block !important;
     margin-bottom: 4px !important;
   }
 
-  .ad-future-title .ad-subtitle {
+  .director-future-title .director-subtitle {
     text-align: left !important;
     margin: 4px 0 8px !important;
     font-size: 1.35rem !important;
@@ -7226,16 +7226,16 @@ img { max-width: 100%; }
   }
 
   /* 2. Image in the middle */
-  .ad-future-media,
-  .ad-future .ad-card-image-wrap {
+  .director-future-media,
+  .director-future .director-card-image-wrap {
     order: 2 !important;
     width: 100% !important;
     margin: 0 0 4px !important;
   }
 
   /* 3. Description below image */
-  .ad-future-body,
-  .ad-future .ad-card-desc {
+  .director-future-body,
+  .director-future .director-card-desc {
     order: 3 !important;
     text-align: left !important;
     width: 100% !important;
@@ -7246,8 +7246,8 @@ img { max-width: 100%; }
   }
 
   /* 4. "Stay Tuned" button (restricted width <= 160px) */
-  .ad-future-actions,
-  .ad-future .ad-card-actions {
+  .director-future-actions,
+  .director-future .director-card-actions {
     order: 4 !important;
     width: auto !important;
     max-width: 160px !important;
@@ -7256,10 +7256,10 @@ img { max-width: 100%; }
     display: block !important;
   }
 
-  .ad-future-actions .ad-btn,
-  .ad-future-actions .btn,
-  .ad-future .ad-card-actions .ad-btn,
-  .ad-future .ad-card-actions .btn {
+  .director-future-actions .director-btn,
+  .director-future-actions .btn,
+  .director-future .director-card-actions .director-btn,
+  .director-future .director-card-actions .btn {
     width: auto !important;
     max-width: 160px !important;
     font-size: 0.75rem !important;
@@ -7276,8 +7276,8 @@ img { max-width: 100%; }
      Behind the Canvas Card (< 768px):
      Title -> Image -> Subtitle -> Desc -> Actions Side-by-Side
      ========================================================================== */
-  .ad-article-card,
-  #art-director .ad-article-card {
+  .director-article-card,
+  #art-director .director-article-card {
     display: flex !important;
     flex-direction: column !important;
     text-align: left !important;
@@ -7285,26 +7285,26 @@ img { max-width: 100%; }
     gap: 10px !important;
   }
 
-  .ad-article-copy {
+  .director-article-copy {
     display: contents !important;
   }
 
   /* 1. Main category / title on top */
-  .ad-article-title,
-  .ad-article-card .ad-card-header {
+  .director-article-title,
+  .director-article-card .director-card-header {
     order: 1 !important;
     text-align: left !important;
     width: 100% !important;
     margin-bottom: 2px !important;
   }
 
-  .ad-article-title .ad-eyebrow {
+  .director-article-title .director-eyebrow {
     text-align: left !important;
     display: block !important;
     margin-bottom: 4px !important;
   }
 
-  .ad-article-title .ad-subtitle {
+  .director-article-title .director-subtitle {
     text-align: left !important;
     margin: 4px 0 8px !important;
     font-size: 1.35rem !important;
@@ -7312,15 +7312,15 @@ img { max-width: 100%; }
   }
 
   /* 2. Article image preview */
-  .ad-article-media,
-  .ad-article-card .ad-card-image-wrap {
+  .director-article-media,
+  .director-article-card .director-card-image-wrap {
     order: 2 !important;
     width: 100% !important;
     margin: 0 0 4px !important;
   }
 
   /* 3. Subtitle directly BELOW the image */
-  .ad-article-subtitle {
+  .director-article-subtitle {
     order: 3 !important;
     text-align: left !important;
     font-size: 0.88rem !important;
@@ -7333,8 +7333,8 @@ img { max-width: 100%; }
   }
 
   /* 4. Body description text */
-  .ad-article-body,
-  .ad-article-card .ad-card-desc {
+  .director-article-body,
+  .director-article-card .director-card-desc {
     order: 4 !important;
     text-align: left !important;
     font-size: 0.8rem !important;
@@ -7345,8 +7345,8 @@ img { max-width: 100%; }
   }
 
   /* 5. Action buttons placed side by side */
-  .ad-article-actions,
-  .ad-article-card .ad-card-actions {
+  .director-article-actions,
+  .director-article-card .director-card-actions {
     order: 5 !important;
     display: flex !important;
     flex-direction: row !important;
@@ -7355,9 +7355,9 @@ img { max-width: 100%; }
     margin-top: 6px !important;
   }
 
-  .ad-article-actions .btn,
-  .ad-article-actions .ad-btn,
-  .ad-article-card .ad-card-actions .btn {
+  .director-article-actions .btn,
+  .director-article-actions .director-btn,
+  .director-article-card .director-card-actions .btn {
     flex: 1 !important;
     padding: 10px 8px !important;
     font-size: 0.72rem !important;
@@ -7371,8 +7371,8 @@ img { max-width: 100%; }
 }
 
 /* ---- media frames (workshops + articles): natural ratio, no dead letterbox ---- */
-#art-director .ad-future-media,
-#art-director .ad-article-media {
+#art-director .director-future-media,
+#art-director .director-article-media {
     aspect-ratio: auto !important;
     width: 100%;
     border: 0;
@@ -7380,8 +7380,8 @@ img { max-width: 100%; }
     border-radius: var(--radius);
     overflow: hidden;
 }
-#art-director .ad-future-media > img,
-#art-director .ad-article-media > img {
+#art-director .director-future-media > img,
+#art-director .director-article-media > img {
     width: 100%;
     height: auto;
     object-fit: contain;
@@ -7389,7 +7389,7 @@ img { max-width: 100%; }
     border-radius: var(--radius);
     box-shadow: 0 18px 40px -12px rgba(0, 0, 0, .7);
 }
-#art-director .ad-placeholder-label {
+#art-director .director-placeholder-label {
     border: 1.5px dashed rgba(247, 244, 235, .35);
     border-radius: var(--radius);
     padding: 44px 20px;
@@ -7397,28 +7397,28 @@ img { max-width: 100%; }
 }
 
 /* ---- text blocks of workshops / articles ---- */
-#art-director .ad-future-copy p,
-#art-director .ad-article-copy p { margin-bottom: 24px; }
-#art-director .ad-article-copy h4 { margin: 0 0 8px; }
-#art-director .ad-article-actions { margin-top: 0; }
+#art-director .director-future-copy p,
+#art-director .director-article-copy p { margin-bottom: 24px; }
+#art-director .director-article-copy h4 { margin: 0 0 8px; }
+#art-director .director-article-actions { margin-top: 0; }
 
 /* ---- tablet: workshops & articles single column ---- */
 @media (max-width: 900px) {
-    #art-director .ad-future,
-    #art-director .ad-article-card {
+    #art-director .director-future,
+    #art-director .director-article-card {
         grid-template-columns: minmax(0, 1fr) !important;
         gap: 28px !important;
     }
-    #art-director .ad-article-media { order: -1; }
-    #art-director .ad-future,
-    #art-director .ad-articles { margin-top: 48px !important; padding-top: 40px !important; }
+    #art-director .director-article-media { order: -1; }
+    #art-director .director-future,
+    #art-director .director-articles { margin-top: 48px !important; padding-top: 40px !important; }
 }
 @media (min-width: 768px) and (max-width: 900px) {
-    #art-director .ad-story-grid {
+    #art-director .director-story-grid {
         grid-template-columns: minmax(0, 1fr) !important;
         gap: 28px !important;
     }
-    #art-director .ad-story-media { order: -1; max-width: 400px; }
+    #art-director .director-story-media { order: -1; max-width: 400px; }
 }
 
 
@@ -7559,12 +7559,12 @@ img { max-width: 100%; }
     }
 
     /* ---------- 2) CINEMA WORKS ---------- */
-    #art-director .ad-cinema-drawer {
+    #art-director .director-cinema-drawer {
         scroll-margin-top: 84px;
         overflow: visible !important;
     }
-    #art-director .ad-cinema-drawer.is-open { margin-top: 36px; }
-    #art-director .ad-cinema-header { margin-bottom: 18px; }
+    #art-director .director-cinema-drawer.is-open { margin-top: 36px; }
+    #art-director .director-cinema-header { margin-bottom: 18px; }
 
     #art-director .md-field {
         position: relative !important;
@@ -7978,5 +7978,5 @@ img { max-width: 100%; }
 
 
 /* ---- About stats: longer labels may wrap instead of overflowing ---- */
-.ad-story-stats-row .ad-stat-pill { flex: 1 1 0 !important; max-width: 170px !important; }
-.ad-story-stats-row .ad-stat-lbl { white-space: normal !important; line-height: 1.3 !important; }
+.director-story-stats-row .director-stat-pill { flex: 1 1 0 !important; max-width: 170px !important; }
+.director-story-stats-row .director-stat-lbl { white-space: normal !important; line-height: 1.3 !important; }
