@@ -25,7 +25,7 @@
     heroTitle: 'Coffee, farm and a place to stay',
     heroText: 'We grow it on the slope behind the kitchen, roast it here, and pour it while the mist is still coming off the hills.',
     aboutTitle: 'Forest Cafe',
-    aboutText: 'We started in 2021 with four tables, an artisan roaster, and a slope full of coffee plants. Today, the same slope feeds our cafe kitchen, the farm counter, and the cozy cottages tucked behind the trees. Nothing travels far here\u2014everything is harvested fresh from the soil and served warm with love.',
+    aboutText: 'We started in 2021 with four tables, an artisan roaster, and a hillside full of coffee plants. Today, that same slope feeds our cafe kitchen, our farm counter, and the cozy cottages tucked behind the trees. Nothing travels far here. Everything is harvested fresh from the soil and served warm.',
     phoneText: '+91 94440 60619',
     phoneLink: 'tel:+919444060619',
     emailText: 'forestcafe.khills@gmail.com',
@@ -495,7 +495,7 @@
             var why = (e.details && e.details[0] && e.details[0].reason) || e.status || '';
             if (window.console && console.warn) {
               console.warn('[Forest Cafe] Could not read the database (HTTP ' + res.status + (why ? ', ' + why : '') + '): ' +
-                (e.message || '') + ' \u2014 showing the built-in content. See README-SETUP.md > "403 error".');
+                (e.message || '') + ' - showing the built-in content. See README-SETUP.md > "403 error".');
             }
             throw new Error('db ' + res.status);
           });
@@ -864,7 +864,7 @@
     var nums = vals.map(priceNum).filter(function (n) { return n != null; });
     if (nums.length === vals.length) {
       var mn = Math.min.apply(null, nums), mx = Math.max.apply(null, nums);
-      return mn === mx ? money(mn) : money(mn) + ' \u2013 ' + money(mx);
+      return mn === mx ? money(mn) : money(mn) + ' - ' + money(mx);
     }
     return vals[0];
   }
@@ -977,7 +977,7 @@
 
   function showPreviewBadge() {
     var b = document.createElement('div');
-    b.textContent = 'Preview \u2014 draft changes (not live yet)';
+    b.textContent = 'Preview - draft changes (not live yet)';
     b.setAttribute('role', 'status');
     b.style.cssText = 'position:fixed;left:12px;bottom:12px;z-index:99999;background:#253c20;color:#fff;' +
       'padding:8px 14px;border-radius:999px;font:600 13px/1.2 system-ui,sans-serif;pointer-events:none;' +
@@ -1134,7 +1134,7 @@
       if (!id) { ui.img.src = path; ui.state.textContent = 'Original photo'; return; }
       var draft = isDraftId(id);
       ui.state.textContent = draft
-        ? 'New photo' + (photoInfo[path] ? ' \u2014 ' + photoInfo[path] : '') + ' \u2014 not live yet'
+        ? 'New photo' + (photoInfo[path] ? ' - ' + photoInfo[path] : '') + ' - not live yet'
         : 'Your uploaded photo (live)';
       getImageUrl(id).then(function (url) {
         if (photoMap[path] === id) ui.img.src = url;
@@ -1145,7 +1145,7 @@
           renderPhoto(path);
           say('A draft photo could not be found. Please choose it again.', true);
         } else {
-          ui.state.textContent = 'Your uploaded photo (live) \u2014 preview could not load';
+          ui.state.textContent = 'Your uploaded photo (live) - preview could not load';
         }
       });
     }
@@ -1321,7 +1321,7 @@
         var items = [];
         cat.items.forEach(function (it) {
           var name = cleanName(it.name);
-          if (!name) { errors.push('A menu item in "' + cat.label + '" has no name \u2014 type a name or remove it'); return; }
+          if (!name) { errors.push('A menu item in "' + cat.label + '" has no name - type a name or remove it'); return; }
           if (used[it.id]) return;
           used[it.id] = true;
           items.push({ id: it.id, name: name, price: formatPrice(it.price) });
@@ -1352,12 +1352,12 @@
       if (!DB_READY) {
         liveChip.textContent = remoteState.found
           ? 'Live file: data/content.json found'
-          : 'Live: none yet \u2014 the site shows its built-in values (database not connected)';
+          : 'Live: none yet - the site shows its built-in values (database not connected)';
       } else {
         liveChip.textContent = remoteState.found
           ? 'Live: ' + (remoteState.source === 'file' ? 'data/content.json' : 'database') +
             (remoteState.content.updatedAt ? ' (updated ' + new Date(remoteState.content.updatedAt).toLocaleString() + ')' : '')
-          : 'Live: nothing published yet \u2014 the site shows its built-in values';
+          : 'Live: nothing published yet - the site shows its built-in values';
       }
       liveChip.classList.toggle('ok', remoteState.found);
       draftChip.textContent = d ? 'Draft: saved on this device (not live)' : 'Draft: none';
