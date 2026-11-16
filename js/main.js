@@ -408,7 +408,7 @@
         stage.innerHTML = slides.map((s, i) => {
             if (s.isPlaceholder) {
                 return `
-            <button type="button" class="rooms-panel rooms-panel--placeholder" data-index="${i}" aria-label="${s.label} – Attic Photo Coming Soon" aria-pressed="false" style="background: #e8e2d8;">
+            <button type="button" class="rooms-panel rooms-panel--placeholder" data-index="${i}" aria-label="${s.label} - Attic Photo Coming Soon" aria-pressed="false" style="background: #e8e2d8;">
                 <div class="rooms-panel__placeholder-wrap" style="position: absolute; inset: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px dashed #b8ab99; border-radius: 14px; color: #6d432b; text-align: center; padding: 16px; z-index: 1;">
                     <span style="font-size: 2rem; margin-bottom: 6px;">✨🪟</span>
                     <strong style="font-size: 0.95rem; letter-spacing: 0.02em;">Attic Photo Coming Soon</strong>
@@ -422,7 +422,7 @@
             </button>`;
             }
             return `
-            <button type="button" class="rooms-panel" data-index="${i}" aria-label="${s.label} – ${s.title.replace(/\n/g, ' ')}" aria-pressed="false">
+            <button type="button" class="rooms-panel" data-index="${i}" aria-label="${s.label} - ${s.title.replace(/\n/g, ' ')}" aria-pressed="false">
                 <img class="rooms-panel__img" src="${window.fcImg ? window.fcImg(s.image) : s.image}" data-fc-src="${s.image}" alt="${s.label}" draggable="false" width="462" height="260" loading="lazy" decoding="async">
                 <span class="rooms-panel__shade"></span>
                 <span class="rooms-panel__side">${s.label}</span>
@@ -576,6 +576,21 @@
         if (!isExpanded) {
             grid.scrollIntoView({ behavior: "smooth", block: "nearest" });
         }
+    });
+})();
+
+
+/* ==========================================================================
+   STAY GUIDELINES & HOUSE RULES ACCORDION
+   ========================================================================== */
+(() => {
+    const trigger = document.getElementById("stayRulesTrigger");
+    const accordion = document.getElementById("stayRulesAccordion");
+    if (!trigger || !accordion) return;
+
+    trigger.addEventListener("click", () => {
+        const isOpen = accordion.classList.toggle("is-open");
+        trigger.setAttribute("aria-expanded", String(isOpen));
     });
 })();
 
@@ -1618,7 +1633,7 @@
     const $$ = (s, c) => Array.from((c || document).querySelectorAll(s));
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    /* ---------- 1. Open-now badge (India time, Tue closed, 9:30 am – 7:00 pm) ---------- */
+    /* ---------- 1. Open-now badge (India time, Tue closed, 9:00 am - 7:00 pm) ---------- */
     (function openNow() {
         const badge = $("#openBadge");
         if (!badge) return;
@@ -1632,7 +1647,7 @@
                 day = get("weekday");
                 mins = (parseInt(get("hour"), 10) % 24) * 60 + parseInt(get("minute"), 10);
             } catch (_) { return; }
-            const OPEN = 9 * 60 + 30, CLOSE = 19 * 60;
+            const OPEN = 9 * 60, CLOSE = 19 * 60;
             const open = day !== "Tue" && mins >= OPEN && mins < CLOSE;
             badge.hidden = false;
             badge.classList.toggle("is-closed", !open);

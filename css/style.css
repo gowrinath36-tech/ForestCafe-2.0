@@ -868,6 +868,7 @@ img[src*="item-15.webp"],
     align-items: start !important;
     width: 100% !important;
     margin-top: 34px;
+    margin-bottom: 24px !important;
     padding-top: 26px;
     border-top: 1px solid var(--line);
 }
@@ -3196,7 +3197,7 @@ body .products-grid.is-expanded .product-card:last-child:nth-child(odd) {
   #shopToggleBtn,
   #toggleProductsBtn,
   .products-toggle-container {
-    margin: 16px auto 20px auto !important;
+    margin: 16px auto 10px auto !important;
     display: flex !important;
     justify-content: center !important;
     width: 100% !important;
@@ -3207,9 +3208,11 @@ body .products-grid.is-expanded .product-card:last-child:nth-child(odd) {
   #farm-shop,
   #shop,
   .farm-shop-section,
-  .theme-farm {
+  .shop-section,
+  .theme-farm,
+  body #shop {
     min-height: auto !important;
-    padding-bottom: 24px !important;
+    padding-bottom: 16px !important;
   }
 
   .hill-ribbon,
@@ -3217,11 +3220,11 @@ body .products-grid.is-expanded .product-card:last-child:nth-child(odd) {
   .farm-bottom-art,
   .hill-retreat-divider,
   .hill-retreat-ribbon-img {
-    margin-top: 8px !important;
+    margin-top: 0 !important;
   }
 
   .hill-retreat-divider {
-    padding: 10px 0 !important;
+    padding: 0 !important;
   }
 
   /* Add tactile tap feedback on mobile */
@@ -4310,7 +4313,7 @@ img.img-in { animation: fcImgIn .6s ease both; }
 .stay-hero-split {
     min-height: min(650px, 75vh);
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     gap: clamp(32px, 4vw, 64px);
     margin-bottom: 0 !important;
@@ -4972,7 +4975,7 @@ img.img-in { animation: fcImgIn .6s ease both; }
 
 .footer .brand-logo { height: 64px; }
 
-body #stay { padding-top: clamp(32px, 5vh, 56px) !important; padding-bottom: clamp(32px, 5vh, 56px) !important; }
+body #stay { padding-top: clamp(16px, 2.5vw, 24px) !important; padding-bottom: clamp(32px, 5vh, 56px) !important; }
 
 body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: clamp(80px, 10vh, 120px) !important; }
 
@@ -5351,6 +5354,7 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
     flex-direction: column;
     align-items: center;
     gap: 16px;
+    align-self: flex-start;
 }
 
 .cot-features-grid {
@@ -5422,6 +5426,83 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
 .cot-pill-badge--accent {
     background: #E5F3D8;
     color: #2F6322;
+}
+
+/* Stay Guidelines & House Rules Accordion (Sleek Narrow Line-Bar) */
+.stay-rules-accordion {
+  margin-top: 14px;
+  margin-bottom: 22px;
+  border: 1px solid rgba(47, 74, 53, 0.18);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.35);
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+.stay-rules-accordion:hover,
+.stay-rules-accordion.is-open {
+  background: rgba(255, 255, 255, 0.65);
+  border-color: rgba(47, 74, 53, 0.32);
+}
+.stay-rules-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 14px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #2f4a35;
+  line-height: 1.3;
+}
+.stay-rules-trigger-left {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.stay-rules-chevron {
+  transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0.8;
+}
+.stay-rules-accordion.is-open .stay-rules-chevron {
+  transform: rotate(180deg);
+}
+.stay-rules-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition:
+    grid-template-rows 0.42s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.32s ease;
+}
+.stay-rules-accordion.is-open .stay-rules-panel {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+.stay-rules-panel-inner {
+  overflow: hidden;
+}
+.stay-rules-list {
+  margin: 0;
+  padding: 8px 16px 14px 32px;
+  border-top: 1px solid rgba(47, 74, 53, 0.1);
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: #3d4a3f;
+  transform: translateY(-6px);
+  transition: transform 0.42s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.stay-rules-accordion.is-open .stay-rules-list {
+  transform: translateY(0);
+}
+.stay-rules-list li + li {
+  margin-top: 5px;
+}
+.stay-rules-list strong {
+  color: #2f4a35;
+  font-weight: 600;
 }
 
 .cot-cta-group {
@@ -5502,7 +5583,7 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
 }
 
 #stay {
-    padding-top: clamp(24px, 3vh, 40px) !important;
+    padding-top: clamp(16px, 2.5vw, 24px) !important;
 }
 
 @media (max-width: 900px) {
@@ -5539,7 +5620,7 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
    ========================================================================== */
 .farm-features-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 22px 0 22px; }
 .farm-feature-item {
-    display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 14px;
+    display: flex; align-items: center !important; gap: 12px; padding: 12px 14px; border-radius: 14px;
     background: rgba(232, 242, 222, .8); border: 1px solid rgba(74, 101, 66, .24);
     box-shadow: 0 4px 12px rgba(74, 101, 66, .06);
 }
@@ -6059,7 +6140,7 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
   width: 100% !important;
   max-width: 100vw !important;
   margin: 0 !important;
-  padding: 5px 0 !important;
+  padding: 0 !important;
 
   display: flex !important;
   justify-content: center !important;
@@ -6085,20 +6166,24 @@ body #rooms { padding-top: clamp(24px, 4vh, 48px) !important; padding-bottom: cl
   height: auto !important;
   display: block !important;
   object-fit: contain !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
 }
 
 /* Ensure no harsh top padding pulls Stay into the ribbon */
+body #stay,
 #stay,
 .theme-stay,
 .stay-section {
-  padding-top: clamp(24px, 3vw, 40px) !important;
+  padding-top: clamp(16px, 2.5vw, 24px) !important;
   background-color: #FAF7F0 !important;
 }
 
 /* Ensure 'View more products' button has breathing space above the divider */
+.shop-toggle-wrap,
 .farm-shop-action,
 .view-more-container {
-  margin-bottom: 18px !important;
+  margin-bottom: 10px !important;
 }
 
 /* ==========================================================================
@@ -6656,7 +6741,8 @@ img { max-width: 100%; }
 
     /* feature chips */
     .farm-features-grid, .cot-features-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-    .farm-feature-item, .cot-feature-item { padding: 10px 12px; gap: 10px; align-items: flex-start; }
+    .cot-feature-item { padding: 10px 12px; gap: 10px; align-items: flex-start; }
+    .farm-feature-item { padding: 12px 14px !important; gap: 10px; align-items: center !important; }
     .farm-feature-item strong, .cot-feature-item strong { font-size: .86rem; }
     .farm-feature-item span, .cot-feature-item span { font-size: .76rem; line-height: 1.35; }
     .cot-cta-group { flex-direction: column; align-items: stretch; gap: 10px; }
@@ -7739,6 +7825,20 @@ img { max-width: 100%; }
         display: block !important;
     }
 
+    .stay-rules-accordion {
+        margin-top: 10px !important;
+        margin-bottom: 16px !important;
+    }
+    .stay-rules-trigger {
+        font-size: 0.82rem !important;
+        padding: 8px 12px !important;
+    }
+    .stay-rules-list {
+        font-size: 0.78rem !important;
+        line-height: 1.45 !important;
+        padding: 6px 14px 12px 24px !important;
+    }
+
     /* Side-by-Side CTA Buttons */
     .cot-cta-group {
         display: grid !important;
@@ -7922,14 +8022,14 @@ img { max-width: 100%; }
 
 /* Farm promises (100% Organic ...): tighter boxes */
 .farm-features-grid { gap: 8px; margin: 16px 0 18px; }
-.farm-feature-item { padding: 7px 12px; gap: 9px; align-items: center; border-radius: 12px; }
+.farm-feature-item { padding: 12px 14px !important; gap: 9px; align-items: center !important; border-radius: 12px; }
 .farm-feat-icon { width: 24px; height: 24px; }
 .farm-feat-icon svg { width: 16px; height: 16px; }
 .farm-feature-item strong { font-size: 0.82rem; line-height: 1.15; }
 .farm-feature-item > div { line-height: 1.25; }
 .farm-feature-item span { display: block; margin-top: 2px; font-size: 0.72rem; line-height: 1.25; }
 @media (max-width: 767px) {
-    .farm-feature-item { padding: 7px 9px; gap: 7px; align-items: center; }
+    .farm-feature-item { padding: 12px 14px !important; gap: 7px; align-items: center !important; }
     .farm-feature-item strong { font-size: 0.76rem; }
     .farm-feature-item span { font-size: 0.66rem; line-height: 1.25; }
 }
