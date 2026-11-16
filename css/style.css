@@ -679,6 +679,136 @@ textarea {
         transform: translateY(-2px);
     }
 
+.cake-fill-btn {
+  --btn-bg: #3b2618;
+  --btn-text: #f7f3eb;
+  --btn-fill-bg: #f7f3eb;
+  --btn-fill-text: #3b2618;
+  --icon-circle: 38px;
+  --icon-right: 6px;
+  --circle-inset-y: calc((100% - var(--icon-circle)) / 2);
+  --ease-liquid: cubic-bezier(0.785, 0.135, 0.15, 0.86);
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  width: fit-content;
+  min-width: fit-content;
+  padding: 0 calc(var(--icon-circle) + var(--icon-right) + 18px) 0 24px;
+  border-radius: 999px;
+  border: 1.5px solid var(--btn-bg);
+  background-color: var(--btn-bg);
+  color: var(--btn-text);
+  font-family: inherit;
+  font-size: 0.94rem;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(59, 38, 24, 0.16);
+  transition: box-shadow 0.45s var(--ease-liquid), transform 0.3s ease;
+}
+
+.cake-fill-btn:hover {
+  box-shadow: 0 10px 24px rgba(59, 38, 24, 0.24);
+}
+
+.cake-fill-label {
+  position: relative;
+  z-index: 1;
+  padding-bottom: 1px;
+  white-space: nowrap;
+}
+
+.cake-fill-bg {
+  pointer-events: none;
+  position: absolute;
+  z-index: 2;
+  border-radius: 999px;
+  background-color: var(--btn-fill-bg);
+  inset: var(--circle-inset-y) var(--icon-right) var(--circle-inset-y) calc(100% - var(--icon-right) - var(--icon-circle));
+  transition: inset 0.45s var(--ease-liquid), background-color 0.45s var(--ease-liquid);
+}
+
+.cake-fill-overlay {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  padding: 0 calc(var(--icon-circle) + var(--icon-right) + 18px) 0 24px;
+  color: var(--btn-fill-text);
+  clip-path: inset(var(--circle-inset-y) var(--icon-right) var(--circle-inset-y) calc(100% - var(--icon-right) - var(--icon-circle)) round 999px);
+  transition: clip-path 0.45s var(--ease-liquid), color 0.45s var(--ease-liquid);
+}
+
+.cake-fill-btn:hover .cake-fill-bg,
+.cake-fill-btn[data-pressed="true"] .cake-fill-bg {
+  inset: 0;
+}
+
+.cake-fill-btn:hover .cake-fill-overlay,
+.cake-fill-btn[data-pressed="true"] .cake-fill-overlay {
+  clip-path: inset(0 0 0 0 round 999px);
+}
+
+.cake-fill-circle {
+  pointer-events: none;
+  position: absolute;
+  right: var(--icon-right);
+  top: 50%;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--icon-circle);
+  height: var(--icon-circle);
+  border-radius: 999px;
+  background-color: var(--btn-fill-bg);
+  color: var(--btn-fill-text);
+  transform: translateY(-50%);
+  overflow: hidden;
+}
+
+.cake-fill-circle svg {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 19px;
+  height: 19px;
+  transition: transform 0.45s var(--ease-liquid);
+}
+
+.cake-icon-in {
+  transform: translate(-175%, -50%) scale(0.2);
+}
+
+.cake-icon-out {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.cake-fill-btn:hover .cake-icon-in,
+.cake-fill-btn[data-pressed="true"] .cake-icon-in {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.cake-fill-btn:hover .cake-icon-out,
+.cake-fill-btn[data-pressed="true"] .cake-icon-out {
+  transform: translate(75%, -50%) scale(0.2);
+}
+
+@media (max-width: 767px) {
+  .cake-fill-btn {
+    height: 48px;
+    --icon-circle: 36px;
+    font-size: 0.9rem;
+  }
+}
+
 .btn--ghost {
     background: transparent;
     color: var(--green-700);
@@ -1314,6 +1444,28 @@ img[src*="item-15.webp"],
         width: 100%;
         border-radius: var(--radius-lg);
     }
+
+#menuModal .modal-panel {
+  max-width: min(1000px, 94vw);
+  max-height: 85vh;
+  width: auto;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: visible;
+}
+
+#menuModal img,
+.menu-lightbox-img {
+  max-width: 92vw;
+  max-height: 85vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 14px;
+  box-shadow: 0 20px 50px rgba(24, 16, 10, 0.35);
+}
 
 .modal-close {
     position: absolute;

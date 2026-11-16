@@ -306,11 +306,36 @@
 
     var modal = $('#menuModal');
     if (!modal) return;
-    function open() { modal.classList.add('is-open'); lockScroll(); }
+    var modalImg = modal.querySelector('img');
+    var openBtn = $('#openMenuBoardBtn') || $('#openMenuModal');
+    function open() {
+      if (modalImg && openBtn) {
+        var src = openBtn.getAttribute('data-src') || openBtn.getAttribute('data-menu-src');
+        if (src) modalImg.src = src;
+      }
+      modal.classList.add('is-open');
+      lockScroll();
+    }
     function close() { modal.classList.remove('is-open'); unlockScroll(); }
-    var openBtn = $('#openMenuModal');
-    if (openBtn) openBtn.addEventListener('click', open);
-    $('#closeMenuModal').addEventListener('click', close);
+
+    if (openBtn) {
+      openBtn.addEventListener('pointerdown', function () {
+        openBtn.setAttribute('data-pressed', 'true');
+      });
+      function clearPress() {
+        setTimeout(function () {
+          openBtn.setAttribute('data-pressed', 'false');
+        }, 450);
+      }
+      openBtn.addEventListener('pointerup', clearPress);
+      openBtn.addEventListener('pointercancel', function () {
+        openBtn.setAttribute('data-pressed', 'false');
+      });
+      openBtn.addEventListener('click', open);
+    }
+
+    var closeBtn = $('#closeMenuModal');
+    if (closeBtn) closeBtn.addEventListener('click', close);
     modal.addEventListener('click', function (e) { if (e.target === modal) close(); });
   }());
 
